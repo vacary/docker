@@ -29,7 +29,7 @@ fi
 # For dev version, copy a fenics.conf to the shared directory if it is not there
 if [ "$VERSION" == "dev" ]; then
     if [[ ! -f $SHAREDDIR/fenics.conf ]]; then
-        cp -a ./src/fenics.conf $SHAREDDIR    
+        cp -a ./src/fenics.conf $SHAREDDIR
     fi
 fi
 
@@ -41,13 +41,14 @@ else
 fi
 
 start_gui () {
-    # If we are on Mac OS X and using boot2docker we
-    # need to use the following workaround from
-    # https://github.com/docker/docker/issues/8710
-    # to get X11 forwarding to work.
+    # If we are on Mac OS X and using boot2docker we need to use the
+    # following workaround from
+    # https://github.com/docker/docker/issues/8710 to get X11
+    # forwarding to work.
     if [ "$(uname)" == "Darwin" ]; then
 	if hash socat 2> /dev/null ; then
-	    # I delibrately haven't sunk the output of socat until we understand more about this. 
+	    # I delibrately haven't sunk the output of socat until we
+	    # understand more about this.
 	    DISPLAY_ENV=$(boot2docker config | grep HostIP | awk -F \" '{print $2}'):0
 	    socat TCP-LISTEN:6000,reuseaddr,fork,bind=$DISPLAY_ENV UNIX-CLIENT:\"$DISPLAY\" &
 	    echo >&2 "Warning: X11 forwarding on Mac OS X is considered experimental!"
@@ -57,14 +58,14 @@ start_gui () {
 	    echo >&2 "socat is required for X11 forwarding to work on Mac OS X."
 	    echo >&2 "Homebrew users can install socat by running:"
 	    echo >&2 "        brew install socat"
-	    echo >&2 "You can run this script without X11 by passing the -c option."
+	    echo >&2 "You can run this script without X11 by not passing the -gui option."
 	    echo >&2 "Aborting."
 	    exit 1
-	fi 
+	fi
     else
         DISPLAY_ENV=$DISPLAY
     fi
-        
+
     # Start xhost sharing
     xhost +local: > /dev/null 2>&1
     # Run docker
@@ -84,27 +85,27 @@ start_gui () {
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
            $IMAGE \
-           sudo -u root /sbin/my_init --quiet -- sudo -u fenics xterm 
+           sudo -u root /sbin/my_init --quiet -- sudo -u fenics xterm
     # End xhost sharing
     xhost - >/dev/null 2>&1
 }
 
 start_cli () {
-    # Launch docker container    
+    # Launch docker container
     docker run -i -t $RM \
            -u fenics \
            -v $SHAREDDIR:/home/fenics/ \
            -w="/home/fenics" \
-           --name="$CONTAINERNAME" \           
+           --name="$CONTAINERNAME" \
            $IMAGE \
-           sudo -u root /sbin/my_init --quiet -- sudo -u fenics /bin/bash 
+           sudo -u root /sbin/my_init --quiet -- sudo -u fenics /bin/bash
 }
 
 # parse arguments
-if [ "$1" == "-c" ]; then
-    start_cli
+if [ "$1" == "-gui" ]; then
+    start_gui
     exit 0
 else
-    start_gui
+    start_cli
     exit 0
 fi
