@@ -16,3 +16,7 @@ automatically:
 
     source fenics.conf
     update_fenics
+
+To launch the container and share the build of FEniCS to the host:
+
+    docker run -v $(pwd)/build:/home/fenics/build -t -i fenicsproject/dev-env:latest

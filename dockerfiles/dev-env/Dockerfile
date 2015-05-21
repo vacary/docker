@@ -94,18 +94,23 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 RUN touch /etc/service/syslog-forwarder/down
 
 # Our helper script
-ADD https://raw.githubusercontent.com/FEniCS/docker/master/fenics.conf /home/fenics/fenics.conf 
+COPY fenics.conf /home/fenics/fenics.conf
 # and the README
-ADD README.md /home/fenics
+COPY README.md /home/fenics/README.md
+RUN chown fenics:fenics /home/fenics/README.md && \
+    chown fenics:fenics /home/fenics/fenics.conf && \
+    chmod u+rw /home/fenics/README.md && \
+    chmod u+rw /home/fenics/fenics.conf
+
+# OpenBLAS threads should be 1 to ensure performance
+RUN echo "export OPENBLAS_NUM_THREADS=1" >> /home/fenics/.bashrc
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
 RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
     echo "cd $HOME" >> /home/fenics/.bashrc.tmp && \
-    echo "echo $HOME/README.md" >> /home/fenics/.bashrc.tmp
+    echo "cat $HOME/README.md" >> /home/fenics/.bashrc.tmp
 
-# Only use one thread with OpenBLAS
-ENV OPENBLAS_NUM_THREADS 1
-
+USER root
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
