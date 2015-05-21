@@ -2,20 +2,16 @@
 
 ## Introduction
 
-We currently offer 3 versions:
+We currently offer three images:
 
-* `stable`: This is recommended for most users. It contains the
-  current stable FEniCS binaries from official PPA. The download size
-  is 2.4G.
-* `git`: This is for users looking for bleeding edge features. It
-  contains the FEniCS binaries built from git source on a weekly
-  basis. The download size is 2.6G for the first time and 1.0G for
-  subsequent updates.
-* `dev`: This is for developers of FEniCS or users who want to study
-  or modify the source code of FEniCS. This can also serve as a way to
-  get the git version with a smaller download size. It contains all
-  the dependencies and a script to build FEniCS. The download size
-  is 1.7G.
+* `stable`: This image provides the more recent release of FEniCS and
+  is recommended for most users. It contains the current stable FEniCS
+  binaries from official PPA.
+* `dev`: This image provides the development version of FEniCS.  It is
+  for users looking for the latest features.
+* `dev-env`: This image provides a development environment in which
+   a user can install FEniCS. It provides the necessary dependencies
+   for FEniCS, but does not provide the FEniCS libraries.
 
 `stable` is the default choice. To choose other version, edit the
 beginning of the script `fenics` and change `VERSION=stable`.
@@ -47,3 +43,10 @@ list of changes (additional packages installed and so on).
 One alternative to this is to build another customized docker image
 based on the official ones offered here. This has its own trade-offs
 and requires more knowledge of docker.
+
+
+## Authors
+
+* Jack Hale <jack.hale@uni.lu>
+* Lizao Li <lixx1445@umn.edu>
+* Garth N. Wells <gnw20@cam.ac.uk>

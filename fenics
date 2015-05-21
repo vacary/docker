@@ -23,17 +23,18 @@ fi
 
 # Prepare the shared folder for the first run
 if [[ ! -d $SHAREDDIR ]]; then
-    cp -a ./src/default_shared_$VERSION $SHAREDDIR
+    cp -a ./default_shared_$VERSION $SHAREDDIR
 fi
 
-# For dev version, copy a fenics.conf to the shared directory if it is not there
+# For dev version, copy a fenics.conf to the shared directory if it is
+# not there
 if [ "$VERSION" == "dev" ]; then
     if [[ ! -f $SHAREDDIR/fenics.conf ]]; then
-        cp -a ./src/fenics.conf $SHAREDDIR
+        cp -a ./fenics.conf $SHAREDDIR
     fi
 fi
 
-# delete the container after use if not persistent
+# Delete the container after use if not persistent
 if [ "$PERSISTENT" == "true" ]; then
     RM=""
 else
