@@ -27,6 +27,10 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
 
+# This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
+RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
+    echo "cd $HOME" >> /home/fenics/.bashrc.tmp
 
 CMD ["/sbin/my_init"]
+ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
