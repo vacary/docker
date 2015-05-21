@@ -6,3 +6,8 @@ intended for users who want to build their own version of FEniCS. It
 also serves as a base image for
 <https://registry.hub.docker.com/u/fenicsproject/dev>, which does
 provide the development version of FEniCS.
+
+We do provide a helper script in this container to help you compile FEniCS:
+
+    > source fenics.conf
+    > update_fenics
