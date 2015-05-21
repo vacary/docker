@@ -11,7 +11,7 @@ FROM fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 WORKDIR /opt
-ADD https://raw.githubusercontent.com/FEniCS/docker/master/src/fenics.conf /opt/fenics.conf
+ADD https://raw.githubusercontent.com/FEniCS/docker/master/fenics.conf /opt/fenics.conf
 
 RUN sed -i 's|FENICS_HOME=/home/fenics/build|FENICS_HOME=/opt/fenics|' /opt/fenics.conf && \
     chmod +r /opt/fenics.conf
