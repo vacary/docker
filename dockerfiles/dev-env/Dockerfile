@@ -34,7 +34,7 @@ RUN cd /tmp && \
     ./configure --COPTFLAGS="-O2 -mtune=native -march=native" \
                 --CXXOPTFLAGS="-O2 -mtune=native -march=native" \
                 --FOPTFLAGS="-O2 -mtune=native -march=native" \
-                --with-blas-lib=/usr/lib/libblas.a --with-lapack-lib=/usr/lib/liblapack.a \
+                --with-blas-lib=/usr/lib/libopenblas.a --with-lapack-lib=/usr/lib/liblapack.a \
                 --with-c-support \
                 --with-debugging=0 \
                 --with-shared-libraries \
@@ -93,6 +93,13 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
 
+# This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
+RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
+    echo "cd $HOME" >> /home/fenics/.bashrc.tmp
+
+# Only use one thread with OpenBLAS
+ENV OPENBLAS_NUM_THREADS 1
 
 CMD ["/sbin/my_init"]
+ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
