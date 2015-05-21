@@ -7,7 +7,12 @@ also serves as a base image for
 <https://registry.hub.docker.com/u/fenicsproject/dev>, which does
 provide the development version of FEniCS.
 
-We do provide a helper script in this container to help you compile FEniCS:
+To launch the container:
 
-    > source fenics.conf
-    > update_fenics
+    docker run -t -i fenicsproject/dev-env:latest
+
+We do provide a helper script in this container to compile FEniCS 
+automatically:
+
+    source fenics.conf
+    update_fenics
