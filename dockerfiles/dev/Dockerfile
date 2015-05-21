@@ -12,7 +12,7 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 RUN sed -i 's|FENICS_HOME=/home/fenics/build|FENICS_HOME=/opt/fenics|' /home/fenics/fenics.conf 
 
-RUN /bin/bash -c "source fenics.conf && \
+RUN /bin/bash -c "source /home/fenics/fenics.conf && \
                   update_fenics"
 
 CMD ["/sbin/my_init"]
