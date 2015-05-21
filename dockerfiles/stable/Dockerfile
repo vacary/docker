@@ -29,8 +29,10 @@ RUN touch /etc/service/syslog-forwarder/down
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
+ADD README.md /home/fenics/README.md
 RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
-    echo "cd $HOME" >> /home/fenics/.bashrc.tmp
+    echo "cd $HOME" >> /home/fenics/.bashrc.tmp && \
+    echo "cat $HOME/README.md" >> /home/fenics/.bashrc.tmp
 
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
