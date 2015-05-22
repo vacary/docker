@@ -93,24 +93,25 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
 
+ENV HOME /home/fenics
+
 # Our helper script
-COPY fenics.conf /home/fenics/fenics.conf
+COPY fenics.conf $HOME/fenics.conf
 # and the README
-COPY README.md /home/fenics/README.md
-RUN chown fenics:fenics /home/fenics/README.md && \
-    chown fenics:fenics /home/fenics/fenics.conf && \
-    chmod u+rw /home/fenics/README.md && \
-    chmod u+rw /home/fenics/fenics.conf
+COPY WELCOME $HOME/WELCOME
+RUN chown fenics:fenics $HOME/WELCOME && \
+    chown fenics:fenics $HOME/fenics.conf && \
+    chmod u+rw $HOME/WELCOME && \
+    chmod u+rw $HOME/fenics.conf
 
 # OpenBLAS threads should be 1 to ensure performance
-RUN echo "export OPENBLAS_NUM_THREADS=1" >> /home/fenics/.bashrc
+RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
-ENV HOME /home/fenics
-RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
-    echo "cd $HOME" >> /home/fenics/.bashrc.tmp && \
-    echo "cat $HOME/README.md" >> /home/fenics/.bashrc.tmp
+RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
+    cp $HOME/.bashrc $HOME/.bashrc.tmp && \
+    echo "cd $HOME" >> $HOME/.bashrc.tmp && \
+    echo "cat $HOME/WELCOME" >> $HOME/.bashrc.tmp
 
-USER root
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
