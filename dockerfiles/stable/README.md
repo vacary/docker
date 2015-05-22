@@ -8,6 +8,11 @@ To launch the container:
 
     docker run -t -i fenicsproject/stable:latest
 
-To share a directory from the host into the container:
+To launch the container and share the current directory on the host
+with the container:
 
-    docker run -v /absolute/path/to/directory:/home/fenics/shared -t -i fenicsproject/stable:latest 
+    docker run -v $(pwd)/build:/home/fenics/build -t -i fenicsproject/stable:latest
+
+To share a specified directory from the host with the container:
+
+    docker run -v /absolute/path/to/shared/directory:/home/fenics/shared -t -i fenicsproject/stable:latest

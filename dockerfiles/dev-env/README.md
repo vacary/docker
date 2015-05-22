@@ -11,12 +11,13 @@ To launch the container:
 
     docker run -t -i fenicsproject/dev-env:latest
 
-We do provide a helper script in this container to compile FEniCS 
+We do provide a helper script in this container to compile FEniCS
 automatically:
 
     source fenics.conf
     update_fenics
 
-To launch the container and share the build of FEniCS to the host:
+To launch the container and share the current directory on the host
+with the container:
 
     docker run -v $(pwd)/build:/home/fenics/build -t -i fenicsproject/dev-env:latest

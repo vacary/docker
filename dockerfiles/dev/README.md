@@ -3,3 +3,16 @@
 This image provides the development version of FEniCS
 (<http://fenicsproject.org>). It is intended for users who want access
 to the most recent features.
+
+To launch the container:
+
+    docker run -t -i fenicsproject/dev:latest
+
+To launch the container and share the current directory on the host
+with the container:
+
+    docker run -v $(pwd)/build:/home/fenics/build -t -i fenicsproject/dev:latest
+
+To share a specified directory from the host with the container:
+
+    docker run -v /absolute/path/to/shared/directory:/home/fenics/shared -t -i fenicsproject/dev:latest
