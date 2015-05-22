@@ -1,4 +1,4 @@
-# Builds a Docker image with the necesary libraries for compiling
+# Builds a Docker image with the necessary libraries for compiling
 # FEniCS.  The image is at:
 #
 #     https://registry.hub.docker.com/u/fenicsproject/
@@ -31,9 +31,9 @@ RUN cd /tmp && \
     wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-${PETSC_VERSION}.tar.gz && \
     cd petsc-${PETSC_VERSION} && \
-    ./configure --COPTFLAGS="-O2 -mtune=native -march=native" \
-                --CXXOPTFLAGS="-O2 -mtune=native -march=native" \
-                --FOPTFLAGS="-O2 -mtune=native -march=native" \
+    ./configure --COPTFLAGS="-O2" \
+                --CXXOPTFLAGS="-O2" \
+                --FOPTFLAGS="-O2" \
                 --with-blas-lib=/usr/lib/libopenblas.a --with-lapack-lib=/usr/lib/liblapack.a \
                 --with-c-support \
                 --with-debugging=0 \
