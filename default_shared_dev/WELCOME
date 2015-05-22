@@ -1,6 +1,0 @@
-Welcome to FEniCS. The build environment is ready. Please execute
-
-     update_fenics
-
-to build FEniCS from current git source.
-
