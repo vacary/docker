@@ -10,10 +10,12 @@
 FROM fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
-RUN sed -i 's|FENICS_HOME=/home/fenics/build|FENICS_HOME=/opt/fenics|' /home/fenics/fenics.conf 
+ENV HOME /home/fenics
 
-RUN /bin/bash -c "source /home/fenics/fenics.conf && \
+RUN /bin/bash -c "source $HOME/fenics.conf && \
                   update_fenics"
+
+COPY WELCOME $HOME/WELCOME
 
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
