@@ -10,5 +10,4 @@ provide the development version of FEniCS.
 We do provide a helper script in this container to compile FEniCS
 automatically:
 
-    source fenics.conf
     update_fenics
