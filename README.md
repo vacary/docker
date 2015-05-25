@@ -4,14 +4,14 @@
 
 We currently offer three images:
 
-* `stable`: This image provides the more recent release of FEniCS and
-  is recommended for most users. It contains the current stable FEniCS
-  binaries from official PPA.
+* `stable-ppa`: This image provides the more recent release of FEniCS
+  and is recommended for most users. It contains the current stable
+  FEniCS binaries from official PPA.
 * `dev`: This image provides the development version of FEniCS.  It is
   for users looking for the latest features.
-* `dev-env`: This image provides a development environment in which
-   a user can install FEniCS. It provides the necessary dependencies
-   for FEniCS, but does not provide the FEniCS libraries.
+* `dev-env`: This image provides a development environment in which a
+   user can install FEniCS. It provides the necessary dependencies for
+   FEniCS, but does not provide the FEniCS libraries.
 
 `stable` is the default choice. To choose other version, edit the
 beginning of the script `fenics` and change `VERSION=stable`.
@@ -47,6 +47,6 @@ and requires more knowledge of docker.
 
 ## Authors
 
-* Jack Hale <jack.hale@uni.lu>
-* Lizao Li <lixx1445@umn.edu>
-* Garth N. Wells <gnw20@cam.ac.uk>
+* Jack Hale (<jack.hale@uni.lu>)
+* Lizao Li (<lixx1445@umn.edu>)
+* Garth N. Wells (<gnw20@cam.ac.uk>)
