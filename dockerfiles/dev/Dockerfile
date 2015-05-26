@@ -10,6 +10,7 @@
 FROM fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
+USER fenics
 ENV HOME /home/fenics
 
 RUN /bin/bash -c "source $HOME/fenics.conf && \
@@ -17,5 +18,6 @@ RUN /bin/bash -c "source $HOME/fenics.conf && \
 
 COPY WELCOME $HOME/WELCOME
 
+USER root
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
