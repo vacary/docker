@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # User settings
-VERSION=stable-ppa              # Valid choices are: stable-ppa, dev-env, dev
+VERSION=dev-env              # Valid choices are: stable-ppa, dev-env, dev
 SHAREDDIR=$PWD/shared           # Location of the defaul shared directory
 IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
 PERSISTENT=false                # Is the container persistent? true/false
@@ -19,19 +19,6 @@ if ! hash docker 2>/dev/null; then
     echo >&2 "          https://docs.docker.com/"
     echo >&2 "Aborting."
     exit 1
-fi
-
-# Prepare the shared folder for the first run
-if [[ ! -d $SHAREDDIR ]]; then
-    cp -a ./default_shared_$VERSION $SHAREDDIR
-fi
-
-# For dev version, copy a fenics.conf to the shared directory if it is
-# not there
-if [ "$VERSION" == "dev" ]; then
-    if [[ ! -f $SHAREDDIR/fenics.conf ]]; then
-        cp -a ./fenics.conf $SHAREDDIR
-    fi
 fi
 
 # Delete the container after use if not persistent
@@ -53,7 +40,6 @@ start_gui () {
 	    DISPLAY_ENV=$(boot2docker config | grep HostIP | awk -F \" '{print $2}'):0
 	    socat TCP-LISTEN:6000,reuseaddr,fork,bind=$DISPLAY_ENV UNIX-CLIENT:\"$DISPLAY\" &
 	    echo >&2 "Warning: X11 forwarding on Mac OS X is considered experimental!"
-	    echo >&2 "If you have problems run without X11 by passing the -c option."
         else
 	    echo >&2 "Command 'socat' cannot be found on your system."
 	    echo >&2 "socat is required for X11 forwarding to work on Mac OS X."
@@ -80,13 +66,11 @@ start_gui () {
     # Launch docker container
     docker run -i -t $RM \
            -e DISPLAY=$DISPLAY_ENV \
-           -u fenics \
            -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-           -v $SHAREDDIR:/home/fenics/ \
+           -v $SHAREDDIR:/home/fenics/shared \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
-           $IMAGE \
-           sudo -u root /sbin/my_init --quiet -- sudo -u fenics xterm
+           $IMAGE
     # End xhost sharing
     xhost - >/dev/null 2>&1
 }
@@ -94,12 +78,10 @@ start_gui () {
 start_cli () {
     # Launch docker container
     docker run -i -t $RM \
-           -u fenics \
-           -v $SHAREDDIR:/home/fenics/ \
+           -v $SHAREDDIR:/home/fenics/shared \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
-           $IMAGE \
-           sudo -u root /sbin/my_init --quiet -- sudo -u fenics /bin/bash
+           $IMAGE
 }
 
 # parse arguments
