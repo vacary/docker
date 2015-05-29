@@ -113,5 +113,6 @@ RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
     echo "cd $HOME" >> $HOME/.bashrc.tmp && \
     echo "cat $HOME/WELCOME" >> $HOME/.bashrc.tmp
 
-CMD ["/sbin/my_init"]
-ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
+ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
+CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
+
