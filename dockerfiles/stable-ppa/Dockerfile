@@ -7,7 +7,7 @@
 # Authors:
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:0.9.16
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Install add-apt-repository
@@ -29,10 +29,10 @@ RUN touch /etc/service/syslog-forwarder/down
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
-ADD README.md /home/fenics/README.md
+ADD WELCOME /home/fenics/WELCOME
 RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
     echo "cd $HOME" >> /home/fenics/.bashrc.tmp && \
-    echo "cat $HOME/README.md" >> /home/fenics/.bashrc.tmp
+    echo "cat $HOME/WELCOME" >> /home/fenics/.bashrc.tmp
 
 CMD ["/sbin/my_init"]
 ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp

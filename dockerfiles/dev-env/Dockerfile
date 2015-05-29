@@ -7,7 +7,7 @@
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:0.9.16
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Install build environment
