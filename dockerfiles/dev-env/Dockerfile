@@ -4,8 +4,9 @@
 #     https://registry.hub.docker.com/u/fenicsproject/
 #
 # Authors:
-# Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
+# Lizao Li <lixx1445@umn.edu>
+# Garth N. Wells <gnw20@cam.ac.uk>
 
 FROM phusion/baseimage:0.9.16
 MAINTAINER fenics-project <fenics@fenicsproject.org>
@@ -21,11 +22,11 @@ RUN apt-get -qq update && \
          python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
          python-numpy python-vtk6 python-six python-ply \
-         python-pip python-h5py xterm && \
+         python-h5py python-urllib3 xterm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install petsc from source
+# Install PETSc from source
 ENV PETSC_VERSION 3.5.3
 RUN cd /tmp && \
     wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PETSC_VERSION}.tar.gz && \
@@ -53,7 +54,7 @@ RUN cd /tmp && \
      make install && \
      rm -rf /tmp/*
 
-# Install slepc from source
+# Install SLEPc from source
 ENV SLEPC_VERSION 3.5.3
 RUN cd /tmp && \
     export PETSC_DIR=/usr/local && \
@@ -67,7 +68,13 @@ RUN cd /tmp && \
 ENV SLEPC_DIR /usr/local
 ENV PETSC_DIR /usr/local
 
-# Install sympy, petsc4py, slepc4py, swig from source
+# Install Python setuptools and pip (the Ubuntu 14.04 packaged
+#  versions have bugs that cause failures when installing FEniCS
+#  Python packages)
+RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python && \
+    easy_install pip
+
+# Install sympy, petsc4py, slepc4py and swig from source
 ENV SWIG_VERSION 3.0.5
 ENV PETSC4PY_VERSION 3.5.1
 ENV SLEPC4PY_VERSION 3.5.1
@@ -115,4 +122,3 @@ RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
 
 ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
 CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
-
