@@ -34,5 +34,5 @@ RUN cp /home/fenics/.bashrc /home/fenics/.bashrc.tmp && \
     echo "cd $HOME" >> /home/fenics/.bashrc.tmp && \
     echo "cat $HOME/WELCOME" >> /home/fenics/.bashrc.tmp
 
-CMD ["/sbin/my_init"]
-ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
+ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
+CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
