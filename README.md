@@ -19,8 +19,8 @@ We currently offer three images:
    user can install FEniCS. It provides the necessary dependencies for
    FEniCS, but does not provide the FEniCS libraries. 
 
-      docker run -t -i fenicsproject/dev-env:latest
-  
+        docker run -t -i fenicsproject/dev-env:latest
+
   A helper script (fenics.conf) is provided in the container to compile 
   FEniCS. Just run:
   
