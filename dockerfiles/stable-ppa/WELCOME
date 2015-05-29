@@ -6,5 +6,5 @@ the FEniCS PPA (<https://launchpad.net/~fenics-packages>).
 
 Get started by solving a Poisson problem using FEniCS:
     
-    cp /usr/share/dolfin/demos/documented/poisson/python/demo_poisson.py $HOME
+    cp /usr/share/dolfin/demo/documented/poisson/python/demo_poisson.py $HOME
     python demo_poisson.py
