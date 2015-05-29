@@ -3,3 +3,8 @@
 This image provides the most recent stable release of FEniCS
 (<http://fenicsproject.org>). The FEniCS installation is installed via
 the FEniCS PPA (<https://launchpad.net/~fenics-packages>).
+
+Get started by solving a Poisson problem using FEniCS:
+    
+    cp /usr/share/dolfin/demos/poisson/python/demo_poisson.py $HOME
+    python demo_poisson.py
