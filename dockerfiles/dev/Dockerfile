@@ -17,7 +17,6 @@ RUN /bin/bash -c "source $HOME/fenics.conf && \
                   update_fenics"
 
 COPY WELCOME $HOME/WELCOME
-
 USER root
-CMD ["/sbin/my_init"]
-ENTRYPOINT exec /sbin/my_init --quiet -- sudo -u fenics /bin/bash --rcfile /home/fenics/.bashrc.tmp
+ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
+CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
