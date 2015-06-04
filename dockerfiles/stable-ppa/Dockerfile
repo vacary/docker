@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
     apt-get -qqy install python-software-properties && \
     add-apt-repository -y ppa:fenics-packages/fenics && \
     apt-get -qq update && \
-    apt-get -qqy install xauth fenics ipython xterm && \
+    apt-get -qqy install xauth fenics ipython xterm libatlas3gf-base && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
