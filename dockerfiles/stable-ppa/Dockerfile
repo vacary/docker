@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
     apt-get -qqy install python-software-properties && \
     add-apt-repository -y ppa:fenics-packages/fenics && \
     apt-get -qq update && \
-    apt-get -qqy install xauth fenics ipython xterm libatlas3gf-base && \
+    apt-get -qqy install xauth fenics ipython xterm libopenblas-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -26,6 +26,10 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
+
+# OpenBLAS threads should be 1 to ensure performance
+RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc && \
+    echo "export OPENBLAS_VERBOSE=0" >> $HOME/.bashrc
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 ENV HOME /home/fenics
