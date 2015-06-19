@@ -112,7 +112,8 @@ RUN chown fenics:fenics $HOME/WELCOME && \
     chmod u+rw $HOME/fenics.conf
 
 # OpenBLAS threads should be 1 to ensure performance
-RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc
+RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc && \
+    echo "export OPENBLAS_VERBOSE=1" >> $HOME/.bashrc
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
