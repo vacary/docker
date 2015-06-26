@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
-# User settings
-VERSION=dev-env              # Valid choices are: stable-ppa, dev-env, dev
-SHAREDDIR=$PWD/shared           # Location of the defaul shared directory
+#----------------- Feel free to edit below ---------------------------#
+# Basic settings
+VERSION=stable-ppa        # Valid choices are: stable-ppa, dev-env, dev
+GUI=true                  # Enable gui? true/false
+SHAREDDIR=$PWD/shared     # Location of the defaul shared directory
+PERSISTENT=false          # Is the container persistent? true/false
+
+# Advanced settings
 IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
-PERSISTENT=false                # Is the container persistent? true/false
 CONTAINERNAME="fenics-$VERSION" # Default name of the container
 
-#-------------------------------------------------------------------------#
+#------- Do not edit below unless you know what you are doing --------#
 
 # Tell script to exit on first error
 trap 'exit' ERR
@@ -84,8 +88,8 @@ start_cli () {
            $IMAGE
 }
 
-# parse arguments
-if [ "$1" == "-gui" ]; then
+# Launch
+if [ "$GUI" == "true" ]; then
     start_gui
     exit 0
 else
