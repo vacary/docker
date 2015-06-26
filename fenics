@@ -2,10 +2,13 @@
 
 #----------------- Feel free to edit below ---------------------------#
 # Basic settings
-VERSION=stable-ppa        # Valid choices are: stable-ppa, dev-env, dev
-GUI=true                  # Enable gui? true/false
-SHAREDDIR=$PWD/shared     # Location of the defaul shared directory
-PERSISTENT=false          # Is the container persistent? true/false
+VERSION=stable-ppa    # Valid choices are: stable-ppa, dev-env, dev
+GUI=true              # Enable gui? true/false
+PERSISTENT=false      # Is the container persistent? true/false
+
+# Location of the shared directory
+SHAREDDIRHOST=$PWD/shared              # host side
+SHAREDDIRCONT=/home/fenics/shared      # container side
 
 # Advanced settings
 IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
@@ -71,7 +74,7 @@ start_gui () {
     docker run -i -t $RM \
            -e DISPLAY=$DISPLAY_ENV \
            -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-           -v $SHAREDDIR:/home/fenics/shared \
+           -v $SHAREDDIRHOST:$SHAREDDIRCONT \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
            $IMAGE
@@ -82,7 +85,7 @@ start_gui () {
 start_cli () {
     # Launch docker container
     docker run -i -t $RM \
-           -v $SHAREDDIR:/home/fenics/shared \
+           -v $SHAREDDIRHOST:$SHAREDDIRCONT \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
            $IMAGE
