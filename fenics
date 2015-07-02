@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 
-# User settings
-VERSION=dev-env              # Valid choices are: stable-ppa, dev-env, dev
-SHAREDDIR=$PWD/shared           # Location of the defaul shared directory
+#----------------- Feel free to edit below ---------------------------#
+# Basic settings
+VERSION=stable-ppa    # Valid choices are: stable-ppa, dev-env, dev
+GUI=true              # Enable gui? true/false
+PERSISTENT=false      # Is the container persistent? true/false
+
+# Shared directories.
+# Format    -v HOST_PATH:CONTAINER_PATH \
+SHAREDDIRS="-v $PWD/shared:/home/fenics/shared \
+            -v $PWD/build:/home/fenics/build \
+           "
+
+# Advanced settings
 IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
-PERSISTENT=false                # Is the container persistent? true/false
 CONTAINERNAME="fenics-$VERSION" # Default name of the container
 
-#-------------------------------------------------------------------------#
+#------- Do not edit below unless you know what you are doing --------#
 
 # Tell script to exit on first error
 trap 'exit' ERR
@@ -67,7 +76,7 @@ start_gui () {
     docker run -i -t $RM \
            -e DISPLAY=$DISPLAY_ENV \
            -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-           -v $SHAREDDIR:/home/fenics/shared \
+           $SHAREDDIRS \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
            $IMAGE
@@ -78,14 +87,14 @@ start_gui () {
 start_cli () {
     # Launch docker container
     docker run -i -t $RM \
-           -v $SHAREDDIR:/home/fenics/shared \
+           $SHAREDDIRS \
            -w="/home/fenics" \
            --name="$CONTAINERNAME" \
            $IMAGE
 }
 
-# parse arguments
-if [ "$1" == "-gui" ]; then
+# Launch
+if [ "$GUI" == "true" ]; then
     start_gui
     exit 0
 else
