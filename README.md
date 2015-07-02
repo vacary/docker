@@ -10,6 +10,12 @@ We currently offer three images:
 
       docker run -t -i fenicsproject/stable-ppa:latest
 
+* `stable`: This image provides the most recent release of FEniCS and
+  is recommended for users who heavily use PETSc and SLEPc as it is
+  compiled against the latest version.
+
+      docker run -t -i fenicsproject/stable:latest
+
 * `dev`: This image provides the development version of FEniCS.  It is
   for users looking for the latest features.
 
