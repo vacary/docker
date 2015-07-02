@@ -60,7 +60,7 @@ RUN cd /tmp && \
     export PETSC_DIR=/usr/local && \
     wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
     tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
-    cd slepc-3.5.3 && \
+    cd slepc-${SLEPC_VERSION} && \
     ./configure --prefix=/usr/local && \
     make && \
     make install && \
@@ -76,8 +76,8 @@ RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python && \
 
 # Install sympy, petsc4py, slepc4py and swig from source
 ENV SWIG_VERSION 3.0.5
-ENV PETSC4PY_VERSION 3.6.0
-ENV SLEPC4PY_VERSION 3.6.0
+ENV PETSC4PY_VERSION 3.5.1
+ENV SLEPC4PY_VERSION 3.5.1
 RUN pip install sympy && \
     easy_install \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
