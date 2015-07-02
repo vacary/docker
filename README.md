@@ -11,8 +11,8 @@ We currently offer three images:
       docker run -t -i fenicsproject/stable-ppa:latest
 
 * `stable`: This image provides the most recent release of FEniCS and
-  is recommended for users who heavily use PETSc and SLEPc as it is
-  compiled against the latest version.
+  is recommended for users who need the latest versions of PETSc,
+  SLEPc, petsc4py and slepc4py.
 
       docker run -t -i fenicsproject/stable:latest
 
@@ -22,7 +22,7 @@ We currently offer three images:
       docker run -t -i fenicsproject/dev:latest
 
 * `dev-env`: This image provides a development environment in which a
-   user can install FEniCS. It provides the necessary dependencies for
+   user can compile FEniCS. It provides the necessary dependencies for
    FEniCS, but does not provide the FEniCS libraries. 
 
         docker run -t -i fenicsproject/dev-env:latest
