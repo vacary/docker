@@ -1,4 +1,4 @@
-# FEniCS stable version image
+# FEniCS stable PPA version image
 
 This image provides the most recent stable release of FEniCS
 (<http://fenicsproject.org>). The FEniCS installation is installed via
