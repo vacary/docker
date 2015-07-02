@@ -15,7 +15,8 @@ ENV HOME /home/fenics
 ENV FENICS_VERSION 1.5.0
 COPY fenics.conf /home/fenics/fenics.conf
 RUN /bin/bash -c "source $HOME/fenics.conf && \
-                  update_fenics"
+                  update_fenics && \
+                  rm -rf $HOME/build/src"
 
 COPY WELCOME $HOME/WELCOME
 USER root

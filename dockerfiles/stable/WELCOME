@@ -9,5 +9,5 @@ and slepc4py.
 
 Get started by solving a Poisson problem using FEniCS:
 
-    cp /usr/share/dolfin/demo/documented/poisson/python/demo_poisson.py $HOME
+    cp $HOME/build/share/dolfin/demo/documented/poisson/python/demo_poisson.py $HOME
     python demo_poisson.py
