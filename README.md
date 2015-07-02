@@ -2,7 +2,7 @@
 
 ## Introduction
 
-We currently offer three images:
+We currently offer four images:
 
 * `stable-ppa`: This image provides the most recent release of FEniCS
   and is recommended for most users. It contains the current stable
