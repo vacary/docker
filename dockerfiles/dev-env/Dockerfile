@@ -76,8 +76,8 @@ RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python && \
 
 # Install sympy, petsc4py, slepc4py and swig from source
 ENV SWIG_VERSION 3.0.5
-ENV PETSC4PY_VERSION 3.5.1
-ENV SLEPC4PY_VERSION 3.5.1
+ENV PETSC4PY_VERSION 3.6.0
+ENV SLEPC4PY_VERSION 3.6.0
 RUN pip install sympy && \
     easy_install \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
