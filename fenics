@@ -68,7 +68,7 @@ start_gui () {
     if [ "$PERSISTENT" == "true" ]; then
         if [ -n "$(docker ps -a | grep $CONTAINERNAME)" ]; then
             # not the first run in the persistent case. just restore
-            docker start $CONTAINERNAME
+            docker start -a $CONTAINERNAME
             exit 0
         fi
     fi
