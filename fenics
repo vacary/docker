@@ -86,6 +86,13 @@ start_gui () {
 
 start_cli () {
     # Launch docker container
+    if [ "$PERSISTENT" == "true" ]; then
+        if [ -n "$(docker ps -a | grep $CONTAINERNAME)" ]; then
+            # not the first run in the persistent case. just restore
+            docker start -a $CONTAINERNAME
+            exit 0
+        fi
+    fi    
     docker run -i -t $RM \
            $SHAREDDIRS \
            -w="/home/fenics" \
