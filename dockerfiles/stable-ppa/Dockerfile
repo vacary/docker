@@ -7,7 +7,7 @@
 # Authors:
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.17
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Install add-apt-repository

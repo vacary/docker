@@ -8,7 +8,7 @@
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.17
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Install build environment
