@@ -2,9 +2,9 @@
 
 #----------------- Feel free to edit below ---------------------------#
 # Basic settings
-VERSION=stable-ppa    # Valid choices are: stable-ppa, dev-env, dev
-GUI=true              # Enable gui? true/false
-PERSISTENT=false      # Is the container persistent? true/false
+VERSION=stable    # Valid choices are: stable, stable-ppa, dev-env, dev
+GUI=true          # Enable gui? true/false
+PERSISTENT=false  # Is the container persistent? true/false
 
 # Shared directories.
 # Format    -v HOST_PATH:CONTAINER_PATH \
