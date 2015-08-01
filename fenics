@@ -8,9 +8,7 @@ PERSISTENT=false  # Is the container persistent? true/false
 
 # Shared directories.
 # Format    -v HOST_PATH:CONTAINER_PATH \
-SHAREDDIRS="-v $PWD/shared:/home/fenics/shared \
-            -v $PWD/build:/home/fenics/build \
-           "
+SHAREDDIRS="-v $PWD/shared:/home/fenics/shared"
 
 # Advanced settings
 IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
@@ -28,6 +26,11 @@ if ! hash docker 2>/dev/null; then
     echo >&2 "          https://docs.docker.com/"
     echo >&2 "Aborting."
     exit 1
+fi
+
+# For dev-env the build directory should also be exposed to the host.
+if [ "$VERSION" == "dev-env" ]; then
+    SHAREDDIRS="$SHAREDDIRS -v $PWD/build:/home/fenics/build"
 fi
 
 # Delete the container after use if not persistent
