@@ -1,33 +1,32 @@
+# options
+IMAGENAME="fenicsproject/stable-mpi"
+
 # file paths
 CTLDIR="control"
-HOSTLIST="$CTLDIR/hostlist.txt"
-CONTAINER_ID_LOG="$CTLDIR/container_ids.log"
-SSHCONFIG="$CTLDIR/sshconfig"
-HOSTFILEPATH="$CTLDIR/hostfile"
-KEYNAME="fenics_mpi_key"
-REMOTE_KEY_PATH="/tmp"
-IMAGENAME="test"
+SSHDIR="$CTLDIR/ssh"
+SHAREDIR="share"
 
 create_cluster () {
-    # create the temp directory if it does not exist
-    if [ ! -d "$CTLDIR" ]; then
-        mkdir "$CTLDIR" 
+    # check argument
+    if [ -z "$1" ]; then
+        echo "Usage: create_cluster [host list file]"
+        exit 1
     fi
+
+    # create dirs
+    mkdir -p "$CTLDIR"
+    mkdir -p "$SSHDIR"
+    mkdir -p "$SHAREDIR"
 
     # create a DSA key pair if it does not exist
-    if [ ! -s "$CTLDIR/$KEYNAME" ]; then
-        ssh-keygen -t rsa -b 4096 -N "" -f "$CTLDIR/$KEYNAME"
+    if [ ! -s "$SSHDIR/id_rsa" ]; then
+        ssh-keygen -t rsa -b 4096 -N "" -f "$SSHDIR/id_rsa"
+        cp $SSHDIR/id_rsa.pub $SSHDIR/authorized_keys
     fi
     
-    # check if host list exists
-    if [ ! -s "$HOSTLIST" ]; then
-        echo >&2 "Bad host list file."
-        kill -INT $$
-    fi
-
     # spawn all the docker instances
     while read line; do
-        # read info from hostlist.txt
+        # get info from hostlist.txt
         array=($line)
         ncpu=${array[0]}
         host=${array[1]}
@@ -42,102 +41,68 @@ create_cluster () {
             SSHPORT=" -p$port"
             SCPPORT=" -P$port"
         fi
-        # send the public key
-        scp $SCPPORT $CTLDIR/$KEYNAME.pub $host:$REMOTE_KEY_PATH
         # start container
         id=$(ssh $host $SSHPORT \
                  docker run -d -p 22 \
-                 -v $REMOTE_KEY_PATH/$KEYNAME.pub:/home/fenics/.ssh/authorized_keys \
+                 -v $PWD/$SSHDIR:/home/fenics/.ssh \
+                 -v $PWD/$SHAREDIR:/home/fenics/share \
+                 -v $PWD/$CTLDIR:/home/fenics/control \
                  $IMAGENAME)
         # save container id
-        echo "$host $port $id" >> $CONTAINER_ID_LOG
+        echo "$host $port $id" >> $CTLDIR/container_list
         # ask for the container ssh port
         r=$(ssh $host $SSHPORT docker port $id 22)
         tmp=(${r//:/ })
         container_port=${tmp[1]}
-        # update sshconfig
-        echo "Host $host"                >> $SSHCONFIG
-        echo "     Port $container_port" >> $SSHCONFIG
-        echo "     User fenics"          >> $SSHCONFIG
-        echo ""                          >> $SSHCONFIG
+        # update ssh config
+        echo "Host $host"                >> $SSHDIR/config
+        echo "     Port $container_port" >> $SSHDIR/config
+        echo "     User fenics"          >> $SSHDIR/config
+        echo ""                          >> $SSHDIR/config
         # update hostfile
-        echo "$host slots=$ncpu" >> $HOSTFILEPATH
-        # finish up
+        echo "$host slots=$ncpu" >> $CTLDIR/hostlist
+        # say it is done
         echo "Done."
         echo ""
-    done < $HOSTLIST
+    done < "$1"
 
-    # prepare sshconfig
-    echo "Host *" >> $SSHCONFIG
-    echo "     StrictHostKeyChecking no" >> $SSHCONFIG
-    echo "     IdentityFile $CTLDIR/$KEYNAME" >> $SSHCONFIG
+    # finalize ssh config
+    echo "Host *"                             >> $SSHDIR/config
+    echo "     StrictHostKeyChecking no"      >> $SSHDIR/config
 }
 
 cleanup_cluster () {
-    # check if host list exists
-    if [ ! -s "$CONTAINER_ID_LOG" ]; then
-        echo >&2 "No container id file."
-        kill -INT $$
-    fi
-
+    # check if there is a cluster running
+    if [ ! -s "$CTLDIR/container_list" ]; then
+        echo "No active cluster"
+        exit 1
+    fi    
+    # remove containers one by one
     while read line; do
-        # read info from container id log
+        # get info from container list
         array=($line)
         host=${array[0]}
         port=${array[1]}
         id=${array[2]}
         echo "Clean up $host..."
-        # remove the public key and containers
-        ssh $host -p$port "
-           rm $REMOTE_KEY_PATH/$KEYNAME.pub
-           docker stop $id
-           docker rm $id
-        "
+        ssh $host -p$port "docker stop $id && docker rm $id"
         echo "Done."
         echo ""
-    done < $CONTAINER_ID_LOG
-    
-    rm $CONTAINER_ID_LOG
-    rm $SSHCONFIG
-    rm $HOSTFILEPATH
+    done < $CTLDIR/container_list
+    # remove control dir
+    rm -rf $CTLDIR
 }
 
-### --- Code snippets to allow multiple docker containers on a host --- ###
-## This should not be the start point. Save for later..
-# while read line; do
-#     # read info from hostlist.txt
-#     array=($line)
-#     n=${array[0]}
-#     host=${array[1]}
-#     port=${array[2]}
-#     if [ -z $port ]; then
-#         echo "Connecting to $host to spawn $n containers..."
-#         SSHPORT=""
-#         SCPPORT=""
-#     else
-#         echo "Connecting to $host:$port to spawn $n containers..."
-#         SSHPORT=" -p $port"
-#         SCPPORT=" -P $port"
-#     fi
-#     # write to container id log
-#     echo $line >> $CONTAINER_ID_LOG
-#     # spawn containers
-#     for (( i=1; i<=n; i++ ))
-#     do
-#         printf "   Spawn container #$i... "
-#         # send the public key
-#         scp $CTLDIR/id_rsa.pub $host:$REMOTE_KEY_PATH $SCPPORT
-#         # docker run
-#         id=$(ssh $host $SSHPORT \
-#                  docker run -d -p 22 \
-#                  -v $REMOTE_KEY_PATH:/home/fenics/.ssh/authorized_keys \
-#                  $IMAGENAME)
-#         echo $id >> $CONTAINER_ID_LOG
-#         # ask for the container ssh port
-#         r=$(ssh $host $SSHPORT \
-#                 docker port $id 22)
-#         tmp=(${r//:/ })
-#         rport=${arr[1]}
-        
-#         printf "[done].\n"
-#     done
+connect_to_master () {
+    # check if there is a cluster running
+    if [ ! -s "$CTLDIR/container_list" ]; then
+        echo "No active cluster"
+        exit 1
+    fi    
+    # get master ip
+    tmp=($(head $CTLDIR/container_list))
+    master=${tmp[0]}
+    # connect
+    ssh -F $CTLDIR/ssh/config -i $CTLDIR/ssh/id_rsa $master
+}
+    
