@@ -27,7 +27,7 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PETSc from source
-ENV PETSC_VERSION 3.6.0
+ENV PETSC_VERSION 3.6.1
 RUN cd /tmp && \
     wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-${PETSC_VERSION}.tar.gz && \
@@ -55,7 +55,7 @@ RUN cd /tmp && \
      rm -rf /tmp/*
 
 # Install SLEPc from source
-ENV SLEPC_VERSION 3.6.0
+ENV SLEPC_VERSION 3.6.1
 RUN cd /tmp && \
     export PETSC_DIR=/usr/local && \
     wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
@@ -75,7 +75,7 @@ RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python && \
     easy_install pip
 
 # Install sympy, petsc4py, slepc4py and swig from source
-ENV SWIG_VERSION 3.0.5
+ENV SWIG_VERSION 3.0.7
 ENV PETSC4PY_VERSION 3.6.0
 ENV SLEPC4PY_VERSION 3.6.0
 RUN pip install sympy && \
