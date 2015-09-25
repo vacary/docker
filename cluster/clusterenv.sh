@@ -10,7 +10,7 @@ create_cluster () {
     # check argument
     if [ -z "$1" ]; then
         echo "Usage: create_cluster [host list file]"
-        exit 1
+        return
     fi
 
     # create dirs
@@ -23,7 +23,7 @@ create_cluster () {
         ssh-keygen -t rsa -b 4096 -N "" -f "$SSHDIR/id_rsa"
         cp $SSHDIR/id_rsa.pub $SSHDIR/authorized_keys
     fi
-    
+
     # spawn all the docker instances
     while read line; do
         # get info from hostlist.txt
@@ -47,11 +47,11 @@ create_cluster () {
                  -v $PWD/$SSHDIR:/home/fenics/.ssh \
                  -v $PWD/$SHAREDIR:/home/fenics/share \
                  -v $PWD/$CTLDIR:/home/fenics/control \
-                 $IMAGENAME)
+                 $IMAGENAME < /dev/null)
         # save container id
         echo "$host $port $id" >> $CTLDIR/container_list
         # ask for the container ssh port
-        r=$(ssh $host $SSHPORT docker port $id 22)
+        r=$(ssh $host $SSHPORT docker port $id 22  < /dev/null)
         tmp=(${r//:/ })
         container_port=${tmp[1]}
         # update ssh config
@@ -75,7 +75,7 @@ cleanup_cluster () {
     # check if there is a cluster running
     if [ ! -s "$CTLDIR/container_list" ]; then
         echo "No active cluster"
-        exit 1
+        return
     fi    
     # remove containers one by one
     while read line; do
@@ -85,19 +85,19 @@ cleanup_cluster () {
         port=${array[1]}
         id=${array[2]}
         echo "Clean up $host..."
-        ssh $host -p$port "docker stop $id && docker rm $id"
+        ssh $host -p$port "docker stop $id && docker rm $id"  < /dev/null
         echo "Done."
         echo ""
     done < $CTLDIR/container_list
     # remove control dir
-    rm -rf $CTLDIR
+    /bin/rm -rf $CTLDIR
 }
 
 connect_to_master () {
     # check if there is a cluster running
     if [ ! -s "$CTLDIR/container_list" ]; then
         echo "No active cluster"
-        exit 1
+        return
     fi    
     # get master ip
     tmp=($(head $CTLDIR/container_list))
