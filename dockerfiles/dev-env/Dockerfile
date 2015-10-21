@@ -21,7 +21,7 @@ RUN apt-get -qq update && \
          libopenmpi-dev \
          python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python-numpy python-vtk6 python-six python-ply \
+         python-numpy python-vtk6 python-six python-ply python-pytest \
          python-h5py python-urllib3 xterm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
