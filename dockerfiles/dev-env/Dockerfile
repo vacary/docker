@@ -27,10 +27,10 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PETSc from source
-ENV PETSC_VERSION 3.6.1
+ENV PETSC_VERSION 3.6.2
 RUN cd /tmp && \
-    wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PETSC_VERSION}.tar.gz && \
-    tar -xf petsc-${PETSC_VERSION}.tar.gz && \
+    wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
+    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
     cd petsc-${PETSC_VERSION} && \
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
