@@ -1,7 +1,7 @@
 # Builds a Docker image with FEniCS development versions built from
 # git sources. The image is at:
 #
-#     https://registry.hub.docker.com/u/fenicsproject/
+#     https://hub.docker.com/u/fenicsproject/
 #
 # Authors:
 # Lizao Li <lixx1445@umn.edu>

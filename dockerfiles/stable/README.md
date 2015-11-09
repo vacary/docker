@@ -1,11 +1,10 @@
 # FEniCS stable version image
 
 This image provides the most recent stable release of FEniCS
-(<http://fenicsproject.org>). The FEniCS installation is built 
-against the dev-env image 
-(<https://registry.hub.docker.com/u/fenicsproject/dev-env/>)
-which contains up-to-date stable builds of PETSc, SLEPc, petsc4py
-and slepc4py.
+(<http://fenicsproject.org>). The FEniCS installation is built against
+the dev-env image (<https://hub.docker.com/r/fenicsproject/dev-env/>)
+which contains up-to-date stable builds of PETSc, SLEPc, petsc4py and
+slepc4py.
 
 To launch the container:
 

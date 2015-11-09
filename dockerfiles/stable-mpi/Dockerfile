@@ -1,7 +1,7 @@
-# Builds a Docker image with the stable FEniCS and SSH for MPI.
+# Builds a Docker image with the stable FEniCS and SSH for MPI. A
+# build of this Dockerfile is maintaned at:
 #
-# A build of this Dockerfile is maintaned at:
-# https://registry.hub.docker.com/u/fenicsproject/
+#    https://hub.docker.com/u/fenicsproject/
 #
 # Authors:
 # Lizao Li <lixx1445@umn.edu>
@@ -19,7 +19,5 @@ RUN sed -i /home/fenics/.bashrc -e '6s/case/#case/' && \
     sed -i /home/fenics/.bashrc -e '7s/^./#/'       && \
     sed -i /home/fenics/.bashrc -e '8s/^./#/'       && \
     sed -i /home/fenics/.bashrc -e '9s/esac/#esac/'
-    
+
 ENTRYPOINT ["/sbin/my_init"]
-
-

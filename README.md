@@ -1,5 +1,9 @@
 # Docker for FEniCS
 
+This repository contains the scripts for building various Docker
+images for FEniCS (<http://fenicsproject.org>).
+
+
 ## Introduction
 
 We currently offer four images:
@@ -23,14 +27,15 @@ We currently offer four images:
 
 * `dev-env`: This image provides a development environment in which a
    user can compile FEniCS. It provides the necessary dependencies for
-   FEniCS, but does not provide the FEniCS libraries. 
+   FEniCS, but does not provide the FEniCS libraries.
 
         docker run -t -i fenicsproject/dev-env:latest
 
-  A helper script (fenics.conf) is provided in the container to compile 
+  A helper script (fenics.conf) is provided in the container to compile
   FEniCS. Just run:
-  
+
       update_fenics
+
 
 ## Authors
 
