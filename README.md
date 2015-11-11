@@ -37,6 +37,23 @@ We currently offer four images:
       update_fenics
 
 
+## Building images
+
+Images are hosted on Docker Hub, and are automatically built on Docker
+Hub from the Dockerfiles in this repository. The FEniCS Docker Hub
+page is at <https://hub.docker.com/r/fenicsproject/>.
+
+
+### Developer notes
+
+The images on Dockerhub are built automatically upon pushes to this
+repository. The images tagged `latest` (the stable images) are built
+from the Dockerfiles in the branch `build`. The images tagged
+`experimental` are built from Dockerfiles in the branch `master`.
+When a Dockerfile is ready to move from `experimental` to `latest`,
+merge `master` into `build`.
+
+
 ## Authors
 
 * Jack Hale (<jack.hale@uni.lu>)
