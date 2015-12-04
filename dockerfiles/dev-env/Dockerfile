@@ -106,6 +106,7 @@ ENV HOME /home/fenics
 COPY fenics.conf $HOME/fenics.conf
 # and the README
 COPY WELCOME $HOME/WELCOME
+
 RUN chown fenics:fenics $HOME/WELCOME && \
     chown fenics:fenics $HOME/fenics.conf && \
     chmod u+rw $HOME/WELCOME && \
@@ -113,13 +114,11 @@ RUN chown fenics:fenics $HOME/WELCOME && \
 
 # OpenBLAS threads should be 1 to ensure performance
 RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc && \
-    echo "export OPENBLAS_VERBOSE=0" >> $HOME/.bashrc
+    echo "export OPENBLAS_VERBOSE=0" >> $HOME/.bashrc && \
+    echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
+    echo "cat $HOME/WELCOME" >> $HOME/.bashrc 
 
 # This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
-RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
-    cp $HOME/.bashrc $HOME/.bashrc.tmp && \
-    echo "cd $HOME" >> $HOME/.bashrc.tmp && \
-    echo "cat $HOME/WELCOME" >> $HOME/.bashrc.tmp
-
-ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
-CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
+WORKDIR /home/fenics
+ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics"]
+CMD ["/bin/bash","-l"]
