@@ -118,7 +118,6 @@ RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc && \
     echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
     echo "cat $HOME/WELCOME" >> $HOME/.bashrc 
 
-# This makes sure we launch with ENTRYPOINT /bin/bash into the home directory
 WORKDIR /home/fenics
 ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics"]
 CMD ["/bin/bash","-l"]

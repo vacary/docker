@@ -18,5 +18,3 @@ RUN /bin/bash -c "source $HOME/fenics.conf && \
 
 COPY WELCOME $HOME/WELCOME
 USER root
-ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
-CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]
