@@ -14,20 +14,20 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 # Install build environment
 RUN apt-get -qq update && \
     apt-get -y install \
-    	 xauth cmake flex g++ gfortran git ipython openmpi-bin pkg-config \
+    	 cmake flex g++ gfortran git ipython openmpi-bin pkg-config \
          wget bison sudo \
          libopenblas-dev libboost-all-dev libcln-dev libcppunit-dev \
          libeigen3-dev liblapack-dev libmpfr-dev \
          libopenmpi-dev \
-         python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
+         python-dev libhwloc-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python-numpy python-vtk6 python-six python-ply python-pytest \
-         python-h5py python-urllib3 xterm && \
+         python-numpy python-six python-ply python-pytest \
+         python-h5py python-urllib3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PETSc from source
-ENV PETSC_VERSION 3.6.2
+ENV PETSC_VERSION 3.6.3
 RUN cd /tmp && \
     wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
@@ -55,7 +55,7 @@ RUN cd /tmp && \
      rm -rf /tmp/*
 
 # Install SLEPc from source
-ENV SLEPC_VERSION 3.6.1
+ENV SLEPC_VERSION 3.6.2
 RUN cd /tmp && \
     export PETSC_DIR=/usr/local && \
     wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
