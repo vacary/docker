@@ -1,0 +1,5 @@
+# FEniCS development version image for Python 3
+
+This image provides the development version of FEniCS
+(<http://fenicsproject.org>) for Python 3. It is intended for users
+who want access to the most recent features.
