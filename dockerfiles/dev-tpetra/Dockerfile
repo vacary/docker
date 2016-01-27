@@ -38,6 +38,6 @@ RUN cd /tmp && \
           -D Xpetra_ENABLE_EXPLICIT_INSTANTIATION:BOOL=ON \
           -D Teuchos_ENABLE_LONG_LONG_INT:BOOL=ON \
           .. && \
-    make -j 4 && \
+    make -j 1 && \
     make install && \
     rm -rf /tmp/*
