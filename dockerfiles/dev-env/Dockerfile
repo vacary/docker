@@ -22,12 +22,12 @@ RUN apt-get -qq update && \
          python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
          python-numpy python-vtk6 python-six python-ply python-pytest \
-         python-h5py python-urllib3 xterm && \
+         python-h5py python-urllib3 python-setuptools python pip xterm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PETSc from source
-ENV PETSC_VERSION 3.6.2
+ENV PETSC_VERSION 3.6.3
 RUN cd /tmp && \
     wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
@@ -55,7 +55,7 @@ RUN cd /tmp && \
      rm -rf /tmp/*
 
 # Install SLEPc from source
-ENV SLEPC_VERSION 3.6.1
+ENV SLEPC_VERSION 3.6.2
 RUN cd /tmp && \
     export PETSC_DIR=/usr/local && \
     wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
@@ -68,14 +68,12 @@ RUN cd /tmp && \
 ENV SLEPC_DIR /usr/local
 ENV PETSC_DIR /usr/local
 
-# Install Python setuptools and pip (the Ubuntu 14.04 packaged
-#  versions have bugs that cause failures when installing FEniCS
-#  Python packages)
-RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python && \
-    easy_install pip
+# Update pip and setuptools
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
 
 # Install sympy, petsc4py, slepc4py and swig from source
-ENV SWIG_VERSION 3.0.7
+ENV SWIG_VERSION 3.0.8
 ENV PETSC4PY_VERSION 3.6.0
 ENV SLEPC4PY_VERSION 3.6.0
 RUN pip install sympy && \
