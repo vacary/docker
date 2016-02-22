@@ -8,11 +8,12 @@
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.18
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Install build environment
 RUN apt-get -qq update && \
+    apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
     	 xauth cmake flex g++ gfortran git ipython openmpi-bin pkg-config \
          wget bison sudo \
@@ -22,7 +23,7 @@ RUN apt-get -qq update && \
          python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
          python-numpy python-vtk6 python-six python-ply python-pytest \
-         python-h5py python-urllib3 python-setuptools python pip xterm && \
+         python-h5py python-urllib3 python-setuptools python-pip xterm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
