@@ -37,6 +37,18 @@ We currently offer four images:
       update_fenics
 
 
+## Issues
+
+* Docker images default to use the Google Domain Name Servers
+  (DNS). Access to these may be blocked on some networks. In this
+  case, you can set the address of the DNS using the Docker option
+  `--dns`, e.g.:
+
+        docker run --dns=4.4.4.4 -t -i fenicsproject/dev-env:latest
+
+  and replace `4.4.4.4` with the address of your local DNS.
+
+
 ## Building images
 
 Images are hosted on Docker Hub, and are automatically built on Docker
