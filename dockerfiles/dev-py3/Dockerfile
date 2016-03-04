@@ -12,12 +12,8 @@ FROM fenicsproject/dev-env-py3:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
-ENV HOME /home/fenics
 
-RUN /bin/bash -c "source $HOME/fenics.conf && \
-                  update_fenics"
+RUN source $HOME/fenics.conf && \
+    update_fenics
 
 COPY WELCOME $HOME/WELCOME
-USER root
-ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/sh","-c"]
-CMD ["/bin/bash --rcfile /home/fenics/.bashrc.tmp"]

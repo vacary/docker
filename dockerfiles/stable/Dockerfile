@@ -10,13 +10,11 @@ FROM fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
-ENV HOME /home/fenics
 
 ENV FENICS_VERSION 1.6.0
 COPY fenics.conf /home/fenics/fenics.conf
-RUN /bin/bash -c "source $HOME/fenics.conf && \
-                  update_fenics && \
-                  rm -rf $HOME/build/src"
+RUN source $HOME/fenics.conf && \
+    update_fenics && \
+    rm -rf $HOME/build/src
 
 COPY WELCOME $HOME/WELCOME
-USER root

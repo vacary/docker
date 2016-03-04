@@ -8,8 +8,14 @@
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.9.18
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+FROM fenicsproject/dev-env-base:latest
+MAINTAINER fenics-project <fenics@fenicsproject.org> 
+
+USER root
+RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
+RUN echo "7" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
+
+WORKDIR /tmp
 
 # Install build environment
 RUN apt-get -qq update && \
@@ -28,9 +34,7 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install PETSc from source
-ENV PETSC_VERSION 3.6.3
-RUN cd /tmp && \
-    wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
+RUN wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
     cd petsc-${PETSC_VERSION} && \
     ./configure --COPTFLAGS="-O2" \
@@ -56,9 +60,7 @@ RUN cd /tmp && \
      rm -rf /tmp/*
 
 # Install SLEPc from source
-ENV SLEPC_VERSION 3.6.2
-RUN cd /tmp && \
-    export PETSC_DIR=/usr/local && \
+RUN export PETSC_DIR=/usr/local && \
     wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
     tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
     cd slepc-${SLEPC_VERSION} && \
@@ -69,14 +71,10 @@ RUN cd /tmp && \
 ENV SLEPC_DIR /usr/local
 ENV PETSC_DIR /usr/local
 
-# Update pip and setuptools
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
+RUN pip install --upgrade pip && \
+    pip install --upgrade setuptools
 
 # Install sympy, petsc4py, slepc4py and swig from source
-ENV SWIG_VERSION 3.0.8
-ENV PETSC4PY_VERSION 3.6.0
-ENV SLEPC4PY_VERSION 3.6.0
 RUN pip install sympy && \
     easy_install \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
@@ -91,32 +89,6 @@ RUN pip install sympy && \
     make install && \
     rm -rf /tmp/*
 
-# Set up user so that we do not run as root
-RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
-    echo "fenics:docker" | chpasswd && \
-    echo "fenics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# See https://github.com/phusion/baseimage-docker/issues/186
-RUN touch /etc/service/syslog-forwarder/down
-
-ENV HOME /home/fenics
-
-# Our helper script
-COPY fenics.conf $HOME/fenics.conf
-# and the README
+USER fenics
+WORKDIR $HOME 
 COPY WELCOME $HOME/WELCOME
-
-RUN chown fenics:fenics $HOME/WELCOME && \
-    chown fenics:fenics $HOME/fenics.conf && \
-    chmod u+rw $HOME/WELCOME && \
-    chmod u+rw $HOME/fenics.conf
-
-# OpenBLAS threads should be 1 to ensure performance
-RUN echo "export OPENBLAS_NUM_THREADS=1" >> $HOME/.bashrc && \
-    echo "export OPENBLAS_VERBOSE=0" >> $HOME/.bashrc && \
-    echo "source $HOME/fenics.conf" >> $HOME/.bashrc && \
-    echo "cat $HOME/WELCOME" >> $HOME/.bashrc 
-
-WORKDIR /home/fenics
-ENTRYPOINT ["/sbin/my_init","--quiet","--","sudo","-u","fenics"]
-CMD ["/bin/bash","-l"]

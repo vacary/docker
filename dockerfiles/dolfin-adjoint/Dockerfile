@@ -10,9 +10,7 @@ FROM fenicsproject/stable:latest
 MAINTAINER jhale <mail@jackhale.co.uk>
 
 USER fenics
-ENV HOME /home/fenics
 
-ENV FENICS_VERSION 1.6.0
 ENV DOLFIN_ADJOINT_VERSION 1.6
 COPY dolfin-adjoint.conf /home/fenics/dolfin-adjoint.conf
 RUN source $HOME/dolfin-adjoint.conf && \
@@ -22,4 +20,3 @@ RUN source $HOME/dolfin-adjoint.conf && \
 
 COPY WELCOME $HOME/WELCOME
 RUN echo "source $HOME/dolfin-adjoint.conf" >> $HOME/.bashrc
-USER root

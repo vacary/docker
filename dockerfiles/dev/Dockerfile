@@ -11,10 +11,8 @@ FROM fenicsproject/dev-env-dbg:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
-ENV HOME /home/fenics
 
-RUN /bin/bash -c "source $HOME/fenics.conf && \
-                  update_fenics"
+RUN source $HOME/fenics.conf && \
+    update_fenics
 
 COPY WELCOME $HOME/WELCOME
-USER root
