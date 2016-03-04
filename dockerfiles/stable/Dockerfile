@@ -12,7 +12,6 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 USER fenics
 
 ENV FENICS_VERSION 1.6.0
-COPY fenics.conf /home/fenics/fenics.conf
 RUN source $HOME/fenics.conf && \
     update_fenics && \
     rm -rf $HOME/build/src
