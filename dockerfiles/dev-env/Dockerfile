@@ -12,8 +12,8 @@ FROM fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org> 
 
 USER root
-RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
-RUN echo "7" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
+RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION && \
+    echo "7" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
 WORKDIR /tmp
 
@@ -68,8 +68,8 @@ RUN export PETSC_DIR=/usr/local && \
     make && \
     make install && \
     rm -rf /tmp/*
-ENV SLEPC_DIR /usr/local
-ENV PETSC_DIR /usr/local
+ENV SLEPC_DIR=/usr/local \
+    PETSC_DIR=/usr/local
 
 RUN pip install --upgrade pip && \
     pip install --upgrade setuptools

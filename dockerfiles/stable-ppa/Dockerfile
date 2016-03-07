@@ -10,6 +10,7 @@
 FROM fenicsproject/base:latest 
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
+USER root
 # Install add-apt-repository
 RUN apt-get -qq update && \
     apt-get -qqy install python-software-properties && \
@@ -19,4 +20,4 @@ RUN apt-get -qq update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD WELCOME $HOME/WELCOME
+COPY WELCOME $HOME/WELCOME

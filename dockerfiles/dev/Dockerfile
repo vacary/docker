@@ -7,12 +7,16 @@
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/dev-env-dbg:latest
+FROM fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
 
-RUN source $HOME/fenics.conf && \
-    update_fenics
+ENV FENICS_PYTHON_MAJOR_VERSION 2 \
+    FENICS_PYTHON_MINOR_VERSION 7 \
+    FENICS_BUILD_TYPE Release 
+
+RUN bash -c "source $HOME/fenics.conf && \
+             update_fenics"
 
 COPY WELCOME $HOME/WELCOME

@@ -69,8 +69,8 @@ RUN export PETSC_DIR=/usr/local && \
     make && \
     make install && \
     rm -rf /tmp/*
-ENV SLEPC_DIR /usr/local
-ENV PETSC_DIR /usr/local
+ENV SLEPC_DIR=/usr/local \
+    PETSC_DIR=/usr/local
 
 RUN pip3 install --upgrade pip && \
     pip3 install --upgrade setuptools
