@@ -35,5 +35,5 @@ COPY WELCOME $HOME/WELCOME
 RUN echo "cat $HOME/WELCOME" >> $HOME/.bashrc
 
 WORKDIR /home/fenics
-ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics"]
+ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]
 CMD ["/bin/bash","-l"]
