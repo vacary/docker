@@ -25,6 +25,7 @@ RUN echo 1 > /etc/container_environment/OPENBLAS_NUM_THREADS && \
 
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
+RUN echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc 
 
 USER fenics
 ENV HOME /home/fenics
@@ -32,8 +33,6 @@ ENV HOME /home/fenics
 # Print something nice on entry. 
 COPY WELCOME $HOME/WELCOME
 
-RUN echo "cat $HOME/WELCOME" >> $HOME/.bashrc
-
 WORKDIR /home/fenics
 ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]
-CMD ["/bin/bash","-l"]
+CMD ["/bin/bash -i"]

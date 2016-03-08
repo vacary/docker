@@ -10,11 +10,14 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 # Our helper script
 USER root
 COPY fenics.conf $HOME/fenics.conf
+COPY fenics.env.conf $HOME/fenics.env.conf
 RUN chown fenics:fenics $HOME/fenics.conf && \
-    chmod u+rw $HOME/fenics.conf
+    chmod u+rw $HOME/fenics.conf && \
+    chmod u+rw $HOME/fenics.env.conf
 
 USER fenics
-RUN echo "source $HOME/fenics.conf" >> $HOME/.bashrc
+RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile && \
+    echo "source /home/fenics/fenics.conf" >> /home/fenics/.bashrc
 
 # Version numbers
 ENV PETSC_VERSION=3.6.3 \

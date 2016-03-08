@@ -26,10 +26,10 @@ RUN apt-get -qq update && \
          libopenblas-dev libboost-all-dev libcln-dev libcppunit-dev \
          libeigen3-dev liblapack-dev libmpfr-dev \
          libopenmpi-dev \
-         python-dev libhwloc-dev libvtk6-dev libpcre3-dev \
+         python-dev libhwloc-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python-numpy python-vtk6 python-six python-ply python-pytest \
-         python-h5py python-urllib3 python-setuptools python-pip xterm && \
+         python-numpy python-six python-ply python-pytest \
+         python-h5py python-urllib3 python-setuptools python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
