@@ -35,4 +35,4 @@ COPY WELCOME $HOME/WELCOME
 
 WORKDIR /home/fenics
 ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]
-CMD ["/bin/bash -i"]
+CMD ["/bin/bash","-i"]

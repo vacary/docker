@@ -13,10 +13,10 @@ USER fenics
 
 ENV DOLFIN_ADJOINT_VERSION 1.6
 COPY dolfin-adjoint.conf /home/fenics/dolfin-adjoint.conf
-RUN /bin/bash -c "source $HOME/dolfin-adjoint.conf && \
-                  update_libadjoint && \
-                  update_dolfin-adjoint && \
-                  rm -rf $HOME/build/src"
+RUN /bin/bash -l -c "source $HOME/dolfin-adjoint.conf && \
+                     update_libadjoint && \
+                     update_dolfin-adjoint && \
+                     rm -rf $HOME/build/src"
 
 COPY WELCOME $HOME/WELCOME
 RUN echo "source $HOME/dolfin-adjoint.conf" >> $HOME/.bashrc

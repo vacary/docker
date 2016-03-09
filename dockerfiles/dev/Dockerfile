@@ -12,11 +12,11 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
 
-ENV FENICS_PYTHON_MAJOR_VERSION 2 \
-    FENICS_PYTHON_MINOR_VERSION 7 \
-    FENICS_BUILD_TYPE Release 
+ENV FENICS_PYTHON_MAJOR_VERSION=2 \
+    FENICS_PYTHON_MINOR_VERSION=7 \
+    FENICS_BUILD_TYPE=Release 
 
-RUN bash -c "source $HOME/fenics.conf && \
-             update_fenics"
+RUN bash -l -c "source $HOME/fenics.conf && \
+                update_fenics"
 
 COPY WELCOME $HOME/WELCOME

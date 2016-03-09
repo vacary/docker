@@ -16,8 +16,8 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
     FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=1.6.0
 
-RUN /bin/bash -c "source $HOME/fenics.conf && \
-                  update_fenics && \
-                  rm -rf $HOME/build/src"
+RUN /bin/bash -l -c "source $HOME/fenics.conf && \
+                     update_fenics && \
+                     rm -rf $HOME/build/src"
 
 COPY WELCOME $HOME/WELCOME
