@@ -1,9 +1,9 @@
 # FEniCS dev-env + trilinos image
 
 This image provides a development environment for building the FEniCS
-libraries, including trilinos.
-It does not provide an installation of FEniCS. It is intended for users
-who want to build their own version of FEniCS with Trilinos for testing.
+libraries, including Trilinos.  It does not provide an installation of FEniCS.
+It is intended for users who want to build their own version of FEniCS with
+Trilinos for testing.
 
 To launch the container:
 

@@ -1,9 +1,16 @@
-
+# Builds Trilinos on top of the fenicsproject/dev-env image.
+#
+# Warning: Current Dockerhub build bots have insufficient memory to build this
+# image successfully!
+#
+# Author:
+# Chris Richardson
 FROM fenicsproject/dev-env:latest
+MAINTAINER fenics-project <fenics@fenicsproject.org>
 
-ENV TRILINOS_VERSION 12.4.2
-RUN cd /tmp && \
-    wget -nc http://trilinos.csbsju.edu/download/files/trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
+USER root
+WORKDIR /tmp
+RUN wget -nc http://trilinos.csbsju.edu/download/files/trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
     tar -xf trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
     cd trilinos-${TRILINOS_VERSION}-Source && \
     mkdir build && cd build && \
@@ -41,3 +48,7 @@ RUN cd /tmp && \
     make -j 1 && \
     make install && \
     rm -rf /tmp/*
+
+USER fenics
+WORKDIR $HOME
+COPY WELCOME $HOME/WELCOME
