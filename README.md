@@ -42,15 +42,15 @@ images:
    FEniCS, but does not provide the FEniCS libraries. Debugging symbols
    are disabled in PETSc and SLEPc.
 
-        docker run -t -i fenicsproject/dev-env:latest
+      docker run -t -i fenicsproject/dev-env:latest
 
    A helper script (fenics.conf) is provided in the container to the compile
    FEniCS. Just run:
 
-        update_fenics
+      update_fenics
 
 * `dev-env-dbg`: Identical to `dev-env`, except that PETSc and SLEPc are
-  compiled with debugging symbols. 
+   compiled with debugging symbols. 
 
       docker run -t -i fenicsproject/dev-env-dbg:latest
 
