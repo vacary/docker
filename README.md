@@ -52,9 +52,9 @@ images:
 
 ### Images that you can build yourself
 
-The following images are considered to be of minority interest or deprecated and
-can be built using the command `docker build .` in the directory of the Dockerfile
-on your own computer.
+The following images are considered to be of minority interest or deprecated
+and can be built using the command `docker build .` in the directory of the
+Dockerfile on your own computer.
 
 * `dev-env-tpetra`: Identical to `dev-env`, except that Trilinos is also
   compiled.
@@ -98,6 +98,14 @@ from the Dockerfiles in the branch `build`. The images tagged
 When a Dockerfile is ready to move from `experimental` to `latest`,
 merge `master` into `build`.
 
+The image `base` defines the end-user experience for all containers, including
+creating the `fenics` user, setting default `ENTRYPOINT` and `CMD` variables,
+and setting the version of `phusion/baseimage` to use. All other images should
+ultimately inherit `FROM` this image.
+
+The image `dev-env-base` includes the `fenics.conf` helper script, the
+`fenics.env.conf` and sets the version numbers of the packages to compile in
+the child images. All `dev-env-{variant}` should inhereit `FROM` this image.
 
 ## Authors
 
