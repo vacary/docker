@@ -20,7 +20,13 @@ the following command:
 
         docker run -v $(pwd):/home/fenics/shared fenicsproject/<image-name>:latest
 
-We currently offer nine images. Most end-users are probably looking
+## The images
+
+We currently offer nine images.
+
+### Application images
+
+Most end-users are probably looking
 for the `stable`, `stable-ppa` or `dolfin-adjoint` images:
 
 * `stable`: This image provides the most recent release of FEniCS and
@@ -32,6 +38,8 @@ for the `stable`, `stable-ppa` or `dolfin-adjoint` images:
   FEniCS binaries from the official PPA.
 
 * `dolfin-adjoint`: Identical to `stable`, but also includes dolfin-adjoint. 
+
+### Development and advanced images
 
 Developers and more advanced users may be interested in the following
 images:
