@@ -22,20 +22,15 @@ the following command:
 
 ## The images
 
-We currently offer nine images.
+We currently offer five images.
 
 ### Application images
 
-Most end-users are probably looking
-for the `stable`, `stable-ppa` or `dolfin-adjoint` images:
+Most end-users are probably looking for the `stable` or `dolfin-adjoint` images:
 
 * `stable`: This image provides the most recent release of FEniCS and
   is recommended for users who need the latest versions of PETSc,
   SLEPc, petsc4py and slepc4py.
-
-* `stable-ppa`: This image provides the most recent release of FEniCS
-  and is recommended for most users. It contains the current stable
-  FEniCS binaries from the official PPA.
 
 * `dolfin-adjoint`: Identical to `stable`, but also includes dolfin-adjoint. 
 
@@ -54,6 +49,12 @@ images:
 
 * `dev-env-dbg`: Identical to `dev-env`, except that PETSc and SLEPc are
    compiled with debugging symbols. 
+
+### Images that you can build yourself
+
+The following images are considered to be of minority interest and
+can be built using the command `docker build .` in the directory of the Dockerfile
+on your own computer.
 
 * `dev-env-tpetra`: Identical to `dev-env`, except that Trilinos is also
   compiled.
