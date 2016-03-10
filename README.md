@@ -52,7 +52,7 @@ images:
 
 ### Images that you can build yourself
 
-The following images are considered to be of minority interest and
+The following images are considered to be of minority interest or deprecated and
 can be built using the command `docker build .` in the directory of the Dockerfile
 on your own computer.
 
@@ -63,6 +63,8 @@ on your own computer.
   installed.
 
 * `dev-env-py3`: Identical to `dev-env`, except with Python 3.
+
+* `stable-ppa`: *Deprecated*, use image `stable` instead.
 
 ## Issues
 
