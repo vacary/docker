@@ -40,14 +40,9 @@ images:
   for users looking for the latest features.
 
 * `dev-env`: This image provides a development environment in which a
-   user can compile FEniCS. It provides the necessary dependencies for
+   user can compile FEniCS easily. It provides the necessary dependencies for
    FEniCS, but does not provide the FEniCS libraries. Debugging symbols
    are disabled in PETSc and SLEPc.
-
-   A helper script (fenics.conf) is provided in the container to the compile
-   FEniCS. Just run:
-
-        update_fenics
 
 * `dev-env-dbg`: Identical to `dev-env`, except that PETSc and SLEPc are
    compiled with debugging symbols. 
