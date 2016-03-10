@@ -18,7 +18,7 @@ following command:
 If you want to share your current working directory into the container use
 the following command:
 
-        docker run -v $(pwd):/home/fenics/shared fenicsproject/<image-name>:latest
+        docker run -ti -v $(pwd):/home/fenics/shared fenicsproject/<image-name>:latest
 
 ## The images
 
