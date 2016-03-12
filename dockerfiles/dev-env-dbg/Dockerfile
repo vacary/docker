@@ -8,7 +8,7 @@
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM fenicsproject/dev-env-base:latest
+FROM quay.io/fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root

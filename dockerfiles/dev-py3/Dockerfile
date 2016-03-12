@@ -8,7 +8,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Johannes Ring <johannr@simula.no>
 
-FROM fenicsproject/dev-env-py3:latest
+FROM quay.io/fenicsproject/dev-env-py3:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics

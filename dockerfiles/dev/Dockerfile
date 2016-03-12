@@ -7,14 +7,14 @@
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/dev-env:latest
+FROM quay.io/fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
 
 ENV FENICS_PYTHON_MAJOR_VERSION=2 \
     FENICS_PYTHON_MINOR_VERSION=7 \
-    FENICS_BUILD_TYPE=Release 
+    FENICS_BUILD_TYPE=Release
 
 RUN bash -l -c "source $HOME/fenics.conf && \
                 update_fenics"

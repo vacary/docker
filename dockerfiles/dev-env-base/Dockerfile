@@ -4,7 +4,7 @@
 # Author:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/base:latest
+FROM quay.io/fenicsproject/base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Our helper script

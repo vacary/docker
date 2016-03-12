@@ -5,7 +5,7 @@
 #
 # Author:
 # Chris Richardson
-FROM fenicsproject/dev-env:latest
+FROM quay.io/fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root

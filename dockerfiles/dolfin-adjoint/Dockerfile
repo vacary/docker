@@ -6,7 +6,7 @@
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/stable:latest
+FROM quay.io/fenicsproject/stable:latest
 MAINTAINER jhale <mail@jackhale.co.uk>
 
 USER fenics
