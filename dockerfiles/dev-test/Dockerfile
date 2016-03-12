@@ -7,7 +7,7 @@
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/dev-env-test:latest
+FROM quay.io/fenicsproject/dev-env-test:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
