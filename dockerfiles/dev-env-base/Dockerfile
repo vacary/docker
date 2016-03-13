@@ -1,6 +1,10 @@
 # Shim image that adds in the global fenics.conf used by all and allows easy
 # bumping of package versions using one set of environment variables.
 #
+# While not intended for use by users, an image is hosted at:
+#
+#    https://quay.io/repository/fenicsproject/dev-env-base
+#
 # Author:
 # Jack S. Hale <jack.hale@uni.lu>
 

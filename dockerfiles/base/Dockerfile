@@ -1,13 +1,13 @@
-# Builds a base Docker image that all other fenicsproject images are built off
-# of (FROM). In this image we control the end user experience, namely; creating
-# the user fenics, setting up the users environment and the default entry point
-# and cmds.
+# Builds a base Docker image that all other fenicsproject images are
+# built off of (FROM). In this image we control the end user
+# experience, namely; creating the user fenics, setting up the users
+# environment and the default entry point and cmds.
 #
 # Although this image is not used directly by end-users, it can be
 # found at:
 #
-#   https://registry.hub.docker.com/u/fenicsproject/
-# 
+#   https://quay.io/repository/fenicsproject/base
+#
 # Author:
 # Jack S. Hale <jack.hale@uni.lu>
 
@@ -25,12 +25,12 @@ RUN echo 1 > /etc/container_environment/OPENBLAS_NUM_THREADS && \
 
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down
-RUN echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc 
+RUN echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc
 
 USER fenics
 ENV HOME /home/fenics
 
-# Print something nice on entry. 
+# Print something nice on entry.
 COPY WELCOME $HOME/WELCOME
 
 WORKDIR /home/fenics

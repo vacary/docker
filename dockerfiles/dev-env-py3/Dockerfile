@@ -1,7 +1,7 @@
 # Builds a Docker image with the necessary libraries for compiling
 # FEniCS for Python 3. The image is at:
 #
-#     https://registry.hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/dev-env-py3
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>

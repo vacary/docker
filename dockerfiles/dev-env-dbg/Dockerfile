@@ -1,7 +1,7 @@
 # Builds a Docker image with the necessary libraries for compiling
 # FEniCS. PETSc and SLEPc are compiled in debug mode. The image is at:
 #
-#     https://registry.hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/dev-env-dbg
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
