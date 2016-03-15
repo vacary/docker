@@ -30,7 +30,9 @@ Most end-users are probably looking for the `stable` or `dolfin-adjoint` images:
 
 * `stable`: This image provides the most recent release of FEniCS and
   is recommended for users who need the latest versions of PETSc,
-  SLEPc, petsc4py and slepc4py.
+  SLEPc, petsc4py and slepc4py. [![Docker Repository on
+  Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on
+  Quay")](https://quay.io/repository/fenicsproject/dev)
 
 * `dolfin-adjoint`: Identical to `stable`, but also includes dolfin-adjoint. 
 
