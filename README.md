@@ -22,7 +22,7 @@ the following command:
 
 ## The images
 
-We currently offer eight images.
+We currently offer seven images.
 
 ### Application images
 
@@ -53,9 +53,6 @@ images:
 * `dev-env-trilinos`: Identical to `dev-env`, except that Trilinos is also
   compiled.
 
-* `dev-py3`: Identical to `dev`, except with a Python 3 version of DOLFIN
-  installed.
-
 * `dev-env-py3`: Identical to `dev-env`, except with Python 3.
 
 ### Images that you can build yourself
@@ -65,6 +62,10 @@ command `docker build .` in the directory of the Dockerfile
 on your own computer.
 
 * `stable-ppa`: *Removed and deprecated*, use image `stable` instead.
+
+* `dev-py3`: Identical to `dev`, except with a Python 3 version of DOLFIN
+  installed. Because FEniCS is not yet fully compatible with Python 3
+  we are not building the Python 3 version at the moment on <https://quay.io>.
 
 ## Issues
 
