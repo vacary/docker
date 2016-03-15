@@ -1,7 +1,8 @@
 # Builds a Docker image with FEniCS development versions built from
-# git sources for Python 3. The image is at:
+# git sources for Python 3.
 #
-#    https://quay.io/repository/fenicsproject/dev-py3
+# Because FEniCS is not yet fully compatible with Python 3,
+# we do not build this image automatically on quay.io.
 #
 # Authors:
 # Lizao Li <lixx1445@umn.edu>

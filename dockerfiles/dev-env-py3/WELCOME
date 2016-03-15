@@ -3,7 +3,7 @@
 This image provides a development environment for building the FEniCS libraries
 for Python 3. It does not provide an installation of FEniCS. It is intended for
 users who want to build their own version of FEniCS. It also serves as a base
-image for <https://hub.docker.com/r/fenicsproject/dev-py3>, which does provide
+image for <https://quay.io/repository/fenicsproject/dev-py3>, which does provide
 the development version of FEniCS for Python 3.
 
 We do provide a helper script in this container to compile FEniCS
