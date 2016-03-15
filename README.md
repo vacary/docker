@@ -20,6 +20,11 @@ the following command:
 
         docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
 
+## Documentation
+
+More extensive documentation, including suggested workflows is currently under
+construction at (<https://fenics-containers.readthedocs.org/>).
+
 ## The images
 
 We currently offer seven images.
