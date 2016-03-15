@@ -21,8 +21,6 @@ Contents
 .. toctree::
    :maxdepth: 2 
 
-   index <index>
-
 Getting started
 ===============
 
