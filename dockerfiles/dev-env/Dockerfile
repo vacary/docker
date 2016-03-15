@@ -1,15 +1,15 @@
 # Builds a Docker image with the necessary libraries for compiling
 # FEniCS.  The image is at:
 #
-#     https://registry.hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/dev-env
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM fenicsproject/dev-env-base:latest
-MAINTAINER fenics-project <fenics@fenicsproject.org> 
+FROM quay.io/fenicsproject/dev-env-base:latest
+MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
 RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION && \
@@ -90,5 +90,5 @@ RUN pip install sympy && \
     rm -rf /tmp/*
 
 USER fenics
-WORKDIR $HOME 
+WORKDIR $HOME
 COPY WELCOME $HOME/WELCOME

@@ -1,11 +1,11 @@
-# Builds Trilinos on top of the fenicsproject/dev-env image.
+# Builds Trilinos on top of the fenicsproject/dev-env image. Imahe
+# build is available at:
 #
-# Warning: Current Dockerhub build bots have insufficient memory to build this
-# image successfully!
+#    https://quay.io/repository/fenicsproject/dev-env-trilinos
 #
 # Author:
 # Chris Richardson
-FROM fenicsproject/dev-env:latest
+FROM quay.io/fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root

@@ -1,14 +1,14 @@
 # Builds a Docker image with the necessary libraries for compiling
 # FEniCS. PETSc and SLEPc are compiled in debug mode. The image is at:
 #
-#     https://registry.hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/dev-env-dbg
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM fenicsproject/dev-env-base:latest
+FROM quay.io/fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
@@ -28,7 +28,7 @@ RUN apt-get -qq update && \
          python-dev python-dbg libhwloc-dev libvtk6-dev libpcre3-dev \
          libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
          python-numpy python-six python-ply python-pytest \
-         python-h5py python-vtk6 python-urllib3 && \
+         python-h5py python-vtk6 python-urllib3 python-setuptools python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

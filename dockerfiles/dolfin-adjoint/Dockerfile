@@ -1,12 +1,12 @@
 # Builds a Docker image with dolfin-adjoint stable version built from
 # git sources. The image is at:
 #
-#     https://hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/dolfin-adjoint
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/stable:latest
+FROM quay.io/fenicsproject/stable:latest
 MAINTAINER jhale <mail@jackhale.co.uk>
 
 USER fenics

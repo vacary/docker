@@ -1,10 +1,14 @@
 # Shim image that adds in the global fenics.conf used by all and allows easy
 # bumping of package versions using one set of environment variables.
 #
+# While not intended for use by users, an image is hosted at:
+#
+#    https://quay.io/repository/fenicsproject/dev-env-base
+#
 # Author:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/base:latest
+FROM quay.io/fenicsproject/base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Our helper script
@@ -25,4 +29,4 @@ ENV PETSC_VERSION=3.6.3 \
     SWIG_VERSION=3.0.8 \
     PETSC4PY_VERSION=3.6.0 \
     SLEPC4PY_VERSION=3.6.0 \
-    TRILINOS_VERSION=12.4.2
+    TRILINOS_VERSION=12.6.1

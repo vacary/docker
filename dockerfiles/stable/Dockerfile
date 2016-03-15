@@ -1,12 +1,12 @@
 # Builds a Docker image with FEniCS stable version built from
 # git sources. The image is at:
 #
-#     https://hub.docker.com/u/fenicsproject/
+#    https://quay.io/repository/fenicsproject/stable
 #
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/dev-env:latest
+FROM quay.io/fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
