@@ -15,6 +15,10 @@ following command:
 
         docker run -ti quay.io/fenicsproject/<image-name>:latest
         
+To start with you probably want to try the `stable` image which includes a full
+stable version of FEniCS with PETSc, SLEPc, petsc4py and slepc4py already
+compiled.
+
 If you want to share your current working directory into the container use
 the following command:
 
@@ -27,7 +31,20 @@ construction at (<https://fenics-containers.readthedocs.org/>).
 
 ## The images
 
-We currently offer seven images.
+We currently offer seven end-user images. A full description of the images can be found at (<https://fenics-containers.readthedocs.org/>).
+
+| Image name       | Build status                                                                                                                                                                                    |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| stable           | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev)                                   |
+| dolfin-adjoint   | [Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)               |
+| dev              | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)             |
+| dev-env          | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env)                           |
+| dev-env-dbg      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-dbg/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-dbg)                   |
+| dev-env-trilinos | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-trilinos/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-trilinos)         |
+| dev-env-py3      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-py3/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-py3)                   |
+| dev-py3          | No automatic build.                                                                                                                                                                             |
+| base             | `base`: [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/base)                         |
+| dev-env-base     | `dev-env-base`: [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-base) |
 
 ### Application images
 
