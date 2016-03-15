@@ -1,6 +1,6 @@
 # FEniCS stable PPA version image
 
-* This image is deprecated, please use the fenicsproject/stable
+* This image is deprecated, please use the quay.io/fenicsproject/stable
 image which is superior in both performance and features *
 
 This image provides the most recent stable release of FEniCS

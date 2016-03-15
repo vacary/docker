@@ -1,13 +1,13 @@
 # Builds a Docker image with the official FEniCS PPA packages
 # installed. A build of this Dockerfile is maintaied at:
 #
-#    https://hub.docker.com/u/fenicsproject/
+# Note: *Deprecated*, please use quay.io/fenicsproject/stable
 #
 # Authors:
 # Lizao Li <lixx1445@umn.edu>
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM fenicsproject/base:latest 
+FROM quay.io/fenicsproject/base:latest 
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
