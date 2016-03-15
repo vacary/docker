@@ -11,7 +11,7 @@ PERSISTENT=false  # Is the container persistent? true/false
 SHAREDDIRS="-v $PWD/shared:/home/fenics/shared"
 
 # Advanced settings
-IMAGE=fenicsproject/$VERSION    # Name of the docker image to use
+IMAGE=quay.io/fenicsproject/$VERSION    # Name of the docker image to use
 CONTAINERNAME="fenics-$VERSION" # Default name of the container
 
 #------- Do not edit below unless you know what you are doing --------#
