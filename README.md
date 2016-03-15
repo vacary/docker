@@ -97,10 +97,9 @@ on your own computer.
 
 ## Building images
 
-Images are hosted on quay.io, and are automatically built on Docker
-Hub from the Dockerfiles in this repository. The FEniCS Docker Hub
-page is at <https://hub.docker.com/r/fenicsproject/>.
-
+Images are hosted on quay.io, and are automatically built in the cloud on from
+the Dockerfiles in this repository. The FEniCS Project quay.io page is at
+<https://quay.io/organization/fenicsproject/>.
 
 ### Developer notes
 
