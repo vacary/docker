@@ -13,16 +13,16 @@ etc.), follow the instructions at
 Once you have Docker installed, you can run any of the images below using the
 following command:
 
-        docker run -ti fenicsproject/<image-name>:latest
+        docker run -ti quay.io/fenicsproject/<image-name>:latest
         
 If you want to share your current working directory into the container use
 the following command:
 
-        docker run -ti -v $(pwd):/home/fenics/shared fenicsproject/<image-name>:latest
+        docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
 
 ## The images
 
-We currently offer five images.
+We currently offer eight images.
 
 ### Application images
 
@@ -50,13 +50,7 @@ images:
 * `dev-env-dbg`: Identical to `dev-env`, except that PETSc and SLEPc are
    compiled with debugging symbols. 
 
-### Images that you can build yourself
-
-The following images are considered to be of minority interest or deprecated
-and can be built using the command `docker build .` in the directory of the
-Dockerfile on your own computer.
-
-* `dev-env-tpetra`: Identical to `dev-env`, except that Trilinos is also
+* `dev-env-trilinos`: Identical to `dev-env`, except that Trilinos is also
   compiled.
 
 * `dev-py3`: Identical to `dev`, except with a Python 3 version of DOLFIN
@@ -64,7 +58,13 @@ Dockerfile on your own computer.
 
 * `dev-env-py3`: Identical to `dev-env`, except with Python 3.
 
-* `stable-ppa`: *Deprecated*, use image `stable` instead.
+### Images that you can build yourself
+
+The following images are deprecated and can be built using the 
+command `docker build .` in the directory of the Dockerfile 
+on your own computer.
+
+* `stable-ppa`: *Removed and deprecated*, use image `stable` instead.
 
 ## Issues
 
@@ -84,7 +84,7 @@ Dockerfile on your own computer.
 
 ## Building images
 
-Images are hosted on Docker Hub, and are automatically built on Docker
+Images are hosted on quay.io, and are automatically built on Docker
 Hub from the Dockerfiles in this repository. The FEniCS Docker Hub
 page is at <https://hub.docker.com/r/fenicsproject/>.
 
