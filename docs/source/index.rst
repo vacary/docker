@@ -9,12 +9,21 @@ FEniCS in Containers - Docker
 
 This is the documentation for Linux/Docker containers for the FEniCS
 libraries from the FEniCS Project (http://fenicsproject.org).
+Containers provide a consistent and portable FEniCS environment, for
+both running FEniCS applications and developing FEniCS. On modern
+Linux systems there is no performance penalty when running in a
+container compared to running natively on the host system. In many
+cases, the container versions of FEniCS are faster than user
+installations as the containers have been tuned for performance by the
+FEniCS developers. On non-Linux based systems, the containers will run
+inside a virtual machine.
 
-The Dockerfiles for the containers are maintained at
-https://bitbucket.org/fenics-project/docker.
+The Docker images are automatically built on quay.io at
+https://quay.io/repository/fenicsproject/. The Dockerfiles for the
+containers are maintained at
+https://bitbucket.org/fenics-project/docker. Images are provided of
+both release and development versions of FEniCS.
 
-Built version of the containers are hosted on quay.io at
-https://quay.io/repository/fenicsproj0ect/.
 
 .. toctree::
    :caption: Table of Contents
@@ -31,6 +40,14 @@ What is Docker?
 
 Installing Docker
 -----------------
+
+Instructions for installing Docker are available at:
+
+- Linux: https://docs.docker.com/linux/ and
+  https://docs.docker.com/engine/installation/
+- OSX: https://docs.docker.com/mac/
+- Windows: https://docs.docker.com/windows/
+
 
 
 Running an image for the first time
@@ -84,36 +101,73 @@ Summary
 +------------------+---------------------+-----------------------------------------------+
 
 
-Full descriptions
------------------
+Detailed descriptions
+---------------------
+
+FEniCS library images
+^^^^^^^^^^^^^^^^^^^^^
 
 * stable: This image provides the most recent release of FEniCS and is
-  recommended for users who need the latest versions of PETSc, SLEPc, petsc4py
-  and slepc4py.
+  recommended for most users. It has most recent versions of PETSc,
+  SLEPc, petsc4py and slepc4py that are compatible with the most
+  recent FEniCS release.
+
+* dev: This image provides a snapshot of the development version of
+  FEniCS.
+
+
+FEniCS development environments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* dev-env: This image provides a snapshot of the development version
+  of FEniCS.
+
+
 
 I want to...
 =============
 
+
 Have a separate container for each project
 ------------------------------------------
+
 
 Have multiple shells running in one container
 ---------------------------------------------
 
+
 Reproduce my results
 --------------------
+
 
 Share my container with a colleague
 -----------------------------------
 
+
 Contribute to the FEniCS Project
 --------------------------------
+
 
 Create a custom image for my team
 ---------------------------------
 
+
 Run FEniCS in the cloud
 -----------------------
+
+
+Contact
+=======
+
+Support requests can be sent to the FEniCS Support mailing list
+(fenics-support@googlegroups.com).
+
+For development-related questions and suggestions, use the FEniCS
+Development mailing list (fenics-dev@googlegroups.com). Bugs can be
+registered on the Bitbucket Issue Tracker
+(https://bitbucket.org/fenics-project/docker/issues).
+
+
 
 Indices and tables
 ==================
