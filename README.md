@@ -3,6 +3,7 @@
 This repository contains the scripts for building various Docker
 images for FEniCS (<http://fenicsproject.org>).
 
+[![Documentation Status](https://readthedocs.org/projects/fenics-containers/badge/?version=latest)](http://fenics.readthedocs.org/projects/containers/en/latest/?badge=latest)
 
 ## Introduction
 
