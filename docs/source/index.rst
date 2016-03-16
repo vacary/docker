@@ -3,8 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-FEniCS Containers
-=================
+=============================
+FEniCS in Containers - Docker
+=============================
 
 This is the documentation for Linux/Docker containers for the FEniCS
 libraries from the FEniCS Project (http://fenicsproject.org).
@@ -13,28 +14,35 @@ The Dockerfiles for the containers are maintained at
 https://bitbucket.org/fenics-project/docker.
 
 Built version of the containers are hosted on quay.io at
-https://quay.io/repository/fenicsproject/.
+https://quay.io/repository/fenicsproj0ect/.
+
 
 Contents
 ========
 
 .. toctree::
-   :maxdepth: 2 
+   :maxdepth: 2
+
 
 Getting started
 ===============
 
+
 What is Docker?
 ---------------
+
 
 Installing Docker
 -----------------
 
+
 Running an image for the first time
 -----------------------------------
 
+
 Sharing files from the host into the container
 ----------------------------------------------
+
 
 Images
 ======
@@ -77,6 +85,7 @@ Summary
 +------------------+---------------------+-----------------------------------------------+
 | dev-env-base     | |dev-env-base|      | Base image, not for end users.                |
 +------------------+---------------------+-----------------------------------------------+
+
 
 Full descriptions
 -----------------
