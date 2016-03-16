@@ -16,11 +16,8 @@ https://bitbucket.org/fenics-project/docker.
 Built version of the containers are hosted on quay.io at
 https://quay.io/repository/fenicsproj0ect/.
 
-
-Contents
-========
-
 .. toctree::
+   :caption: Table of Contents
    :maxdepth: 2
 
 
