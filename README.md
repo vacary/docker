@@ -9,12 +9,12 @@ images for FEniCS (<http://fenicsproject.org>).
 
 To install Docker for your platform (Windows, Mac OS X, Linux, cloud platforms,
 etc.), follow the instructions at
-(<https://docs.docker.com/engine/installation/>).
+<https://docs.docker.com/engine/installation/>.
 
 Once you have Docker installed, you can run any of the images below using the
 following command:
 
-        docker run -ti quay.io/fenicsproject/<image-name>:latest
+    docker run -ti quay.io/fenicsproject/<image-name>:latest
         
 To start with you probably want to try the `stable` image which includes a full
 stable version of FEniCS with PETSc, SLEPc, petsc4py and slepc4py already
@@ -23,16 +23,19 @@ compiled.
 If you want to share your current working directory into the container use
 the following command:
 
-        docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
+    docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
+
 
 ## Documentation
 
 More extensive documentation, including suggested workflows is currently under
-construction at (<https://fenics-containers.readthedocs.org/>).
+construction at <https://fenics-containers.readthedocs.org/>.
 
-## The images
 
-We currently offer seven end-user images. A full description of the images can be found at (<https://fenics-containers.readthedocs.org/>).
+## Images
+
+We currently offer seven end-user images. A full description of the images can be found at 
+<https://fenics-containers.readthedocs.org/>.
 
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
@@ -58,6 +61,7 @@ Most end-users are probably looking for the `stable` or `dolfin-adjoint` images:
 
 * `dolfin-adjoint`: Identical to `stable`, but also includes dolfin-adjoint.
   [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint) 
+
 
 ### Development and advanced images
 
@@ -85,6 +89,7 @@ images:
 * `dev-env-py3`: Identical to `dev-env`, except with Python 3.
   [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-py3/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-py3)
 
+
 ### Images that you can build yourself
 
 The following images are deprecated and can be built using the 
@@ -96,6 +101,7 @@ on your own computer.
 * `dev-py3`: Identical to `dev`, except with a Python 3 version of DOLFIN
   installed. Because FEniCS is not yet fully compatible with Python 3
   we are not building the Python 3 version at the moment on <https://quay.io>.
+
 
 ## Issues
 
@@ -119,6 +125,7 @@ Images are hosted on quay.io, and are automatically built in the cloud on from
 the Dockerfiles in this repository. The FEniCS Project quay.io page is at
 <https://quay.io/organization/fenicsproject/>.
 
+
 ### Developer notes
 
 The images on Dockerhub are built automatically upon pushes to this
@@ -141,6 +148,7 @@ the packages to compile in the child images. All `dev-env-{variant}` should
 inherit `FROM` this image.
 
 `dev-env-base`: [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-base)
+
 
 ## Authors
 
