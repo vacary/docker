@@ -184,6 +184,8 @@ Summary
                       :target: https://quay.io/repository/fenicsproject/dev-env-trilinos
 .. |dev-env-py3| image:: https://quay.io/repository/fenicsproject/dev-env-py3/status
                  :target: https://quay.io/repository/fenicsproject/dev-env-py3
+.. |dev-py3| image:: https://quay.io/repository/fenicsproject/dev-py3/status
+             :target: https://quay.io/repository/fenicsproject/dev-py3
 .. |base| image:: https://quay.io/repository/fenicsproject/base/status
           :target: https://quay.io/repository/fenicsproject/base
 .. |dev-env-base| image:: https://quay.io/repository/fenicsproject/dev-env-base/status
@@ -206,7 +208,7 @@ Summary
 +------------------+---------------------+-----------------------------------------------+
 | dev-env-py3      | |dev-env-py3|       | As `dev-env`, but with Python 3.              |
 +------------------+---------------------+-----------------------------------------------+
-| dev-py3          | No automatic build. | As `dev`, but with Python 3.                  |
+| dev-py3          | |dev-py3|           | As `dev`, but with Python 3.                  |
 +------------------+---------------------+-----------------------------------------------+
 | base             | |base|              | Base image, not for end users.                |
 +------------------+---------------------+-----------------------------------------------+
@@ -235,7 +237,7 @@ probably looking for either the `stable` or `dolfin-adjoint` images.
 Development and advanced images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Developers and more advanced users may be intetested in the following
+Developers and more advanced users may be interested in the following
 images:
 
 * `dev`: Provides the latest development version of FEniCS. It is for
@@ -252,6 +254,8 @@ images:
   also compiled.
 
 * `dev-env-py3`: Identical to `dev-env`, except with Python 3.
+
+* `dev-py3`: Identical to `dev`, except with Python 3.
 
 
 Suggested workflows
@@ -299,7 +303,7 @@ You can get a list of all running containers by running the command::
 
     docker ps
 
-On my system I got the following output::
+On my system I have the following output::
 
     CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
     ed8960fcf652        quay.io/fenicsproject/dev   "sudo /sbin/my_init -"   3 seconds ago       Up 2 seconds                            project-1
