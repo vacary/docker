@@ -46,62 +46,9 @@ We currently offer seven end-user images. A full description of the images can b
 | dev-env-dbg      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-dbg/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-dbg)           | As `dev-env`, but with debugging symbols.     |
 | dev-env-trilinos | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-trilinos/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-trilinos) | As `dev-env`, but with Trilinos.              |
 | dev-env-py3      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-py3/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-py3)           | As `dev-env`, but with Python 3.              |
-| dev-py3          | No automatic build.                                                                                                                                                                     | As `dev`, but with Python 3.                  |
+| dev-py3          | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-py3/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-py3)                   | As `dev`, but with Python 3.                                                                                                                                                 | As `dev`, but with Python 3.                  |
 | base             | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/base)                         | Base image, not for end users.                |
 | dev-env-base     | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-base)         | Base image, not for end users.                |
-
-### Application images
-
-Most end-users are probably looking for the `stable` or `dolfin-adjoint` images:
-
-* `stable`: This image provides the most recent release of FEniCS and
-  is recommended for users who need the latest versions of PETSc,
-  SLEPc, petsc4py and slepc4py.
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev)
-
-* `dolfin-adjoint`: Identical to `stable`, but also includes dolfin-adjoint.
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint) 
-
-
-### Development and advanced images
-
-Developers and more advanced users may be interested in the following
-images:
-
-* `dev`: This image provides the development version of FEniCS.  It is
-  for users looking for the latest features.
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)
-
-* `dev-env`: This image provides a development environment in which a
-   user can compile FEniCS easily. It provides the necessary dependencies for
-   FEniCS, but does not provide the FEniCS libraries. Debugging symbols
-   are disabled in PETSc and SLEPc.
-   [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env)
-
-* `dev-env-dbg`: Identical to `dev-env`, except that PETSc and SLEPc are
-  compiled with debugging symbols. 
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-dbg/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-dbg) 
-
-* `dev-env-trilinos`: Identical to `dev-env`, except that Trilinos is also
-  compiled.
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-trilinos/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-trilinos)
-
-* `dev-env-py3`: Identical to `dev-env`, except with Python 3.
-  [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-py3/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-py3)
-
-
-### Images that you can build yourself
-
-The following images are deprecated and can be built using the 
-command `docker build .` in the directory of the Dockerfile 
-on your own computer.
-
-* `stable-ppa`: *Removed and deprecated*, use image `stable` instead.
-
-* `dev-py3`: Identical to `dev`, except with a Python 3 version of DOLFIN
-  installed. Because FEniCS is not yet fully compatible with Python 3
-  we are not building the Python 3 version at the moment on <https://quay.io>.
-
 
 ## Issues
 
