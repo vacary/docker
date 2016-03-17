@@ -2,3 +2,5 @@
 *.bak
 shared/
 cluster/share/
+
+build/
