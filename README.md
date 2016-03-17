@@ -34,7 +34,7 @@ construction at <https://fenics-containers.readthedocs.org/>.
 
 ## Images
 
-We currently offer seven end-user images. A full description of the images can be found at 
+We currently offer eight end-user images. A full description of the images can be found at 
 <https://fenics-containers.readthedocs.org/>.
 
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
