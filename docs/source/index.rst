@@ -16,7 +16,7 @@ container compared to running natively on the host system. In many
 cases, the container versions of FEniCS are faster than user
 installations as the containers have been tuned for performance by the
 FEniCS developers. On non-Linux based systems, the containers will run
-inside a virtual machine.
+inside a virtual machine are still fast.
 
 The Docker images are automatically built on quay.io at
 https://quay.io/repository/fenicsproject/. The Dockerfiles for the
@@ -35,6 +35,7 @@ of both release and development versions of FEniCS.
    getting_started
    images
    work_flows
+   developing
 
 
 
