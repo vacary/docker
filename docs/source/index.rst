@@ -8,7 +8,7 @@ FEniCS in Containers - Docker
 =============================
 
 This is the documentation for Linux/Docker containers for the FEniCS
-libraries from the FEniCS Project (http://fenicsproject.org).
+libraries from the `FEniCS Project <http://fenicsproject.org>`_.
 Containers provide a consistent and portable FEniCS environment, for
 both running FEniCS applications and developing FEniCS. On modern
 Linux systems there is no performance penalty when running in a
@@ -20,9 +20,9 @@ inside a virtual machine.
 
 The Docker images are automatically built on quay.io at
 https://quay.io/repository/fenicsproject/. The Dockerfiles for the
-containers are maintained at
-https://bitbucket.org/fenics-project/docker. Images are provided of
-both release and development versions of FEniCS.
+containers are maintained on `Bitbucket
+<https://bitbucket.org/fenics-project/docker>`_. Images are provided
+of both release and development versions of FEniCS.
 
 .. note:
 

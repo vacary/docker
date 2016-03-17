@@ -1,3 +1,5 @@
+.. Documentation for suggested work flows using Docker
+
 Suggested workflows
 ===================
 
@@ -9,11 +11,11 @@ curve that may raise difficulties for new users. In this section we
 cover some common workflows that you might find useful.
 
 
-Have a separate container for each project
-------------------------------------------
+Separate container for each user project
+----------------------------------------
 
-We would like to have a separate container for each project.  Let's
-say we have two projects located at ``$HOME/project-1`` and
+We would like to have a separate container for each user project.  Say
+we have two projects located at ``$HOME/project-1`` and
 ``$HOME/project-2`` on the host. We want `project-1` to use the
 ``dev`` image with the development version of FEniCS, and `project-2`
 to use the ``stable`` image with the stable version of FEniCS. Also we
@@ -36,8 +38,8 @@ ID``. We now have two containers with two different versions of FEniCS
 running.
 
 
-Have multiple shells running in one container
----------------------------------------------
+Multiple shells running in one container
+----------------------------------------
 
 You can get a list of all running containers by running the command::
 
