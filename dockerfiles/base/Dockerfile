@@ -8,11 +8,15 @@
 #
 #   https://quay.io/repository/fenicsproject/base
 #
-# Author:
+# Authors:
 # Jack S. Hale <jack.hale@uni.lu>
+# Garth N. Wells <gnw20@cam.ac.uk>
 
 FROM phusion/baseimage:0.9.18
 MAINTAINER fenics-project <fenics@fenicsproject.org>
+
+# Get Ubuntu updates
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Set up user so that we do not run as root
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
