@@ -8,17 +8,9 @@ FEniCS in Docker
 ================
 
 The easiest way to install `FEniCS <http://fenicsproject.org>`_ is to
-use our prebuilt, high-performance Docker images.
-
-This documentation explains how to get quickly started with using
-FEniCS in Docker, as well as how to take advantage of more advanced
-features of Docker.
-
-On modern Linux systems there is no performance penalty when running
-FEniCS in Docker, compared to running natively on the host system. On
-other systems, such as Mac or Windows, running FEniCS in Docker may
-actually be faster than using a native build since our Docker images
-have been tuned for performance.
+use our prebuilt, high-performance Docker images.  This documentation
+explains how to get quickly started with using FEniCS in Docker, as
+well as how to take advantage of more advanced features of Docker.
 
 .. note:
 
@@ -33,6 +25,7 @@ have been tuned for performance.
    images
    work_flows
    jupyter
+   performance
    developing
 
 
