@@ -17,43 +17,32 @@ Microsoft Windows platforms.
 
 For more information, visit: https://www.docker.com/what-docker
 
-.. Compared to virtual machines, Docker containers have a different architecture
-.. allowing them to be much more lightweight. In the contect of scientific
-.. computing we have found that:
-
-.. * You can have hundreds of Docker containers on one laptop, with almost no
-..  performance overhead.
-.. * New containers take microseconds to start up.
-.. * On Linux-based platforms, there is *no* measurable performance penalty
-..  compared to a natively compiled version of FEniCS. On platforms where Docker
-..  runs inside a Virtual Machine, performance overhead is only around ten
-..  percent.
-.. * It is easy and convienient to share development platforms with colleagues.
-.. * Like a commit in version control systems such as git, each Docker image has a
-..  unique mathematical hash associated with it. This makes it much easier to
-..  reproduce results for papers.
-
-
 Installing Docker
 -----------------
 
-To install Docker for your platform (Windows, Mac OS X, Linux), follow
-the instructions at https://docs.docker.com/engine/installation/.
+Mac and Windows users should install the `Docker Toolbox <https://www.docker.com/products/docker-toolbox>` and Linux
+users should follow `these instructions <https://docs.docker.com/engine/installation/linux/>`.
 
-Windows and Mac OS X users will also find the following information on
-using Docker Machine useful:
-https://docs.docker.com/machine/get-started/
-
+For a full list of platforms and installation options, see
+the instructions `here https://docs.docker.com/engine/installation/`.
 
 Running FEniCS in Docker
 ------------------------
 
-You need to open a Terminal on your platform. Windows users can start
-the Command Prompt (``cmd.exe``).
+If running on Mac or Windows, start a `Docker Quickstart Terminal`. This can
+take a little while the first time so just be patient.
+
+If you are running on Linux, just use a standard terminal session. Note that
+you will need to prepend ``sudo`` to the commands below. To allow ``sudo``-less
+use, refer to the installation instructions for your distribution to add your
+user to the ``docker`` group.
 
 First of all we will check that we have a working install of Docker::
 
-    docker info
+    docker run hello-world
+
+You should see a message saying that your Docker installation is working
+correctly.
 
 Now we will ``pull`` the ``quay.io/fenicsproject/stable`` image from
 our cloud infrastructure::
