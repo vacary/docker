@@ -3,7 +3,7 @@
 FEniCS Docker images
 ====================
 
-We currently offer seven end-user images.
+We currently offer eight end-user images.
 
 Summary of available images
 ---------------------------
