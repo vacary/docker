@@ -3,26 +3,22 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-=============================
-FEniCS in Containers - Docker
-=============================
+================
+FEniCS in Docker
+================
 
-This is the documentation for Linux/Docker containers for the FEniCS
-libraries from the `FEniCS Project <http://fenicsproject.org>`_.
-Containers provide a consistent and portable FEniCS environment, for
-both running FEniCS applications and developing FEniCS. On modern
-Linux systems there is no performance penalty when running in a
-container compared to running natively on the host system. In many
-cases, the container versions of FEniCS are faster than user
-installations as the containers have been tuned for performance by the
-FEniCS developers. On non-Linux based systems, the containers will run
-inside a virtual machine are still fast.
+The easiest way to install `FEniCS <http://fenicsproject.org>`_ is to
+use our prebuilt, high-performance Docker images.
 
-The Docker images are automatically built on quay.io at
-https://quay.io/repository/fenicsproject/. The Dockerfiles for the
-containers are maintained on `Bitbucket
-<https://bitbucket.org/fenics-project/docker>`_. Images are provided
-of both release and development versions of FEniCS.
+This documentation explains how to get quickly started with using
+FEniCS in Docker, as well as how to take advantage of more advanced
+features of Docker.
+
+On modern Linux systems there is no performance penalty when running
+FEniCS in Docker, compared to running natively on the host system. On
+other systems, such as Mac or Windows, running FEniCS in Docker may
+actually be faster than using a native build since our Docker images
+have been tuned for performance.
 
 .. note:
 
@@ -32,7 +28,8 @@ of both release and development versions of FEniCS.
 .. toctree::
    :maxdepth: 2
 
-   getting_started
+   quickstart
+   introduction
    images
    work_flows
    jupyter

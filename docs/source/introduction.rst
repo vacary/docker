@@ -1,7 +1,7 @@
 .. Description for how to get started with Docker images for FEniCS
 
-Getting started
-===============
+Introduction
+============
 
 
 What is Docker?

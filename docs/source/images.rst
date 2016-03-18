@@ -1,9 +1,16 @@
 .. Description of the FEniCS Docker images
 
-FEniCS Docker images
-====================
+List of FEniCS Docker images
+============================
 
-We currently offer eight end-user images.
+We currently offer eight end-user images. The stable image is
+recommended for most users, but advanced users or developers may
+want to use other images.
+
+The images are automatically built on quay.io at
+https://quay.io/repository/fenicsproject/. The Dockerfiles for the
+containers are maintained on `Bitbucket
+<https://bitbucket.org/fenics-project/docker>`_.
 
 Summary of available images
 ---------------------------
