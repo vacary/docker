@@ -192,22 +192,124 @@ for FEniCS.
 Compile a development version of FEniCS
 ---------------------------------------
 
+The image ``quay.io/fenicsproject/dev-env`` makes it very easy to compile
+a development version of FEniCS, or start contributing to the development
+of FEniCS. We cover the latter in :ref:`developing`.
+
+Let's ``run`` the ``dev-env`` image and share the current working directory
+into the container at ``/home/fenics/build``::
+
+    docker run -ti -v $(pwd):/home/fenics/build quay.io/fenicsproject/dev-env
+
+You might be surprised how quick it was to download the image ``dev-env``.
+This is because the image ``stable`` is actually built on top of the image
+``dev-env``. Docker can quickly work out that we have already downloaded all of
+the necessary `layers` already when getting the ``stable`` image, and start the
+``dev-env`` container almost instantly. 
+
+This environment contains everything we need to compile the latest version of
+FEniCS from the ``master`` branch. We provide a helper script ``update_fenics``
+that will take care of pulling the source from git, compiling them, and
+installing them in the right locations. Using ``update_fenics`` is optional,
+you can pull and build FEniCS in anyway you wish inside the container.
+
+For more advanced usage, see :ref:`developing`.
 
 Reproduce my results
 --------------------
 
+Whether you are using the ``stable`` image, or have compiled a particular
+revision of FEniCS inside a ``dev-env`` container, you might want to make sure
+that you can always get back to that specific version at some later date so you
+can reproduce your results. Docker makes that easy.
+
+First the simple case; we want to save a particular version of the `stable` image
+that will be used for all runs of code in paper-1. We can do this using the
+``tag`` directive::
+
+    docker tag quay.io/fenicsproject/stable:latest my-name/fenics-stable:paper-1
+
+Now, even if you decide to pull a newer version of FEniCS stable image::
+
+    docker pull quay.io/fenicsproject/stable:latest
+
+The tag ``my-name/fenicsproject:paper-1`` will *always* point to the version
+of FEniCS we have tagged, so when we do::
+
+    docker run -ti my-name/fenics-stable:paper-1
+
+we will get the right version.
+
+In the case we have compiled our own version of FEniCS for paper-2 in a
+``dev-env`` image, the steps are slightly more involved. Start with::
+
+    docker run -ti quay.io/fenicsproject/dev-env
+    
+and in the new container::
+
+    update_fenics
+
+After the compile has finished, ``exit`` the container::
+
+    exit
+
+Now, back on the host, we must ``commit`` the container. This `freezes` the
+modifications to the filesystem we made when we compiled FEniCS. Make a note
+from your terminal of the unique hash in the bash prompt of the container when
+it was running e.g.  `fenics@88794e9fdcf5:~$` and then run, e.g.::
+
+    docker commit 88794
+
+Docker will return a new hash, e.g.::
+
+    sha256:e82475ade54e046e950a7e25c234a9d7d3e77f3ba19062729810a241a50fc8a9
+
+which we can then tag as before::
+
+    docker tag e824 my-name/fenics-dev:paper-2
+
+Note that Docker can auto-complete hashes if you only provide the first few
+letters, making typing less cumbersome!
 
 Share my container with a colleague
 -----------------------------------
 
+There are two main ways of doing this. The simplest is just to ``save`` your
+container in a ``tar`` file and send it to your colleague via your preferred
+file transfer method. First off ``exit`` your container and ``commit`` it::
 
-Contribute to the FEniCS Project
---------------------------------
+    exit
+    docker commit 88794
+
+Docker will return a new hash, e.g.::
+
+    sha256:e82475ade54e046e950a7e25c234a9d7d3e77f3ba19062729810a241a50fc8a9
+
+Now we can ``save`` to a ``tar`` file with::
+
+    docker save e82475 > my-fenics-environment.tar
+
+Send the file ``my-fenics-environment.tar`` to your colleague, and she can load
+it into Docker using::
+
+    docker load < my-fenics-environment.tar
+
+and wait for the import to finish. Your colleague can then start the image
+using::
+
+    docker run -ti e82475
+
+Of course, they can also ``tag`` the image for easy reference in the future.
+
+The other option is to ``push`` your image up to a cloud service like
+`Dockerhub <https://dockerhub.com>`_, or our preferred provider, `quay.io
+<https://quay.io>`_. Both of these services will store images for you and allow
+others to ``pull`` them, just like our images. 
+
+Once you have an account from one of the above sites, you need to login.
 
 
 Create a custom image for my team
 ---------------------------------
 
 
-Run FEniCS in the cloud
------------------------

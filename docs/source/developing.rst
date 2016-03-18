@@ -1,5 +1,7 @@
 .. Documentation for using a container for FEniCS development
 
+.. _developing:
+
 FEniCS development using Docker
 ===============================
 
