@@ -1,13 +1,14 @@
 # FEniCS stable version image
 
-This image provides the most recent stable release of FEniCS
-(<http://fenicsproject.org>). The FEniCS installation is built 
-against the dev-env image 
-(<https://quay.io/repository/fenicsproject/dev-env/>)
-which contains up-to-date stable builds of PETSc, SLEPc, petsc4py
-and slepc4py.
+Welcome to FEniCS/stable!
 
-Get started by solving a Poisson problem using FEniCS:
+This image provides a full-featured and optimized build of
+the most recent stable release of FEniCS (v1.6).
 
-    cp $HOME/build/share/dolfin/demo/documented/poisson/python/demo_poisson.py $HOME
+To help you get started this image contains a number of demo
+programs. Explore the demos by entering the 'demo' directory,
+for example
+
+    cd demo/documented/poisson/python/
     python demo_poisson.py
+

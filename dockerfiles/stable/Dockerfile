@@ -18,6 +18,7 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
 
 RUN /bin/bash -l -c "source $HOME/fenics.conf && \
                      update_fenics && \
-                     rm -rf $HOME/build/src"
+                     rm -rf $HOME/build/src \
+                     cp -r $HOME/build/share/dolfin/demo $HOME/demo"
 
 COPY WELCOME $HOME/WELCOME

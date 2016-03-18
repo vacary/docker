@@ -1,13 +1,14 @@
-# FEniCS development environment image (debug mode).
+# FEniCS development environment image
 
-This image provides a development environment for building the FEniCS libraries
-with PETSc and SLEPc compiled in debug mode. It does not provide an
-installation of FEniCS. It is intended for users who want to build their own
-version of FEniCS. It also serves as a base image for
-<https://registry.hub.docker.com/u/fenicsproject/dev>, which does provide the
-development version of FEniCS.
+Welcome to FEniCS/dev-env-dbg!
 
-We do provide a helper script in this container to compile FEniCS
-automatically:
+This image provides a full-featured build of all FEniCS dependencies,
+but not FEniCS itself. This image provides provides the FEniCS
+dependencies PETSC and SLEPC built in debug mode.
 
-    update_fenics
+It is intended for developers or advanced users who want to build
+their own version of FEniCS.
+
+This image also provides a script which can be used to automatically
+build FEniCS: update_fenics
+
