@@ -123,18 +123,71 @@ Let's break this complex ``run`` command down flag-by-flag:
   exiting the container. Old and unused containers won't clutter up your
   machine. 
 * ``-v $(pwd):/home/fenics/shared`` shares the current working directory
-  `$(pwd)` into the container at `/home/fenics/shared`.
+  ``$(pwd)`` into the container at ``/home/fenics/shared`` just as before.
 * ``-w`` sets the current working directory in the container to our
   shared directory ``/home/fenics/shared``.
 * ``"python my-code.py"`` is the command passed to the Docker container. The
-  container will immediately execute this command. 
+  container will immediately execute this command in the working directory. 
 
 In my ``my-code.py`` I have the following simple Python/FEniCS code::
 
     from dolfin import *
+    print "Running FEniCS..."
     mesh = UnitSquareMesh(10, 10)
     V = FunctionSpace(mesh, "CG", 1)
+    f = interpolate(Constant(1.0), V)
+    File("f.xdmf") << f
 
+Running the ``docker run`` command above then gives me the output::
+    
+    Running FEniCS...
+    Calling FFC just-in-time (JIT) compiler, this may take some time.
+
+and the files ``f.xdmf`` and ``f.h5``  written back onto the host system in the
+current working directory.
+
+In practice, there are two (easily fixable!) issues with the above approach;
+firstly, on each call to ``docker run`` we get a completely fresh container,
+meaning that the `Instant <https://www.bitbucket.org/fenicsproject/instant>`_
+cache of compiled objects needs to be regenerated everytime, and secondly the
+above command is rather cumbersome to type out.
+
+The first issue can be solved with the concept of `data volume containers`.
+Interested users can refer to the official Docker documentation `here
+<https://docs.docker.com/engine/userguide/containers/dockervolumes/>`_. In
+short, we will create a persistent container that is just used to store
+the compiled Instant object cache across individual ``run``-s::
+
+    docker create -v /tmp --name instant-cache quay.io/fenicsproject/stable /bin/true
+
+``create`` is similar to ``run`` but does not actually execute any processes in
+the container. This is fine because we will just use the container
+``instant-cache`` to store data. We can then mount the contents of ``/tmp``
+inside ``instant-cache`` inside a `one-shot` container using the following
+command::
+
+    docker run --volumes-from instant-cache --rm -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "INSTANT_CACHE_DIR=/tmp python my-code.py"
+
+The argument ``--volumes-from instant-cache`` mounts the data volume ``/tmp``
+of the ``instant-cache`` container into the `one-shot` container we use to
+execute our Python code. If you run the command twice, you will notice on the
+second time that we do not need to just-in-time compile the Instant object that
+our Python script requires.
+
+The second issue, that the above is cumbersome to write out, can be solved
+simply using a shell script. You might want to try putting the following code::
+
+    !/bin/bash
+    docker create -v /tmp --name instant-cache quay.io/fenicsproject/stable /bin/true > /dev/null 2>&1
+    docker run --volumes-from instant-cache --rm -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "INSTANT_CACHE_DIR=/tmp $@"
+
+into a file ``fenics`` somewhere in your ``${PATH}`` and making it executable
+``chmod +x fenics``. Then you can simply run::
+
+    fenics "python my-code.py"
+
+You could use the ideas in the above script to write your own custom launcher
+for FEniCS.
 
 Compile a development version of FEniCS
 ---------------------------------------
