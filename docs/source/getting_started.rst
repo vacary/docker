@@ -15,16 +15,16 @@ Docker containers are extremely lightweight, secure, and are based on
 open standards that run on all major Linux distributions, Mac OS X and
 Microsoft Windows platforms.
 
-For more information, visit: https://www.docker.com/what-docker
+For more information, visit https://www.docker.com/what-docker.
 
 Installing Docker
 -----------------
 
-Mac and Windows users should install the `Docker Toolbox <https://www.docker.com/products/docker-toolbox>` and Linux
-users should follow `these instructions <https://docs.docker.com/engine/installation/linux/>`.
+Mac and Windows users should install the `Docker Toolbox <https://www.docker.com/products/docker-toolbox>`_ and Linux
+users should follow `these instructions <https://docs.docker.com/engine/installation/linux/>`_.
 
 For a full list of platforms and installation options, see
-the instructions `here https://docs.docker.com/engine/installation/`.
+the instructions `here <https://docs.docker.com/engine/installation/>`_.
 
 Running FEniCS in Docker
 ------------------------
