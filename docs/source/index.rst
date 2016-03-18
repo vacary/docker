@@ -35,6 +35,7 @@ of both release and development versions of FEniCS.
    getting_started
    images
    work_flows
+   jupyter
    developing
 
 
