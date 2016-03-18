@@ -56,13 +56,13 @@ We would like to have another bash container running inside the
 container ``project-1``. We can execute a new process in the container
 using the ``docker exec`` command::
 
-    docker exec -ti /bin/bash -l
+    docker exec -ti project-1 /bin/bash -l
 
 The ``-l`` is important and ensures that your environment in the
 container is setup correctly for FEniCS to run. You could also enter
 into an ``ipython`` prompt instantly using::
 
-    docker exec -ti /bin/bash -l -c ipython
+    docker exec -ti project-1 /bin/bash -l -c ipython
 
 Restart an exited container
 ---------------------------
@@ -98,7 +98,7 @@ To ``start`` the container ``new-project`` again simply run the command::
 
 We can make a new shell in the container using the command::
 
-    docker exec -ti /bin/bash -l
+    docker exec -ti new-project /bin/bash -l
 
 Conversely, you can stop a running container using the command::
 
