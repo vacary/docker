@@ -16,20 +16,12 @@ USER root
 RUN echo "3" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
 RUN echo "4" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
-# Install build environment
+# Install Python3 based environment 
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-    	 xauth cmake flex g++ gfortran git ipython3 openmpi-bin pkg-config \
-         wget bison sudo \
-         libopenblas-dev libboost-all-dev libcln-dev libcppunit-dev \
-         libeigen3-dev liblapack-dev libmpfr-dev \
-         libopenmpi-dev \
-         python3-dev libhwloc-dev libpcre3-dev \
-         libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python3-numpy python3-six python3-ply python3-pytest \
-         python3-h5py python3-urllib3 xterm \
-         python3-setuptools python3-pip && \
+        python3-dev python3-numpy python3-six python3-ply python3-pytest \ 
+        python3-h5py python3-urllib3 python3-setuptools python3-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

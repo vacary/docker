@@ -16,7 +16,10 @@ FROM phusion/baseimage:0.9.18
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Get Ubuntu updates
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+USER root
+RUN apt-get update && \ 
+    apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set up user so that we do not run as root
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \

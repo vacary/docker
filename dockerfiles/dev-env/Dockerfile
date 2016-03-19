@@ -17,19 +17,12 @@ RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION && \
 
 WORKDIR /tmp
 
-# Install build environment
+# Install Python2 based environment 
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-    	 xauth cmake flex g++ gfortran git ipython openmpi-bin pkg-config \
-         wget bison sudo \
-         libopenblas-dev libboost-all-dev libcln-dev libcppunit-dev \
-         libeigen3-dev liblapack-dev libmpfr-dev \
-         libopenmpi-dev \
-         python-dev libhwloc-dev libpcre3-dev \
-         libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python-numpy python-six python-ply python-pytest \
-         python-h5py python-urllib3 python-setuptools python-pip && \
+        python-dev python-numpy python-six python-ply python-pytest python-h5py \
+        python-urllib3 python-setuptools python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

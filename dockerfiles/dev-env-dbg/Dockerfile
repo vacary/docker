@@ -17,18 +17,11 @@ RUN echo "7" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
 WORKDIR /tmp
 
-# Install build environment
+# Install Python2 based environment and debuggint tools
 RUN apt-get -qq update && \
     apt-get -y install \
-    	 cmake flex gdb valgrind g++ gfortran git ipython openmpi-bin pkg-config \
-         wget bison sudo \
-         libopenblas-dev libboost-all-dev libcln-dev libcppunit-dev \
-         libeigen3-dev liblapack-dev libmpfr-dev \
-         libopenmpi-dev \
-         python-dev python-dbg libhwloc-dev libvtk6-dev libpcre3-dev \
-         libhdf5-openmpi-dev libeigen3-dev libcgal-dev \
-         python-numpy python-six python-ply python-pytest \
-         python-h5py python-vtk6 python-urllib3 python-setuptools python-pip && \
+         gdb valgrind python-numpy python-six python-ply python-pytest \
+         python-h5py python-urllib3 python-setuptools python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
