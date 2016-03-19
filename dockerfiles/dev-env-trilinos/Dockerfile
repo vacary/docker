@@ -10,7 +10,7 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
 WORKDIR /tmp
-RUN wget -nc http://trilinos.csbsju.edu/download/files/trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
+RUN wget -nc --quiet http://trilinos.csbsju.edu/download/files/trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
     tar -xf trilinos-${TRILINOS_VERSION}-Source.tar.gz && \
     cd trilinos-${TRILINOS_VERSION}-Source && \
     mkdir build && cd build && \

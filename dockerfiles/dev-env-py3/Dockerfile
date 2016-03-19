@@ -27,7 +27,7 @@ RUN apt-get -qq update && \
 
 WORKDIR /tmp
 # Install PETSc from source
-RUN wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
+RUN wget -nc --quiet http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
     cd petsc-${PETSC_VERSION} && \
     python2 ./configure --COPTFLAGS="-O2" \
@@ -54,7 +54,7 @@ RUN wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PET
 
 # Install SLEPc from source
 RUN export PETSC_DIR=/usr/local && \
-    wget -nc http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
+    wget -nc --quiet http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
     tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
     cd slepc-${SLEPC_VERSION} && \
     python2 ./configure --prefix=/usr/local && \
@@ -74,7 +74,7 @@ RUN pip3 install sympy && \
     easy_install3 \
      https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     cd /tmp && \
-    wget -nc http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz && \
+    wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz && \
     tar xf swig-${SWIG_VERSION}.tar.gz && \
     cd swig-${SWIG_VERSION} && \
     ./configure && \
