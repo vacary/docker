@@ -76,31 +76,6 @@ Images are hosted on quay.io, and are automatically built in the cloud on from
 the Dockerfiles in this repository. The FEniCS Project quay.io page is at
 <https://quay.io/organization/fenicsproject/>.
 
-
-### Developer notes
-
-The images on Dockerhub are built automatically upon pushes to this
-repository. The images tagged `latest` (the stable images) are built
-from the Dockerfiles in the branch `build`. The images tagged
-`experimental` are built from Dockerfiles in the branch `master`.
-When a Dockerfile is ready to move from `experimental` to `latest`,
-merge `master` into `build`.
-
-The image `base` defines the end-user experience for all containers, including
-creating the `fenics` user, setting default `ENTRYPOINT` and `CMD` variables,
-and setting the version of `phusion/baseimage` to use. All other images should
-ultimately inherit `FROM` this image.
-
-`base`: [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/base)
-
-The image `dev-env-base` includes the `fenics.conf` helper script, the
-`fenics.env.conf` environment variable script, and sets the version numbers of
-the packages to compile in the child images. All `dev-env-{variant}` should
-inherit `FROM` this image.
-
-`dev-env-base`: [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-base)
-
-
 ## Authors
 
 * Jack S. Hale (<jack.hale@uni.lu>)

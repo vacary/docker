@@ -27,7 +27,7 @@ well as how to take advantage of more advanced features of Docker.
    jupyter
    performance
    developing
-
+   developer_notes
 
 
 Contact
