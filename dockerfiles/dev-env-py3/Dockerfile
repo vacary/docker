@@ -64,8 +64,10 @@ RUN export PETSC_DIR=/usr/local && \
 ENV SLEPC_DIR=/usr/local \
     PETSC_DIR=/usr/local
 
-RUN pip3 install --upgrade pip && \
-    pip3 install --upgrade setuptools
+# Installing newer versions of pip and setuptools ends in easyinstall
+# failing. Sticking with the versions from Ubuntu packages for now.
+#RUN pip3 install --upgrade pip && \
+#    pip3 install --upgrade setuptools
 
 # Install sympy, petsc4py, slepc4py and swig from source
 RUN pip3 install sympy && \
