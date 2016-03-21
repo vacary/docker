@@ -27,5 +27,27 @@ example::
 
     docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/stable
 
+Any files you place in the directory ``/home/fenics/shared`` in the container
+will be available on the host system at ``$(pwd)``, and vice versa. We
+recommend keeping the source code and generated results for your projects in
+this shared directory, easily accessible on the host machine.
+
+Any files placed in *any* other directory than ``/home/fenics/shared`` in the
+container will *remain* in the container and are not accessible on the host.
+
+For this reason, we recommend giving *every* container you make a ``--name`` so
+that you can easily restart it and access the data within it at a later date::
+
+    docker run -ti -v $(pwd):/home/fenics/shared --name myproject quay.io/fenicsproject/stable
+
+If you type ``exit`` in the container, you can restart and get a fresh shell
+with the commands::
+
+    docker start myproject
+    docker exec -ti myproject /bin/bash -l
+
+For more detailed instructions, check out :ref:`seperate-container` and
+:ref:`exited-container`.
+
 The above instructions will get you quickly up and running with FEniCS
 in Docker. Read on for details on more advanced features.

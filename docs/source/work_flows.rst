@@ -3,8 +3,6 @@
 Suggested workflows
 ===================
 
-*This section is currently under construction*.
-
 Docker is an extremely powerful and flexible system for running
 containers.  However, with that flexibility comes a steep learning
 curve that may raise difficulties for new users. In this section we
@@ -14,6 +12,7 @@ Advanced users may find the `Docker Cheat Sheet
 <https://github.com/wsargent/docker-cheat-sheet>`_ useful for quick
 reference.
 
+.. _seperate-container:
 
 Separate container for each user project
 ----------------------------------------
@@ -66,6 +65,9 @@ into an ``ipython`` prompt instantly using::
 
     docker exec -ti project-1 /bin/bash -l -c ipython
 
+The ``-c`` flag makes ``bash`` read the commands from the string.
+
+.. _exited-container:
 
 Restart an exited container
 ---------------------------
