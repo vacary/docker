@@ -325,19 +325,121 @@ image using::
 
     docker run -ti e82475
 
-Of course, they can also ``tag`` the image for easy reference in the
+Of course, your colleague can also ``tag`` the image for easy reference in the
 future.
 
-The other option is to ``push`` your image up to a cloud service like
-`Dockerhub <https://dockerhub.com>`_, or our preferred provider,
-`quay.io <https://quay.io>`_. Both of these services will store images
-for you and allow others to ``pull`` them, just like our images.
+The other option is to ``push`` your image up to a cloud repository like
+`Dockerhub <https://dockerhub.com>`_, or our preferred provider, `quay.io
+<https://quay.io>`_. Both of these services will store images for you and allow
+others to ``pull`` them, just like our images.
 
-Once you have an account from one of the above sites, you need to
-login.
+First get an account on `Dockerhub <https://dockerhub.com>`_ or `quay.io
+<https://quay.io>`_.
 
+In the case that you have chosen quay.io you need to login using
+``docker login`` and the URL of the quay.io repository::
 
-Create a custom image for my team
----------------------------------
+    docker login https://quay.io/v2/
 
-*TODO*
+In the case you have chosen Dockerhub, you can login without specifying
+a URL as Dockerhub is the default repository::
+
+    docker login
+
+Then, you can push your image to the remote repository using
+``docker tag`` and ``docker push``::
+
+    docker tag e82475 quay.io/my-user/test-repo:latest
+    docker push quay.io/my-user/test-repo:latest
+
+``quay.io`` is the remote repository I want to push to, ``my-user`` is my
+username on quay.io and ``test-repo`` is the name of the repository I want to
+create. Dockerhub users can leave off the ``quay.io/`` prefix as Dockerhub is
+the default remote repository.
+
+Once the upload is complete anyone can ``pull`` your image from
+the repository::
+
+    docker pull quay.io/my-user/test-repo
+
+and ``run`` it::
+
+    docker run -ti quay.io/my-user/test-repo
+
+Create a custom image for my project
+------------------------------------
+We probably haven't included every Python module, every application and every
+small utility that you need for your project. However, we have done all the
+work of compiling and maintaing FEniCS. 
+
+You can build off of our work by learning to write your own ``Dockerfile`` that
+inherits ``FROM`` one of our pre-built images. We won't go into all of the
+details of how to do this here, but can point you in the right direction. For
+full details, take a look at the official Docker `tutorials
+<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_ and
+`manual <https://docs.docker.com/engine/reference/builder/>`_ pages. 
+
+Let's say that we need to run ``scipy`` alongside FEniCS in Python scripts
+within a container. Because our image is built to be as lean as possible, we
+don't include ``scipy`` by default. However, you can add it easily.
+
+Begin by making an empty folder, for example ``my-docker-image/`` and create
+a file called ``Dockerfile`` inside of it::
+
+    mkdir my-docker-image
+    cd my-docker-image
+    touch Dockerfile
+
+Then open up ``Dockerfile`` in your favourite text editor and add in 
+the following text::
+
+    FROM quay.io/fenicsproject/stable:latest
+    USER root
+    RUN apt-get -qq update && \
+        apt-get -y upgrade && \
+        apt-get -y install python-scipy \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    USER fenics
+
+Let's go through each directive one-by-one. The ``FROM`` directive instructions
+Docker to build the new image using ``quay.io/fenicsproject/stable:latest``
+image as a base. The ``USER`` directive instructions Docker to run all
+subsequent commands as the user ``root`` in the container. This method is
+preferred to using ``sudo`` in the ``Dockerfile``. Then, we ``RUN`` a few shell
+commands that update the ``apt-get`` cache and install ``scipy``. Note that we
+clean up and delete the ``apt-get`` cache after using it. This reduces the
+space requirements of the final image. Finally, we switch back to the ``USER``
+``fenics``. The reasons for switching back to the user ``fenics`` are outside
+the scope of this tutorial.
+
+Save ``Dockerfile`` and exit back to the terminal, and then run::
+
+    docker build .
+
+Docker will ``build`` the container using the instructions in the
+``Dockerfile``.  After the build is complete Docker will output a hash, e.g.::
+
+     Successfully built 10c39a18651f
+
+that you can ``tag`` your container for future use::
+
+    docker tag 10c39 quay.io/my-user/my-docker-image
+    
+We can now ``run`` the container in the usual way::
+
+    docker run -ti quay.io/my-user/my-docker-image
+
+Now, inside the container, you should be able to use ``scipy`` and ``dolfin``::
+
+    python -c "import scipy; import dolfin"
+
+Congratulations, you've built your first Docker container!
+
+This is just the beginning of what you can do to customise and build on our
+containers. In general, if you can install it in Ubuntu, you can install it
+in our container. For ideas, you can take a look at the source code of
+our ``Dockerfiles`` `here <https://bitbucket.org/fenics-project/docker>`_ and
+at the official Docker `tutorials
+<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_ and
+`manual <https://docs.docker.com/engine/reference/builder/>`_ pages.
