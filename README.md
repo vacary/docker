@@ -50,6 +50,10 @@ We currently offer eight end-user images. A full description of the images can b
 | base             | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/base)                         | Base image, not for end users.                |
 | dev-env-base     | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-base)         | Base image, not for end users.                |
 
+> Note: The *Build status* column refers to the latest *attempted* build. Even
+> if a build is marked as failed, there will still be a working image available
+> on the `latest` tag that you can use. 
+
 ## Issues
 
 * Docker images default to using the Google Domain Name Servers
