@@ -60,6 +60,8 @@ Summary of available images
 | ``dev-env-base``     | |dev-env-base|      | Base image, not for end users.                  |
 +----------------------+---------------------+-------------------------------------------------+
 
+Note: The *Build Status* column refers to the latest *attempted* build. Even if a build is marked
+as failed, there will still be a working image on the ``latest`` tag that you can use.
 
 Detailed image descriptions
 ---------------------------
