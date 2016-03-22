@@ -17,6 +17,8 @@ To get started, follow these three steps:
 
     docker run -ti quay.io/fenicsproject/stable
 
+*Didn't work?* Try the :ref:`troubleshooting` section.
+
 The first time you run this command, Docker will automatically fetch
 the image for the latest stable version of FEniCS. For the latest
 development version of FEniCS, just change ``stable`` to ``dev``.

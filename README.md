@@ -54,22 +54,6 @@ We currently offer eight end-user images. A full description of the images can b
 > if a build is marked as failed, there will still be a working image available
 > on the `latest` tag that you can use. 
 
-## Issues
-
-* Docker images default to using the Google Domain Name Servers
-  (DNS). Access to these may be blocked on some networks. In this
-  case, you can set the address of the DNS using the Docker option
-  `--dns`, e.g.:
-
-        docker run --dns=4.4.4.4 -t -i fenicsproject/dev-env:latest
-
-  and replace `4.4.4.4` with the address of your local DNS.
-
-  For setting the DNS system-wide, see
-  <https://docs.docker.com/engine/admin/systemd/> and
-  <https://stackoverflow.com/questions/33784295/setting-dns-for-docker-daemon-using-systemd-drop-in/>.
-
-
 ## Building images
 
 Images are hosted on quay.io, and are automatically built in the cloud on from
