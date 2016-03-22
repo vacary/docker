@@ -1,5 +1,7 @@
 .. Documentation for suggested work flows using Docker
 
+.. _workflows:
+
 Suggested workflows
 ===================
 

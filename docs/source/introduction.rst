@@ -1,5 +1,7 @@
 .. Description for how to get started with Docker images for FEniCS
 
+.. _introduction:
+
 Introduction
 ============
 
@@ -93,6 +95,7 @@ directory. It would now be useful to have this file on the host system
 for visualisation with e.g. Paraview. How to do this is the subject of
 the next section.
 
+.. _sharing_introduction:
 
 Sharing files from the host into the container
 ----------------------------------------------
@@ -107,18 +110,45 @@ host system into the container by passing ``-v`` argument to the
 
     docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/stable
 
-This ``run``-s a new container with the current working directory
-``$(pwd)`` shared into the container at the path
-``/home/fenics/shared``.
+This command will ``run`` a new container with the current working directory
+``$(pwd)`` shared into the container at the path ``/home/fenics/shared``.
 
-The syntax for the argument ``-v`` is
-``/path/on/host:/path/in/container``. Note that all paths are absolute
-paths.
+The syntax for the argument ``-v`` is ``/path/on/host:/path/in/container``.
+Note that all paths are absolute paths.
 
-Now, you can edit your code on the host and simply::
+Now, you can edit your code on the host and run the following inside the
+container::
 
     cd $HOME/shared
     python my_code.py
 
-in the container. Any results written by ``my_code.py`` will be
-instantly available back on the host machine in ``$(pwd)``.
+In this case, all files in ``my-work-directory`` will be shared into the
+container.  Any files you place in the directory ``/home/fenics/shared`` in the
+container will be available on the host system at the current working directory
+``$(pwd)``, and vice versa. We recommend keeping the source code and generated
+results for your projects in this shared directory, easily accessible on the
+host machine.
+
+Any files placed in *any* other directory than ``/home/fenics/shared`` in the
+container will *remain* in the container and are not accessible on the host.
+
+.. _naming_introduction:
+
+Naming a container
+------------------
+
+You can give every container a name so that you can easily refer to it in the
+future. To do this simply pass the ``--name`` flag to the ``docker run``
+command, e.g.::
+
+    docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/stable
+
+Now you can easily ``stop``, ``start``, and run a new shell in your container
+``fenics``::
+
+    docker stop fenics
+    docker start fenics
+    docker exec -ti /bin/bash -l
+
+For more details on ways of working with Docker and FEniCS, check out
+:ref:`workflows`.
