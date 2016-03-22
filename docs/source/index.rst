@@ -28,7 +28,7 @@ well as how to take advantage of more advanced features of Docker.
    performance
    developing
    developer_notes
-
+   troubleshooting
 
 Contact
 =======
