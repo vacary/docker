@@ -7,7 +7,7 @@
 FEniCS in Docker
 ================
 
-The easiest way to install `FEniCS <http://fenicsproject.org>`_ is to
+An easy way to run `FEniCS <http://fenicsproject.org>`_ is to
 use our prebuilt, high-performance Docker images.  This documentation
 explains how to get quickly started with using FEniCS in Docker, as
 well as how to take advantage of more advanced features of Docker.
