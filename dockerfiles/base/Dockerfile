@@ -19,7 +19,15 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 USER root
 RUN apt-get update && \ 
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
+    apt-get -y install locales && \
+    echo "C.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set locale environment
+ENV LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    LANGUAGE=C.UTF-8
 
 # Set up user so that we do not run as root
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
