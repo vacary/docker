@@ -1,0 +1,38 @@
+#!/bin/bash
+# pull fenics projects
+# 
+# usage: pull_fenics [ffc] [dolfin]
+#
+# With no args, will pull all fenics projects
+
+
+set -e
+
+if [ -z "$SRC_DIR" ]; then
+    echo "SRC_DIR must be defined" >&2
+    exit -1
+fi
+
+function pull () {
+    for project in $@; do
+        echo "FENICS-BUILDER: Pulling $project..."
+        cd "$SRC_DIR"
+        if [ -d $project ]; then
+            cd $project
+            git pull
+        else
+            git clone https://bitbucket.org/fenics-project/$project.git
+            cd $project
+            if [ ! -z "${FENICS_VERSION}" ]; then
+                git checkout $project-${FENICS_VERSION}
+            fi
+        fi
+    done
+}
+
+if [ -z "$1" ]; then
+    pull fiat instant ufl ffc dolfin
+else
+    pull $@
+fi
+

@@ -20,7 +20,7 @@ WORKDIR /tmp
 # Install Python2 based environment and debuggint tools
 RUN apt-get -qq update && \
     apt-get -y install \
-         gdb valgrind python-numpy python-six python-ply python-pytest \
+         python-dev gdb valgrind python-numpy python-six python-ply python-pytest \
          python-h5py python-urllib3 python-setuptools python-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
