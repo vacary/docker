@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# This script wraps Docker commands to simplify the use of FEniCS Docker images.
+
+DEFAULT_IMAGE="quay.io/fenicsproject/stable"
+CACHE_DIR_HOST="$HOME/.instant"
+CACHE_DIR_CONTAINER="/home/fenics/.instant"
+PROJECT_DIR_HOST=$(pwd)
+
+set -e
+
+GREEN="\033[1;32m"
+BLUE="\033[1;34m"
+NORMAL="\033[0m"
+
+help ()
+{
+    echo "Usage: fenics <command> [options]"
+    echo ""
+    echo "  fenics init  <name> [image] - initialize project with given name (tag)"
+    echo "  fenics start <name>         - start project with given name (tag)"
+    echo ""
+    echo "Available images:"
+    echo ""
+    echo "  quay.io/fenicsproject/stable  - stable release [default]"
+    echo "  quay.io/fenicsproject/dev     - development version"
+    echo "  quay.io/fenicsproject/dev-env - development environment"
+    echo ""
+    echo "More images at http://fenics-containers.readthedocs.org/en/latest/images.html"
+    echo ""
+}
+
+command ()
+{
+    echo "[$@]"
+    echo ""
+    $@
+}
+
+init ()
+{
+    NAME="$1"
+    echo -e "Initializing new ${GREEN}FEniCS Project${NORMAL} ${BLUE}$NAME${NORMAL}."
+    echo ""
+
+    # Create host cache directory
+    mkdir -p $CACHE_DIR_HOST
+
+    # Select image
+    IMAGE="$2"
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+
+    # Create the container
+    CMD="docker create -ti --name $NAME \
+           -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:/home/fenics/$NAME \
+           $IMAGE /bin/bash"
+    command $CMD
+    
+    # Print summary
+    echo ""
+    echo -e "To ${BLUE}start the container${NORMAL}, type the following command:"
+    echo ""
+    echo "  fenics start $NAME"
+    echo ""
+    echo "You will find the current working directory under ~/$NAME."
+
+}
+
+start ()
+{
+    NAME="$1"
+    echo "Starting project named $NAME."
+
+    # Start container
+    CMD="docker start -ai $NAME"
+    command $CMD
+}
+
+# Check command-line arguments
+if [ $# -le 1 ]; then
+    help
+    exit 1
+elif [ "$1" == "init" ]; then
+    init $2 $3
+elif [ "$1" == "start" ]; then
+    start $2
+else
+    help
+    exit 1
+fi
