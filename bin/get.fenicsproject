@@ -3,6 +3,47 @@
 # This script downloads and installs the fenicsproject script providing
 # simplified use of FEniCS Docker images.
 
+# Config
 URLBASE="http://get.fenicsproject.org"
+TMPDEST="/tmp/fenicsproject"
+DEST="/usr/local/bin/fenicsproject"
 
-echo "Test"
+# Setup
+GREEN="\033[1;32m"
+BLUE="\033[1;34m"
+NORMAL="\033[0m"
+
+quickstart ()
+{
+    echo "To get started, run the command ${BLUE}fenicsproject help${NORMAL}."
+    echo ""
+    echo "For example, you might want to run"
+    echo ""
+    echo "  ${BLUE}fenicsproject init myfirstproject${NORMAL}"
+    echo ""
+    echo "to create your first ${GREEN}FEniCS Project${NORMAL}."
+}
+
+# Download script
+rm -f $TMPDEST
+curl -s $URLBASE/fenicsproject > $TMPDEST
+chmod +x $TMPDEST
+
+# Check whether user is in sudoers
+sudo -v
+if [ ! $? -eq 0 ]; then
+    echo ""
+    echo "It appears that you are not allowed to run sudo on your system."
+    echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
+    echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
+    echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
+    echo "When you have done this, follow the instructions below to get started."
+    echo ""
+    quickstart
+    exit
+fi
+
+# Copy the script to PATH
+sudo cp $TMPDEST $DEST
+sudo chmod +x $DEST
+quickstart
