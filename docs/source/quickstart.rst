@@ -41,6 +41,12 @@ first container, or perhaps the name of the project you are working on::
 
     docker run -ti -v $(pwd):/home/fenics/shared --name fenics quay.io/fenicsproject/stable
 
+Then, if you `exit` the container, you can always start it again and
+get another bash session using the commands::
+
+    docker start fenics
+    docker exec -ti fenics /bin/bash -l
+
 The above instructions will get you quickly up and running with FEniCS in
 Docker. We recommend continuing to the :ref:`introduction` for more details on
 :ref:`sharing_introduction` and :ref:`naming_introduction`.

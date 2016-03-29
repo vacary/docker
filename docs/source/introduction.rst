@@ -77,7 +77,7 @@ different to the one above.
 
 We can run the standard DOLFIN ``poisson.py`` example as usual::
 
-    cp /usr/share/dolfin/demo/documented/poisson/python/demo_poisson.py $HOME
+    cd demo/documented/poisson/python
     python demo_poisson.py
 
 You should see the following output::
@@ -141,7 +141,7 @@ You can give every container a name so that you can easily refer to it in the
 future. To do this simply pass the ``--name`` flag to the ``docker run``
 command, e.g.::
 
-    docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/stable
+    docker run -ti -v $(pwd):/home/fenics/shared --name fenics quay.io/fenicsproject/stable
 
 Now you can easily ``stop``, ``start``, and run a new shell in your container
 ``fenics``::
