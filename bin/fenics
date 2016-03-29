@@ -2,7 +2,8 @@
 #
 # This script wraps Docker commands to simplify the use of FEniCS Docker images.
 
-DEFAULT_IMAGE="quay.io/fenicsproject/stable"
+IMAGE_HOST="quay.io/fenicsproject"
+DEFAULT_IMAGE="stable"
 CACHE_DIR_HOST="$HOME/.instant"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
@@ -22,9 +23,9 @@ help ()
     echo ""
     echo "Available images:"
     echo ""
-    echo "  quay.io/fenicsproject/stable  - stable release [default]"
-    echo "  quay.io/fenicsproject/dev     - development version"
-    echo "  quay.io/fenicsproject/dev-env - development environment"
+    echo "  stable  - latest stable release [default]"
+    echo "  dev     - latest development version, master branch"
+    echo "  dev-env - development environment including dependencies but not FEniCS"
     echo ""
     echo "More images at http://fenics-containers.readthedocs.org/en/latest/images.html"
     echo ""
@@ -54,7 +55,7 @@ init ()
     CMD="docker create -ti --name $NAME \
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/$NAME \
-           $IMAGE /bin/bash"
+           $IMAGE_HOST/$IMAGE /bin/bash"
     command $CMD
     
     # Print summary
