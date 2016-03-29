@@ -27,7 +27,9 @@ help ()
     echo "  dev     - latest development version, master branch"
     echo "  dev-env - development environment including dependencies but not FEniCS"
     echo ""
-    echo "More images at http://fenics-containers.readthedocs.org/en/latest/images.html"
+    echo "For more details and tips, see our FEniCS Docker page:"
+    echo ""
+    echo "  http://fenics-containers.readthedocs.org/en/latest/"
     echo ""
 }
 
