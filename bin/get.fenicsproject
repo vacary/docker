@@ -46,4 +46,6 @@ fi
 # Copy the script to PATH
 sudo cp $TMPDEST $DEST
 sudo chmod +x $DEST
+echo "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
+echo ""
 quickstart
