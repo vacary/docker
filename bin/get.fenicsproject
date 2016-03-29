@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# This script downloads and installs the fenicsproject script providing
+# simplified use of FEniCS Docker images.
+
+URLBASE="http://get.fenicsproject.org"
+
+echo "Test"
