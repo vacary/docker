@@ -9,8 +9,18 @@
 FROM quay.io/fenicsproject/stable:latest
 MAINTAINER jhale <mail@jackhale.co.uk>
 
-USER fenics
+USER root
+RUN apt-get -qq update && \
+    apt-get -y install python-scipy && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN git clone https://github.com/funsim/moola.git && \
+    cd moola && \
+    python setup.py install && \
+    rm -rf /tmp/*
+
+USER fenics
 ENV DOLFIN_ADJOINT_VERSION 1.6
 COPY dolfin-adjoint.conf /home/fenics/dolfin-adjoint.conf
 RUN /bin/bash -l -c "source $HOME/dolfin-adjoint.conf && \
