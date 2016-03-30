@@ -31,13 +31,15 @@ if [ ! $? -eq 0 ]; then
     echo ""
     OS=$(uname)
     if [ "$OS"="Linux" ]; then
-        echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
+        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo ""
         echo "Follow these instructions to install Docker, then come back and try again:"
         echo ""
         echo "  https://docs.docker.com/linux/step_one/"
         echo ""
     else
-        echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
+        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo ""
         echo "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
         echo "Follow these instructions to install Docker then come back and try again:"
         echo ""
