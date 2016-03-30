@@ -29,7 +29,8 @@ quickstart ()
 TMP=$(docker -v)
 if [ ! $? -eq 0 ]; then
     echo ""
-    if [ $(uname) == "Linux" ]; then
+    OS=$(uname)
+    if [ "$OS"="Linux" ]; then
         echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
         echo "Follow these instructions to install Docker, then come back and try again:"
         echo ""
@@ -39,6 +40,7 @@ if [ ! $? -eq 0 ]; then
         echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
         echo "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
         echo "Follow these instructions to install Docker then come back and try again:"
+        echo ""
         echo "  https://www.docker.com/products/docker-toolbox"
         echo ""
     fi
