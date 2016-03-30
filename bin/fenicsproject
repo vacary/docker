@@ -2,24 +2,28 @@
 #
 # This script wraps Docker commands to simplify the use of FEniCS Docker images.
 
+# Config
 IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
-CACHE_DIR_HOST="$HOME/.instant"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
 
-set -e
+# Set host cache dir
+CACHE_DIR_HOST=$INSTANT_CACHE_DIR
+: ${CACHE_DIR_HOST:="$HOME/.instant"}
 
+# Setup
+set -e
 GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 NORMAL="\033[0m"
 
 help ()
 {
-    echo "Usage: fenics <command> [options]"
+    echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenics init  <name> [image] - initialize project with given name (tag)"
-    echo "  fenics start <name>         - start project with given name (tag)"
+    echo "  fenicsproject init  <name> [image] - initialize project with given name (tag)"
+    echo "  fenicsproject start <name>         - start project with given name (tag)"
     echo ""
     echo "Available images:"
     echo ""
@@ -27,7 +31,9 @@ help ()
     echo "  dev     - latest development version, master branch"
     echo "  dev-env - development environment including dependencies but not FEniCS"
     echo ""
-    echo "More images at http://fenics-containers.readthedocs.org/en/latest/images.html"
+    echo "For more details and tips, see our FEniCS Docker page:"
+    echo ""
+    echo "  http://fenics-containers.readthedocs.org/en/latest/"
     echo ""
 }
 
@@ -54,8 +60,9 @@ init ()
     # Create the container
     CMD="docker create -ti --name $NAME \
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
-           -v $PROJECT_DIR_HOST:/home/fenics/$NAME \
-           $IMAGE_HOST/$IMAGE /bin/bash"
+           -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           -w /home/fenics/shared \
+           $IMAGE_HOST/$IMAGE /bin/bash -l"
     command $CMD
     
     # Print summary
@@ -64,7 +71,7 @@ init ()
     echo ""
     echo "  fenics start $NAME"
     echo ""
-    echo "You will find the current working directory under ~/$NAME."
+    echo "You will find the current working directory under ~/shared."
 
 }
 

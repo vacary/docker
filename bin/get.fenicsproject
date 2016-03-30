@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+#
+# This script downloads and installs the fenicsproject script providing
+# simplified use of FEniCS Docker images.
+
+# Config
+URLBASE="http://get.fenicsproject.org"
+TMPDEST="/tmp/fenicsproject"
+DEST="/usr/local/bin/fenicsproject"
+
+# Setup
+RED="\033[1;31m"
+BLUE="\033[1;34m"
+GREEN="\033[1;32m"
+NORMAL="\033[0m"
+
+quickstart ()
+{
+    echo "To get started, run the command ${BLUE}fenicsproject help${NORMAL}."
+    echo ""
+    echo "For example, you might want to run"
+    echo ""
+    echo "  ${BLUE}fenicsproject init myfirstproject${NORMAL}"
+    echo ""
+    echo "to create your first ${GREEN}FEniCS Project${NORMAL}."
+}
+
+# Check if we have Docker
+TMP=$(docker -v)
+if [ ! $? -eq 0 ]; then
+    echo ""
+    OS=$(uname)
+    if [ "$OS"="Linux" ]; then
+        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo ""
+        echo "Follow these instructions to install Docker, then come back and try again:"
+        echo ""
+        echo "  https://docs.docker.com/linux/step_one/"
+        echo ""
+    else
+        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo ""
+        echo "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
+        echo "Follow these instructions to install Docker then come back and try again:"
+        echo ""
+        echo "  https://www.docker.com/products/docker-toolbox"
+        echo ""
+    fi
+    exit 1
+fi
+
+# Download script
+rm -f $TMPDEST
+curl -s $URLBASE/fenicsproject > $TMPDEST
+chmod +x $TMPDEST
+
+# Check if user is in sudoers
+sudo -v
+if [ ! $? -eq 0 ]; then
+    echo ""
+    echo "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
+    echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
+    echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
+    echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
+    echo "When you have done this, follow the instructions below to get started."
+    echo ""
+    quickstart
+    exit
+fi
+
+# Copy the script to PATH
+sudo cp $TMPDEST $DEST
+sudo chmod +x $DEST
+echo "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
+echo ""
+quickstart
