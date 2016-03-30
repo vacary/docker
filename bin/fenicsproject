@@ -2,14 +2,18 @@
 #
 # This script wraps Docker commands to simplify the use of FEniCS Docker images.
 
+# Config
 IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
-CACHE_DIR_HOST="$HOME/.instant"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
 
-set -e
+# Set host cache dir
+CACHE_DIR_HOST=$INSTANT_CACHE_DIR
+: ${CACHE_DIR_HOST:="$HOME/.instant"}
 
+# Setup
+set -e
 GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 NORMAL="\033[0m"
@@ -56,7 +60,8 @@ init ()
     # Create the container
     CMD="docker create -ti --name $NAME \
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
-           -v $PROJECT_DIR_HOST:/home/fenics/$NAME \
+           -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE /bin/bash"
     command $CMD
     
@@ -66,7 +71,7 @@ init ()
     echo ""
     echo "  fenics start $NAME"
     echo ""
-    echo "You will find the current working directory under ~/$NAME."
+    echo "You will find the current working directory under ~/shared."
 
 }
 
