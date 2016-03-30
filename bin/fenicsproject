@@ -7,6 +7,7 @@ IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
+DEFAULT_COMMAND="/bin/bash -l"
 
 # Set host cache dir
 CACHE_DIR_HOST=$INSTANT_CACHE_DIR
@@ -14,6 +15,7 @@ CACHE_DIR_HOST=$INSTANT_CACHE_DIR
 
 # Setup
 set -e
+RED="\033[1;31m"
 GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 NORMAL="\033[0m"
@@ -22,8 +24,12 @@ help ()
 {
     echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenicsproject init  <name> [image] - initialize project with given name (tag)"
-    echo "  fenicsproject start <name>         - start project with given name (tag)"
+    echo "  fenicsproject run [image] [command] - run a FEniCS session"
+    echo "  fenicsproject init  <name> [image]  - initialize project with given name (tag)"
+    echo "  fenicsproject start <name>          - start project with given name (tag)"
+    echo ""
+    echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
+    echo "For persistent sessions, use 'init' followed by 'start' to (re)start a session."
     echo ""
     echo "Available images:"
     echo ""
@@ -44,6 +50,30 @@ command ()
     $@
 }
 
+run ()
+{
+    # Create host cache directory
+    mkdir -p $CACHE_DIR_HOST
+
+    # Select image
+    IMAGE="$1"
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+
+    # Select command
+    shift
+    COMMAND="$@"
+    : ${COMMAND:="$DEFAULT_COMMAND"}
+
+    #
+    # Run container
+    CMD="docker run -ti \
+           -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           -w /home/fenics/shared \
+           $IMAGE_HOST/$IMAGE $COMMAND"
+    command $CMD
+}
+
 init ()
 {
     NAME="$1"
@@ -62,7 +92,7 @@ init ()
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
-           $IMAGE_HOST/$IMAGE /bin/bash -l"
+           $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
     
     # Print summary
@@ -72,7 +102,6 @@ init ()
     echo "  fenics start $NAME"
     echo ""
     echo "You will find the current working directory under ~/shared."
-
 }
 
 start ()
@@ -86,9 +115,8 @@ start ()
 }
 
 # Check command-line arguments
-if [ $# -le 1 ]; then
-    help
-    exit 1
+if [ "$1" == "run" ]; then
+    run $2 $3
 elif [ "$1" == "init" ]; then
     init $2 $3
 elif [ "$1" == "start" ]; then
