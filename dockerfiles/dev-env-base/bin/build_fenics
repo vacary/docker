@@ -24,7 +24,7 @@ function build_cmake () {
     test -d "$build" && rm -r "$build"
     mkdir -p "$build"
     cd "$build"
-    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${FENICS_HOME}/bin/python -Wno-dev
+    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev
     make
     make install
 }

@@ -29,7 +29,8 @@ RUN apt-get -qq update && \
 # Our helper scripts
 COPY fenics.env.conf $HOME/fenics.env.conf
 COPY bin $HOME/bin
-RUN chown -R fenics:fenics $HOME
+RUN mkdir $HOME/build && \
+    chown -R fenics:fenics $HOME
 
 USER fenics
 
