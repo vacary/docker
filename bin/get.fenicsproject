@@ -9,8 +9,9 @@ TMPDEST="/tmp/fenicsproject"
 DEST="/usr/local/bin/fenicsproject"
 
 # Setup
-GREEN="\033[1;32m"
+RED="\033[1;31m"
 BLUE="\033[1;34m"
+GREEN="\033[1;32m"
 NORMAL="\033[0m"
 
 quickstart ()
@@ -24,16 +25,36 @@ quickstart ()
     echo "to create your first ${GREEN}FEniCS Project${NORMAL}."
 }
 
+# Check if we have Docker
+TMP=$(docker -v)
+if [ ! $? -eq 0 ]; then
+    echo ""
+    if [ $(uname) == "Linux" ]; then
+        echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
+        echo "Follow these instructions to install Docker, then come back and try again:"
+        echo ""
+        echo "  https://docs.docker.com/linux/step_one/"
+        echo ""
+    else
+        echo "It appears that you ${RED}Docker is not installed${NORMAL} on your system."
+        echo "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
+        echo "Follow these instructions to install Docker then come back and try again:"
+        echo "  https://www.docker.com/products/docker-toolbox"
+        echo ""
+    fi
+    exit 1
+fi
+
 # Download script
 rm -f $TMPDEST
 curl -s $URLBASE/fenicsproject > $TMPDEST
 chmod +x $TMPDEST
 
-# Check whether user is in sudoers
+# Check if user is in sudoers
 sudo -v
 if [ ! $? -eq 0 ]; then
     echo ""
-    echo "It appears that you are not allowed to run sudo on your system."
+    echo "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
     echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
     echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
     echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
