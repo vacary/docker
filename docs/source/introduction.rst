@@ -155,7 +155,7 @@ ever created, just type::
 
     docker ps -a
 
-To see information on just running containers, drop the ``-a`` flag::
+To see the information of only running containers, drop the ``-a`` flag::
 
     docker ps
 

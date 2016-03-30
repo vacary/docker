@@ -48,7 +48,7 @@ get another bash session using the commands::
     docker exec -ti fenics /bin/bash -l
 
 If you want to see information on every container you have ever started, just
-type on the host::
+type::
 
     docker ps -a
 
