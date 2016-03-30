@@ -47,6 +47,14 @@ get another bash session using the commands::
     docker start fenics
     docker exec -ti fenics /bin/bash -l
 
+If you want to see information on every container you have ever started, just
+type on the host::
+
+    docker ps -a
+
+You should see the container ``fenics`` that we created in the previous
+steps.
+
 The above instructions will get you quickly up and running with FEniCS in
 Docker. We recommend continuing to the :ref:`introduction` for more details on
 :ref:`sharing_introduction` and :ref:`naming_introduction`.
