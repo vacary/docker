@@ -18,7 +18,6 @@ ENV FENICS_PYTHON_MAJOR_VERSION=3 \
     FENICS_PYTHON_MINOR_VERSION=4 \
     FENICS_BUILD_TYPE=Debug
 
-RUN /bin/bash -l -c "source $HOME/fenics.conf && \
-                     update_fenics"
+RUN /bin/bash -l -c "update_fenics"
 
 COPY WELCOME $HOME/WELCOME

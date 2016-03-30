@@ -1,5 +1,6 @@
-# Shim image that adds in the global fenics.conf used by all and allows easy
-# bumping of package versions using one set of environment variables.
+# Shim image that adds in the global fenics.env.conf and bin/ used by all and
+# allows easy bumping of package versions using one set of environment
+# variables.
 #
 # While not intended for use by users, an image is hosted at:
 #
@@ -26,15 +27,13 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Our helper scripts
-COPY fenics.conf $HOME/fenics.conf
 COPY fenics.env.conf $HOME/fenics.env.conf
 COPY bin $HOME/bin
 RUN chown -R fenics:fenics $HOME
 
 USER fenics
 
-RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile && \
-    echo "source /home/fenics/fenics.conf" >> /home/fenics/.bashrc
+RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
 
 # Version numbers
 ENV PETSC_VERSION=3.6.3 \

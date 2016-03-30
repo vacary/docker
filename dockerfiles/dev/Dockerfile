@@ -16,7 +16,6 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
     FENICS_PYTHON_MINOR_VERSION=7 \
     FENICS_BUILD_TYPE=Release
 
-RUN bash -l -c "source $HOME/fenics.conf && \
-                update_fenics"
+RUN bash -l -c "update_fenics"
 
 COPY WELCOME $HOME/WELCOME
