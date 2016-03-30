@@ -16,10 +16,10 @@ NORMAL="\033[0m"
 
 help ()
 {
-    echo "Usage: fenics <command> [options]"
+    echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenics init  <name> [image] - initialize project with given name (tag)"
-    echo "  fenics start <name>         - start project with given name (tag)"
+    echo "  fenicsproject init  <name> [image] - initialize project with given name (tag)"
+    echo "  fenicsproject start <name>         - start project with given name (tag)"
     echo ""
     echo "Available images:"
     echo ""
