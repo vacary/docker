@@ -77,7 +77,7 @@ different to the one above.
 
 We can run the standard DOLFIN ``poisson.py`` example as usual::
 
-    cd demo/documented/poisson/python
+    cd ~/demo/documented/poisson/python
     python demo_poisson.py
 
 You should see the following output::
