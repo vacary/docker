@@ -16,13 +16,11 @@ NORMAL="\033[0m"
 
 quickstart ()
 {
-    echo "To get started, run the command ${BLUE}fenicsproject help${NORMAL}."
+    echo "To get started, run the command"
     echo ""
-    echo "For example, you might want to run"
+    echo "  ${BLUE}fenicsproject run${NORMAL}"
     echo ""
-    echo "  ${BLUE}fenicsproject init myfirstproject${NORMAL}"
-    echo ""
-    echo "to create your first ${GREEN}FEniCS Project${NORMAL}."
+    echo "For more information, see ${BLUE}fenicsproject help${NORMAL}."
 }
 
 # Check if we have Docker
