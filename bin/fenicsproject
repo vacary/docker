@@ -62,7 +62,7 @@ init ()
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
-           $IMAGE_HOST/$IMAGE /bin/bash"
+           $IMAGE_HOST/$IMAGE /bin/bash -l"
     command $CMD
     
     # Print summary
