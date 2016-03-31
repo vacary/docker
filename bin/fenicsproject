@@ -27,6 +27,7 @@ help ()
     echo "  fenicsproject run [image] [command] - run a FEniCS session"
     echo "  fenicsproject create <name> [image] - create project with given name (tag)"
     echo "  fenicsproject start <name>          - start project with given name (tag)"
+    echo "  fenicsproject clean-cache           - clean the Instant compiled objects cache"
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
     echo "For persistent sessions, use 'create' followed by 'start' to (re)start a session."
@@ -50,11 +51,15 @@ command ()
     $@
 }
 
+command-swallow-stderr ()
+{
+    echo "[$@]"
+    echo ""
+    $@ 2> /dev/null
+}
+
 run ()
 {
-    # Create host cache directory
-    mkdir -p $CACHE_DIR_HOST
-
     # Select image
     IMAGE="$1"
     : ${IMAGE:="$DEFAULT_IMAGE"}
@@ -65,14 +70,28 @@ run ()
         COMMAND="$@"
         : ${COMMAND:="$DEFAULT_COMMAND"}
     fi
-
+    
+    # Setup a container for instant cache 
+    create-cache-container
     # Run container
-    CMD="docker run -ti \
-           -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
+    CMD="docker run --rm -ti \
+           -v instant-cache:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $COMMAND"
     command $CMD
+}
+
+create-cache-container ()
+{
+    CMD="docker volume create --name instant-cache"
+    command $CMD 
+}
+
+clean-cache ()
+{
+    CMD="docker rm instant-cache"
+    command-swallow-stderr $CMD || echo "No Instant cache exists, doing nothing."
 }
 
 create ()
@@ -89,8 +108,9 @@ create ()
     : ${IMAGE:="$DEFAULT_IMAGE"}
 
     # Create the container
+    create-cache-container
     CMD="docker create -ti --name $NAME \
-           -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
+           -v instant-cache:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
@@ -122,6 +142,8 @@ elif [ "$1" == "create" ]; then
     create $2 $3
 elif [ "$1" == "start" ]; then
     start $2
+elif [ "$1" == "clean-cache" ]; then
+    clean-cache
 else
     help
     exit 1
