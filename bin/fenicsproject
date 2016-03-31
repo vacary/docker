@@ -25,11 +25,11 @@ help ()
     echo "Usage: fenicsproject <command> [options]"
     echo ""
     echo "  fenicsproject run [image] [command] - run a FEniCS session"
-    echo "  fenicsproject init  <name> [image]  - initialize project with given name (tag)"
+    echo "  fenicsproject create <name> [image] - create project with given name (tag)"
     echo "  fenicsproject start <name>          - start project with given name (tag)"
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
-    echo "For persistent sessions, use 'init' followed by 'start' to (re)start a session."
+    echo "For persistent sessions, use 'create' followed by 'start' to (re)start a session."
     echo ""
     echo "Available images:"
     echo ""
@@ -75,10 +75,10 @@ run ()
     command $CMD
 }
 
-init ()
+create ()
 {
     NAME="$1"
-    echo -e "Initializing new ${GREEN}FEniCS Project${NORMAL} ${BLUE}$NAME${NORMAL}."
+    echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} ${BLUE}$NAME${NORMAL}."
     echo ""
 
     # Create host cache directory
@@ -100,7 +100,7 @@ init ()
     echo ""
     echo -e "To ${BLUE}start the container${NORMAL}, type the following command:"
     echo ""
-    echo "  fenics start $NAME"
+    echo "  fenicsproject start $NAME"
     echo ""
     echo "You will find the current working directory under ~/shared."
 }
@@ -118,8 +118,8 @@ start ()
 # Check command-line arguments
 if [ "$1" == "run" ]; then
     run $2 $3
-elif [ "$1" == "init" ]; then
-    init $2 $3
+elif [ "$1" == "create" ]; then
+    create $2 $3
 elif [ "$1" == "start" ]; then
     start $2
 else
