@@ -59,12 +59,13 @@ run ()
     IMAGE="$1"
     : ${IMAGE:="$DEFAULT_IMAGE"}
 
-    # Select command
-    shift
-    COMMAND="$@"
-    : ${COMMAND:="$DEFAULT_COMMAND"}
+    # Select command (if any)
+    if [ $# -ge 2 ]; then
+        shift
+        COMMAND="$@"
+        : ${COMMAND:="$DEFAULT_COMMAND"}
+    fi
 
-    #
     # Run container
     CMD="docker run -ti \
            -v $CACHE_DIR_HOST:$CACHE_DIR_CONTAINER \
