@@ -128,11 +128,22 @@ create ()
 start ()
 {
     NAME="$1"
-    echo "Starting project named $NAME."
 
-    # Start container
-    CMD="docker start -ai $NAME"
-    command $CMD
+    # Determine whether container is already running
+    # If not, then start and attach interactive session
+    # If it is, then launch a new bash login terminal.
+    # Why doesn't this line work?
+    #RUNNING=$(docker ps | grep -c ${NAME})
+    RUNNING="0"
+    if [ "$RUNNING" == "0" ]; then 
+        echo "Starting project named $NAME."
+        CMD="docker start -ai $NAME"
+        command $CMD
+    else
+        echo "Starting new container in project named $NAME."
+        CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
+        command $CMD
+    fi
 }
 
 # Check command-line arguments
