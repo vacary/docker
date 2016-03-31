@@ -42,6 +42,9 @@ RUN echo 1 > /etc/container_environment/OPENBLAS_NUM_THREADS && \
 RUN touch /etc/service/syslog-forwarder/down
 RUN echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc
 
+COPY set-home-permissions.sh /etc/my_init.d/set-home-permissions.sh
+RUN chmod +x /etc/my_init.d/set-home-permissions.sh
+
 USER fenics
 ENV HOME /home/fenics
 
