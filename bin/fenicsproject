@@ -24,11 +24,12 @@ help ()
 {
     echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenicsproject run [image] [command] - run a FEniCS session"
-    echo "  fenicsproject create <name> [image] - create project with given name (tag)"
-    echo "  fenicsproject start <name>          - start a session in project with given name (tag)"
-    echo "  fenicsproject list                  - list all projects"
-    echo "  fenicsproject clean-cache [image]   - clean the shared Instant compiled objects cache"
+    echo "  fenicsproject run [image] [command]   - run a FEniCS session"
+    echo "  fenicsproject create <name> [image]   - create standard project with given name (tag)"
+    echo "  fenicsproject notebook <name> [image] - create a Jupyter notebook project with given name (tag)"
+    echo "  fenicsproject start <name>            - start a session in project with given name (tag)"
+    echo "  fenicsproject list                    - list all projects"
+    echo "  fenicsproject clean-cache [image]     - clean the shared Instant compiled objects cache"
     
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
@@ -101,11 +102,8 @@ clean-cache ()
 create ()
 {
     NAME="$1"
-    echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} ${BLUE}$NAME${NORMAL}."
+    echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} terminal project ${BLUE}$NAME${NORMAL}."
     echo ""
-
-    # Create host cache directory
-    mkdir -p $CACHE_DIR_HOST
 
     # Select image
     IMAGE="$2"
@@ -136,9 +134,7 @@ start ()
     # Determine whether container is already running
     # If not, then start and attach interactive session
     # If it is, then launch a new bash login terminal.
-    # Why doesn't this line work?
     IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2>/dev/null)
-    echo $IS_RUNNING
     if [ "$IS_RUNNING" == "false" ]; then 
         echo "Starting project named $NAME."
         CMD="docker start -ai $NAME"
@@ -156,11 +152,44 @@ list ()
     command $CMD
 }
 
+notebook ()
+{
+    # Select image
+    IMAGE="$2"
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+
+    NAME="$1"
+    echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} notebook project ${BLUE}$NAME${NORMAL}."
+    echo ""
+    
+    # Setup a container for instant cache 
+    create-cache-container $IMAGE
+    # Run container
+    CMD="docker create -p 127.0.0.1:8888:8888 \
+           -v instant-cache-$IMAGE:/home/fenics/.instant \
+           -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           -w /home/fenics/shared \
+           --label org.fenicsproject.session_type='notebook' \
+           --name $NAME \
+           $IMAGE_HOST/$IMAGE 'jupyter-notebook --ip=0.0.0.0'"
+    command $CMD
+
+    # Print summary
+    echo ""
+    echo -e "To ${BLUE}start the session${NORMAL}, type the following command:"
+    echo ""
+    echo "  fenicsproject start $NAME"
+    echo ""
+    echo "You can then connect to the Jupyter notebook session at http://localhost:8888"
+}
+
 # Check command-line arguments
 if [ "$1" == "run" ]; then
     run $2 $3
 elif [ "$1" == "create" ]; then
     create $2 $3
+elif [ "$1" == "notebook" ]; then
+    notebook $2 $3
 elif [ "$1" == "start" ]; then
     start $2
 elif [ "$1" == "list" ]; then
