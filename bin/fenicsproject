@@ -26,8 +26,10 @@ help ()
     echo ""
     echo "  fenicsproject run [image] [command] - run a FEniCS session"
     echo "  fenicsproject create <name> [image] - create project with given name (tag)"
-    echo "  fenicsproject start <name>          - start project with given name (tag)"
-    echo "  fenicsproject clean-cache           - clean the Instant compiled objects cache"
+    echo "  fenicsproject start <name>          - start a session in project with given name (tag)"
+    echo "  fenicsproject list                  - list all projects"
+    echo "  fenicsproject clean-cache [image]   - clean the shared Instant compiled objects cache"
+    
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
     echo "For persistent sessions, use 'create' followed by 'start' to (re)start a session."
@@ -48,14 +50,14 @@ command ()
 {
     echo "[$@]"
     echo ""
-    $@
+    eval $@
 }
 
 command-swallow-stderr ()
 {
     echo "[$@]"
     echo ""
-    $@ 2> /dev/null
+    eval $@ 2> /dev/null
 }
 
 run ()
@@ -72,10 +74,10 @@ run ()
     fi
     
     # Setup a container for instant cache 
-    create-cache-container
+    create-cache-container $IMAGE
     # Run container
     CMD="docker run --rm -ti \
-           -v instant-cache:/home/fenics/.instant \
+           -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $COMMAND"
@@ -84,13 +86,15 @@ run ()
 
 create-cache-container ()
 {
-    CMD="docker volume create --name instant-cache"
+    IMAGE="$1"
+    CMD="docker volume create --name instant-cache-${IMAGE}"
     command $CMD 
 }
 
 clean-cache ()
 {
-    CMD="docker rm instant-cache"
+    IMAGE="$1"
+    CMD="docker volume rm instant-cache-$IMAGE"
     command-swallow-stderr $CMD || echo "No Instant cache exists, doing nothing."
 }
 
@@ -108,9 +112,9 @@ create ()
     : ${IMAGE:="$DEFAULT_IMAGE"}
 
     # Create the container
-    create-cache-container
+    create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
-           -v instant-cache:$CACHE_DIR_CONTAINER \
+           -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
@@ -118,7 +122,7 @@ create ()
     
     # Print summary
     echo ""
-    echo -e "To ${BLUE}start the container${NORMAL}, type the following command:"
+    echo -e "To ${BLUE}start the session${NORMAL}, type the following command:"
     echo ""
     echo "  fenicsproject start $NAME"
     echo ""
@@ -133,17 +137,23 @@ start ()
     # If not, then start and attach interactive session
     # If it is, then launch a new bash login terminal.
     # Why doesn't this line work?
-    #RUNNING=$(docker ps | grep -c ${NAME})
-    RUNNING="0"
-    if [ "$RUNNING" == "0" ]; then 
+    IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2>/dev/null)
+    echo $IS_RUNNING
+    if [ "$IS_RUNNING" == "false" ]; then 
         echo "Starting project named $NAME."
         CMD="docker start -ai $NAME"
         command $CMD
     else
-        echo "Starting new container in project named $NAME."
+        echo "Starting new session in project named $NAME."
         CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
         command $CMD
     fi
+}
+
+list ()
+{
+    CMD="docker ps -a --format '{{ .Names }} @{{ .Image }} @{{ .Status }}' | grep fenicsproject | column -t -s='@'"
+    command $CMD
 }
 
 # Check command-line arguments
@@ -153,8 +163,10 @@ elif [ "$1" == "create" ]; then
     create $2 $3
 elif [ "$1" == "start" ]; then
     start $2
+elif [ "$1" == "list" ]; then
+    list
 elif [ "$1" == "clean-cache" ]; then
-    clean-cache
+    clean-cache $2
 else
     help
     exit 1
