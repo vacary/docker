@@ -7,6 +7,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
+# Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
@@ -17,12 +18,12 @@ RUN echo "2" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION && \
 
 WORKDIR /tmp
 
-# Install Python2 based environment 
+# Install Python2 based environment
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
         python-dev python-numpy python-six python-ply python-pytest python-h5py \
-        python-urllib3 python-setuptools python-pip && \
+        python-urllib3 python-setuptools python-pip python-matplotlib && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
