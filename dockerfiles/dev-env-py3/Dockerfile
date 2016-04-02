@@ -69,8 +69,9 @@ ENV SLEPC_DIR=/usr/local \
 #RUN pip3 install --upgrade pip && \
 #    pip3 install --upgrade setuptools
 
-# Install sympy, petsc4py, slepc4py and swig from source
-RUN pip3 install sympy && \
+# Install Jupyter, sympy, petsc4py, slepc4py and swig from source
+RUN pip3 install jupyter && \
+    pip3 install sympy && \
     easy_install3 \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     easy_install3 \
