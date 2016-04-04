@@ -189,6 +189,7 @@ notebook ()
     create-cache-container $IMAGE
     # Run container. We only expose out to localhost
     # for security.
+    CMD="docker create -p 127.0.0.1:3000-4000:8888 \
            -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
@@ -203,7 +204,6 @@ notebook ()
     echo ""
     echo "  fenicsproject start $NAME"
     echo ""
-    echo "You can then connect to the Jupyter notebook session at http://localhost:8888"
 }
 
 # Check command-line arguments
