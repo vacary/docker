@@ -8,6 +8,7 @@
 #
 # Author:
 # Jack S. Hale <jack.hale@uni.lu>
+# Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
@@ -39,6 +40,7 @@ RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
 ENV PETSC_VERSION=3.6.3 \
     SLEPC_VERSION=3.6.2 \
     SWIG_VERSION=3.0.8 \
+    MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.6.0 \
     SLEPC4PY_VERSION=3.6.0 \
     TRILINOS_VERSION=12.6.1
