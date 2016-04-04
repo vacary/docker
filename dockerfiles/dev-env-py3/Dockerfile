@@ -74,11 +74,11 @@ ENV SLEPC_DIR=/usr/local \
 # Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and swig from source
 RUN pip3 install jupyter && \
     pip3 install sympy && \
-    easy_install3 \
+    pip3 install \
      https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
-    easy_install3 \
+    pip3 install \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
-    easy_install3 \
+    pip3 install \
      https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     cd /tmp && \
     wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz && \
