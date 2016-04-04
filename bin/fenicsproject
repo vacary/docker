@@ -171,7 +171,7 @@ start ()
 
 list ()
 {
-    CMD="docker ps -a --format '{{ .Names }} @{{ .Image }} @{{ .Status }}' | grep fenicsproject | column -t -s='@'"
+    CMD="docker ps -a --format '{{ .Names }} @{{ .Image }} @{{ .Status }}' | column -t -s='@'"
     command $CMD
 }
 
