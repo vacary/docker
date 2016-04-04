@@ -149,7 +149,8 @@ start ()
         if [[ "$SESSION_TYPE" == "notebook" && ( "$OS" == "Darwin" || "$OS" == "Cygwin" ) ]]; then
             # Ask Docker for the port mapping.
             ACTIVE_MACHINE=$(docker-machine active)
-            docker-machine ssh $ACTIVE_MACHINE -fN -L $PORT:localhost:$PORT
+            CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
+            command $CMD
         fi
         echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
         cleanup_ssh () {
