@@ -3,7 +3,7 @@
 Running Jupyter notebooks
 =========================
 
-Juypter notebooks allow you to create and share documents that contain live
+Jupyter notebooks allow you to create and share documents that contain live
 code, equations and visualisations. For more information check out
 https://jupyter.org.
 
@@ -23,8 +23,8 @@ The current working directory ``$(pwd)`` will be available in the Jupyter
 notebook interface. You might want to give the container a name that
 you can easily rememember. In this example I have simply chosen ``notebook``.
 
-In addition to the ``docker`` command above, users on Mac OS X and Windows will
-need to set up an SSH tunnel between the host and the virtual machine where
+In addition to the ``docker run`` command users on Mac OS X and Windows will
+need to setup an SSH tunnel between the host and the virtual machine where
 Docker actually runs:: 
 
     docker-machine ssh $(docker-machine active) -fN -L localhost:8888:localhost:8888
