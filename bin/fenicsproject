@@ -8,6 +8,7 @@ DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
 DEFAULT_COMMAND="/bin/bash -l"
+OS=$(uname -s)
 
 # Set host cache dir
 CACHE_DIR_HOST=$INSTANT_CACHE_DIR
@@ -24,7 +25,7 @@ help ()
 {
     echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenicsproject run [image] [command]   - run a FEniCS session"
+    echo "  fenicsproject run [image] [command]   - run a simple FEniCS session"
     echo "  fenicsproject create <name> [image]   - create standard project with given name (tag)"
     echo "  fenicsproject notebook <name> [image] - create a Jupyter notebook project with given name (tag)"
     echo "  fenicsproject start <name>            - start a session in project with given name (tag)"
@@ -33,7 +34,7 @@ help ()
     
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
-    echo "For persistent sessions, use 'create' followed by 'start' to (re)start a session."
+    echo "For persistent sessions, use 'create' or 'notebook' followed by 'start' to (re)start a session."
     echo ""
     echo "Available images:"
     echo ""
@@ -132,12 +133,34 @@ start ()
     NAME="$1"
 
     # Determine whether container is already running
-    # If not, then start and attach interactive session
+    # If not, then start a new session (bash or notebook).
     # If it is, then launch a new bash login terminal.
     IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2>/dev/null)
-    if [ "$IS_RUNNING" == "false" ]; then 
+    SESSION_TYPE=$(docker inspect -f '{{index .Config.Labels "org.fenicsproject.session_type" }}' $NAME 2>/dev/null)
+    if [ "$IS_RUNNING" == "false" ]; then
         echo "Starting project named $NAME."
-        CMD="docker start -ai $NAME"
+        CMD="docker start $NAME"
+        command $CMD
+        # Some SSH tunneling to get the Jupyter session available for people
+        # on Mac OS X and Windows (Cygwin). We only expose out to localhost
+        # for security. 
+        PORT=$(docker port $NAME 8888 | cut -d: -f2)
+        if [[ "$SESSION_TYPE" == "notebook" && ( "$OS" == "Darwin" || "$OS" == "Cygwin" ) ]]; then
+            # Ask Docker for the port mapping.
+            ACTIVE_MACHINE=$(docker-machine active)
+            docker-machine ssh $ACTIVE_MACHINE -fN -L $PORT:localhost:$PORT
+        fi
+        echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
+        cleanup_ssh () {
+            if [[ "$OS" == "Darwin" || "$OS" == "Cygwin" ]]; then
+                # Find the running ssh PID that created our tunnel and kill it.
+                PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                kill $PID
+            fi
+        } 
+        # Manually cleanup ssh port forwarding on terminate signal.
+        trap cleanup_ssh SIGINT
+        CMD="docker attach $NAME"
         command $CMD
     else
         echo "Starting new session in project named $NAME."
@@ -164,8 +187,9 @@ notebook ()
     
     # Setup a container for instant cache 
     create-cache-container $IMAGE
-    # Run container
-    CMD="docker create -p 127.0.0.1:8888:8888 \
+    # Run container. We only expose out to localhost
+    # for security.
+    CMD="docker create -P 127.0.0.1:3000-4000:8888 \
            -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
