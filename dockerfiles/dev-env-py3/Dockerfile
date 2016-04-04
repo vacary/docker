@@ -8,6 +8,7 @@
 # Lizao Li <lixx1445@umn.edu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 # Johannes Ring <johannr@simula.no>
+# Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
@@ -16,12 +17,12 @@ USER root
 RUN echo "3" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
 RUN echo "4" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
-# Install Python3 based environment 
+# Install Python3 based environment
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-        python3-dev python3-numpy python3-six python3-ply python3-pytest \ 
-        python3-h5py python3-urllib3 python3-setuptools python3-pip && \
+        python3-dev python3-numpy python3-six python3-ply python3-pytest \
+        python3-h5py python3-urllib3 python3-setuptools python3-pip python3-flufl.lock && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -69,9 +70,11 @@ ENV SLEPC_DIR=/usr/local \
 #RUN pip3 install --upgrade pip && \
 #    pip3 install --upgrade setuptools
 
-# Install Jupyter, sympy, petsc4py, slepc4py and swig from source
+# Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and swig from source
 RUN pip3 install jupyter && \
     pip3 install sympy && \
+    easy_install3 \
+     https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     easy_install3 \
      https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     easy_install3 \
