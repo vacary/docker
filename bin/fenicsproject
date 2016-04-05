@@ -27,15 +27,17 @@ help ()
     echo "Usage: fenicsproject <command> [options]"
     echo ""
     echo "  fenicsproject run [image] [command]   - run a simple FEniCS session"
-    echo "  fenicsproject create <name> [image]   - create standard project with given name (tag)"
-    echo "  fenicsproject notebook <name> [image] - create a Jupyter notebook project with given name (tag)"
-    echo "  fenicsproject start <name>            - start a session in project with given name (tag)"
+    echo "  fenicsproject create <name> [image]   - create standard project with given name"
+    echo "  fenicsproject notebook <name> [image] - create notebook project with given name"
+    echo "  fenicsproject start <name>            - start session in project with given name"
     echo "  fenicsproject list                    - list all projects"
-    echo "  fenicsproject clean-cache [image]     - clean the shared Instant compiled objects cache"
-    
+    echo "  fenicsproject clean-cache [image]     - clean the shared FEniCS (Instant) cache"
+
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
-    echo "For persistent sessions, use 'create' or 'notebook' followed by 'start' to (re)start a session."
+    echo ""
+    echo "For persistent sessions, use 'create' or 'notebook' followed by 'start'"
+    echo "to (re)start a session."
     echo ""
     echo "Available images:"
     echo ""
@@ -75,8 +77,8 @@ run ()
         COMMAND="$@"
         : ${COMMAND:="$DEFAULT_COMMAND"}
     fi
-    
-    # Setup a container for instant cache 
+
+    # Setup a container for instant cache
     create-cache-container $IMAGE
 
     # Run container
@@ -92,7 +94,7 @@ create-cache-container ()
 {
     IMAGE="$1"
     CMD="docker volume create --name instant-cache-${IMAGE}"
-    command $CMD 
+    command $CMD
 }
 
 clean-cache ()
@@ -120,7 +122,7 @@ create ()
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
-    
+
     # Print summary
     echo ""
     echo -e "To ${BLUE}start the session${NORMAL}, type the following command:"
@@ -145,7 +147,7 @@ start ()
         command $CMD
         # Some SSH tunneling to get the Jupyter session available for people
         # on Mac OS X and Windows (Cygwin). We only expose out to localhost
-        # for security. 
+        # for security.
         PORT=$(docker port $NAME 8888 | cut -d: -f2)
         if [[ "$SESSION_TYPE" == "notebook" && ( "$OS" == "Darwin" || "$OS" == "Cygwin" ) ]]; then
             # Ask Docker for the port mapping.
@@ -160,7 +162,7 @@ start ()
                 PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
                 kill $PID
             fi
-        } 
+        }
         # Manually cleanup ssh port forwarding on terminate signal.
         trap cleanup_ssh SIGINT
         CMD="docker attach $NAME"
@@ -187,8 +189,8 @@ notebook ()
     NAME="$1"
     echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} notebook project ${BLUE}$NAME${NORMAL}."
     echo ""
-    
-    # Setup a container for instant cache 
+
+    # Setup a container for instant cache
     create-cache-container $IMAGE
 
     # Run container. We only expose out to localhost for security.
