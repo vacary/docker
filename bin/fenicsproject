@@ -31,6 +31,7 @@ help ()
     echo "  fenicsproject notebook <name> [image] - create notebook project with given name"
     echo "  fenicsproject start <name>            - start session in project with given name"
     echo "  fenicsproject list                    - list all projects"
+    echo "  fenicsproject pull <image>            - pull latest version of given image"
     echo "  fenicsproject clean-cache [image]     - clean the shared FEniCS (Instant) cache"
 
     echo ""
@@ -180,6 +181,13 @@ list ()
     command $CMD
 }
 
+pull ()
+{
+    IMAGE="$1"
+    CMD="docker pull $IMAGE_HOST/$IMAGE"
+    command $CMD
+}
+
 notebook ()
 {
     # Select image
@@ -222,6 +230,8 @@ elif [ "$1" == "start" ]; then
     start $2
 elif [ "$1" == "list" ]; then
     list
+elif [ "$1" == "pull" ]; then
+    pull $2
 elif [ "$1" == "clean-cache" ]; then
     clean-cache $2
 else
