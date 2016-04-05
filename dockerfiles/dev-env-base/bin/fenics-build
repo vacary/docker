@@ -42,7 +42,7 @@ function build () {
             continue
         fi
         cd "$path"
-        ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade
+        ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
     done
 }
 
