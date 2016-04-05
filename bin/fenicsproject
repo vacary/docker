@@ -115,11 +115,17 @@ create ()
     IMAGE="$2"
     : ${IMAGE:="$DEFAULT_IMAGE"}
 
+    # Share FENiCS_BUILD_DIR if set
+    if [ ! -z "$FENICS_BUILD_DIR" ]; then
+        SHARE_BUILD_DIR="-v $FENICS_BUILD_DIR:/home/fenics/build"
+    fi
+
     # Create the container
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           $SHARE_BUILD_DIR \
            -w /home/fenics/shared \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
