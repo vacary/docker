@@ -37,12 +37,12 @@ function build () {
             echo "FENICS-BUILDER: $project source cannot be found at $path. Please run fenics-pull first."
             exit -1
         fi
-        if [ "$project" = "dolfin" ]; then
+        if [ -e $path/CMakeLists.txt ]; then
             build_cmake "$project"
-            continue
+        else
+            cd "$path"
+            ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
         fi
-        cd "$path"
-        ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
     done
 }
 
