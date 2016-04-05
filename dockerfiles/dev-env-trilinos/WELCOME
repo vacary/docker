@@ -7,4 +7,4 @@ It is intended for users who want to build their own version of FEniCS.
 We do provide a helper script in this container to compile FEniCS
 automatically:
 
-    update_fenics
+    fenics-update 

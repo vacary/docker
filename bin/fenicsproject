@@ -87,6 +87,7 @@ run ()
            -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
+           --label org.fenicsproject.created_by_script=true \
            $IMAGE_HOST/$IMAGE $COMMAND"
     command $CMD
 }
@@ -124,6 +125,8 @@ create ()
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
+           --label org.fenicsproject.created_by_script=true \
+           --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            $SHARE_BUILD_DIR \
            -w /home/fenics/shared \
@@ -147,33 +150,42 @@ start ()
     # If not, then start a new session (bash or notebook).
     # If it is, then launch a new bash login terminal.
     IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2>/dev/null)
-    SESSION_TYPE=$(docker inspect -f '{{index .Config.Labels "org.fenicsproject.session_type" }}' $NAME 2>/dev/null)
+    PROJECT_TYPE=$(docker inspect -f '{{index .Config.Labels "org.fenicsproject.project_type" }}' $NAME 2>/dev/null)
     if [ "$IS_RUNNING" == "false" ]; then
         echo "Starting project named $NAME."
-        CMD="docker start $NAME"
-        command $CMD
-        # Some SSH tunneling to get the Jupyter session available for people
-        # on Mac OS X and Windows (Cygwin). We only expose out to localhost
-        # for security.
-        PORT=$(docker port $NAME 8888 | cut -d: -f2)
-        if [[ "$SESSION_TYPE" == "notebook" && ( "$OS" == "Darwin" || "$OS" == "Cygwin" ) ]]; then
-            # Ask Docker for the port mapping.
-            ACTIVE_MACHINE=$(docker-machine active)
-            CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
+        if [ "$PROJECT_TYPE" == "notebook" ]; then
+            # TODO: When Docker shifts over to new Docker for Mac and Docker
+            # for Windows, all of this SSH madness should be over.
+            CMD="docker start $NAME"
             command $CMD
-        fi
-        echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
-        cleanup_ssh () {
+            
+            # Some SSH tunneling to get the Jupyter session available for people
+            # on Mac OS X and Windows (Cygwin). We only expose out to localhost
+            # for security.
+            PORT=$(docker port $NAME 8888 | cut -d: -f2)
             if [[ "$OS" == "Darwin" || "$OS" == "Cygwin" ]]; then
-                # Find the running ssh PID that created our tunnel and kill it.
-                PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
-                kill $PID
+                # Ask Docker for the port mapping.
+                ACTIVE_MACHINE=$(docker-machine active)
+                CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
+                command $CMD
             fi
-        }
-        # Manually cleanup ssh port forwarding on terminate signal.
-        trap cleanup_ssh SIGINT
-        CMD="docker attach $NAME"
-        command $CMD
+
+            echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
+            # Manually cleanup ssh port forwarding on terminate signal.
+            cleanup_ssh () {
+                if [[ "$OS" == "Darwin" || "$OS" == "Cygwin" ]]; then
+                    # Find the running ssh PID that created our tunnel and kill it.
+                    PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                    kill $PID
+                fi
+            }
+            trap cleanup_ssh SIGINT
+            CMD="docker attach $NAME"
+            command $CMD
+        else
+           CMD="docker start -ai $NAME"
+           command $CMD 
+       fi
     else
         echo "Starting new session in project named $NAME."
         CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
@@ -212,7 +224,8 @@ notebook ()
            -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
-           --label org.fenicsproject.session_type='notebook' \
+           --label org.fenicsproject.created_by_script=true \
+           --label org.fenicsproject.project_type='notebook' \
            --name $NAME \
            $IMAGE_HOST/$IMAGE 'jupyter-notebook --ip=0.0.0.0'"
     command $CMD

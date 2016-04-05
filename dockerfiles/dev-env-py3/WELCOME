@@ -9,4 +9,4 @@ the development version of FEniCS for Python 3.
 We do provide a helper script in this container to compile FEniCS
 automatically:
 
-    update_fenics
+    fenics-update
