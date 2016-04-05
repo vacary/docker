@@ -24,7 +24,7 @@ function build_cmake () {
     test -d "$build" && rm -r "$build"
     mkdir -p "$build"
     cd "$build"
-    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev
+    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev ${CMAKE_EXTRA_ARGS}
     make
     make install
 }
@@ -37,12 +37,12 @@ function build () {
             echo "FENICS-BUILDER: $project source cannot be found at $path. Please run fenics-pull first."
             exit -1
         fi
-        if [ "$project" = "dolfin" ]; then
+        if [ -e $path/CMakeLists.txt ]; then
             build_cmake "$project"
-            continue
+        else
+            cd "$path"
+            ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
         fi
-        cd "$path"
-        ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
     done
 }
 
