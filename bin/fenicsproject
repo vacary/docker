@@ -218,7 +218,7 @@ notebook ()
            -v instant-cache-$IMAGE:/home/fenics/.instant \
            -v $PROJECT_DIR_HOST:/home/fenics/shared \
            -w /home/fenics/shared \
-           --label org.fenicsproject.created_by_script=true \ 
+           --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
            --name $NAME \
            $IMAGE_HOST/$IMAGE 'jupyter-notebook --ip=0.0.0.0'"
