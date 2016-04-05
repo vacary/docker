@@ -1,7 +1,7 @@
 #!/bin/bash
 # pull fenics projects
 # 
-# usage: pull_fenics [ffc] [dolfin]
+# usage: fenics-pull [ffc] [dolfin]
 #
 # With no args, will pull all fenics projects
 

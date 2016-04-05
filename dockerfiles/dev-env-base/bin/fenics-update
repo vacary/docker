@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-pull_fenics $@
-build_fenics $@
+fenics-pull $@
+fenics-build $@
 
 printf "\033c"
 echo "FEniCS compilation has finished."

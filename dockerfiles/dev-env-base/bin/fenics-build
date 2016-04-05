@@ -34,7 +34,7 @@ function build () {
         echo "FENICS-BUILDER: Building $project..."
         path="$SRC_DIR/$project"
         if [ ! -d "$path" ]; then
-            echo "FENICS-BUILDER: $project source cannot be found at $path. Please run pull_fenics first."
+            echo "FENICS-BUILDER: $project source cannot be found at $path. Please run fenics-pull first."
             exit -1
         fi
         if [ "$project" = "dolfin" ]; then
