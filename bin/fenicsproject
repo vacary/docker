@@ -118,7 +118,7 @@ create ()
 
     # Share FENiCS_SRC_DIR if set
     if [ ! -z "$FENICS_SRC_DIR" ]; then
-        SHARE_BUILD_DIR="-v $FENICS_SRC_DIR:/home/fenics/build"
+        SHARE_BUILD_DIR="-v $FENICS_SRC_DIR:/home/fenics/build/src"
     fi
 
     # Create the container
@@ -158,7 +158,7 @@ start ()
             # for Windows, all of this SSH madness should be over.
             CMD="docker start $NAME"
             command $CMD
-            
+
             # Some SSH tunneling to get the Jupyter session available for people
             # on Mac OS X and Windows (Cygwin). We only expose out to localhost
             # for security.
@@ -184,7 +184,7 @@ start ()
             command $CMD
         else
            CMD="docker start -ai $NAME"
-           command $CMD 
+           command $CMD
        fi
     else
         echo "Starting new session in project named $NAME."
