@@ -115,9 +115,9 @@ create ()
     IMAGE="$2"
     : ${IMAGE:="$DEFAULT_IMAGE"}
 
-    # Share FENiCS_BUILD_DIR if set
-    if [ ! -z "$FENICS_BUILD_DIR" ]; then
-        SHARE_BUILD_DIR="-v $FENICS_BUILD_DIR:/home/fenics/build"
+    # Share FENiCS_SRC_DIR if set
+    if [ ! -z "$FENICS_SRC_DIR" ]; then
+        SHARE_BUILD_DIR="-v $FENICS_SRC_DIR:/home/fenics/build"
     fi
 
     # Create the container
