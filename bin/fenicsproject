@@ -147,30 +147,39 @@ start ()
     PROJECT_TYPE=$(docker inspect -f '{{index .Config.Labels "org.fenicsproject.project_type" }}' $NAME 2>/dev/null)
     if [ "$IS_RUNNING" == "false" ]; then
         echo "Starting project named $NAME."
-        CMD="docker start $NAME"
-        command $CMD
-        # Some SSH tunneling to get the Jupyter session available for people
-        # on Mac OS X and Windows (Cygwin). We only expose out to localhost
-        # for security.
-        PORT=$(docker port $NAME 8888 | cut -d: -f2)
-        if [[ "$SESSION_TYPE" == "notebook" && ( "$OS" == "Darwin" || "$OS" == "Cygwin" ) ]]; then
-            # Ask Docker for the port mapping.
-            ACTIVE_MACHINE=$(docker-machine active)
-            CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
+        if [ "$PROJECT_TYPE" == "notebook" ]; then
+            # TODO: When Docker shifts over to new Docker for Mac and Docker
+            # for Windows, all of this SSH madness should be over.
+            CMD="docker start $NAME"
             command $CMD
-        fi
-        echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
-        cleanup_ssh () {
+            
+            # Some SSH tunneling to get the Jupyter session available for people
+            # on Mac OS X and Windows (Cygwin). We only expose out to localhost
+            # for security.
+            PORT=$(docker port $NAME 8888 | cut -d: -f2)
             if [[ "$OS" == "Darwin" || "$OS" == "Cygwin" ]]; then
-                # Find the running ssh PID that created our tunnel and kill it.
-                PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
-                kill $PID
+                # Ask Docker for the port mapping.
+                ACTIVE_MACHINE=$(docker-machine active)
+                CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
+                command $CMD
             fi
-        }
-        # Manually cleanup ssh port forwarding on terminate signal.
-        trap cleanup_ssh SIGINT
-        CMD="docker attach $NAME"
-        command $CMD
+
+            echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
+            # Manually cleanup ssh port forwarding on terminate signal.
+            cleanup_ssh () {
+                if [[ "$OS" == "Darwin" || "$OS" == "Cygwin" ]]; then
+                    # Find the running ssh PID that created our tunnel and kill it.
+                    PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                    kill $PID
+                fi
+            }
+            trap cleanup_ssh SIGINT
+            CMD="docker attach $NAME"
+            command $CMD
+        else
+           CMD="docker start -ai $NAME"
+           command $CMD 
+       fi
     else
         echo "Starting new session in project named $NAME."
         CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
