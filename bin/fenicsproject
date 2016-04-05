@@ -78,6 +78,10 @@ run ()
         : ${COMMAND:="$DEFAULT_COMMAND"}
     fi
 
+    # Pull image
+    CMD="docker pull $IMAGE_HOST/$IMAGE"
+    command $CMD
+
     # Setup a container for instant cache
     create-cache-container $IMAGE
 
@@ -113,6 +117,10 @@ create ()
     # Select image
     IMAGE="$2"
     : ${IMAGE:="$DEFAULT_IMAGE"}
+
+    # Pull image
+    CMD="docker pull $IMAGE_HOST/$IMAGE"
+    command $CMD
 
     # Create the container
     create-cache-container $IMAGE
