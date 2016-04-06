@@ -102,8 +102,8 @@ create-cache-container ()
 clean-cache ()
 {
     IMAGE="$1"
-    CMD="docker volume rm instant-cache-$IMAGE"
-    command-swallow-stderr $CMD || echo "No Instant cache exists, doing nothing."
+    CMD="docker run --rm -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER $IMAGE_HOST/$IMAGE 'rm -rf $CACHE_DIR_CONTAINER/*'"
+    command $CMD
 }
 
 create ()
