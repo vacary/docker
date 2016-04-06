@@ -7,13 +7,10 @@ IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 PROJECT_DIR_HOST=$(pwd)
+PROJECT_DIR_CONTAINER="/home/fenics/shared"
 # Workaround for issue https://github.com/docker/docker/issues/9299
 DEFAULT_COMMAND="/bin/bash -l -c 'export TERM=xterm; bash -i'"
 OS=$(uname -s)
-
-# Set host cache dir
-CACHE_DIR_HOST=$INSTANT_CACHE_DIR
-: ${CACHE_DIR_HOST:="$HOME/.instant"}
 
 # Setup
 set -e
@@ -68,25 +65,16 @@ command-swallow-stderr ()
 
 run ()
 {
-    # Select image
     IMAGE="$1"
-    : ${IMAGE:="$DEFAULT_IMAGE"}
-
-    # Select command (if any)
-    if [ $# -ge 2 ]; then
-        shift
-        COMMAND="$@"
-        : ${COMMAND:="$DEFAULT_COMMAND"}
-    fi
-
+    COMMAND="$2"
     # Setup a container for instant cache
     create-cache-container $IMAGE
 
     # Run container
     CMD="docker run --rm -ti \
-           -v instant-cache-$IMAGE:/home/fenics/.instant \
-           -v $PROJECT_DIR_HOST:/home/fenics/shared \
-           -w /home/fenics/shared \
+           -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
+           -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            $IMAGE_HOST/$IMAGE $COMMAND"
     command $CMD
@@ -109,12 +97,10 @@ clean-cache ()
 create ()
 {
     NAME="$1"
+    IMAGE="$2"
+
     echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} terminal project ${BLUE}$NAME${NORMAL}."
     echo ""
-
-    # Select image
-    IMAGE="$2"
-    : ${IMAGE:="$DEFAULT_IMAGE"}
 
     # Share FENiCS_SRC_DIR if set
     if [ ! -z "$FENICS_SRC_DIR" ]; then
@@ -127,9 +113,9 @@ create ()
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
-           -v $PROJECT_DIR_HOST:/home/fenics/shared \
+           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            $SHARE_BUILD_DIR \
-           -w /home/fenics/shared \
+           -w $PROJECT_DIR_CONTAINER \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
 
@@ -208,9 +194,7 @@ pull ()
 
 notebook ()
 {
-    # Select image
     IMAGE="$2"
-    : ${IMAGE:="$DEFAULT_IMAGE"}
 
     NAME="$1"
     echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} notebook project ${BLUE}$NAME${NORMAL}."
@@ -221,9 +205,9 @@ notebook ()
 
     # Run container. We only expose out to localhost for security.
     CMD="docker create -p 127.0.0.1:3000-4000:8888 \
-           -v instant-cache-$IMAGE:/home/fenics/.instant \
-           -v $PROJECT_DIR_HOST:/home/fenics/shared \
-           -w /home/fenics/shared \
+           -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
+           -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
            --name $NAME \
@@ -276,24 +260,60 @@ fail_if_project_already_exists () {
     set -e
 }
 
+fail_if_image_does_not_exist () {
+    IMAGE=$1
+    fail=true
+    for image in 'stable' 'dev' 'dev-env' 'dev-env-py3' 'dev-py3' 'dev-env-trilinos' 'dolfin-adjoint' 'dev-env-dbg'; do
+        if [ "$IMAGE" == $image ]; then
+           fail=false
+        fi 
+    done
+    if [ $fail == true ]; then
+        echo -e "${RED}Error${NORMAL}: Image with name $IMAGE does not exist. Try stable, dev-env or dev."
+        exit 1
+    fi
+}
+
 # Check command-line arguments
 if [ "$1" == "run" ]; then
-    run $2 $3
+    IMAGE="$2" 
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+    # Select command (if any)
+    if [ $# -ge 3 ]; then
+        shift; shift;
+        COMMAND="$@"
+        : ${COMMAND:="$DEFAULT_COMMAND"}
+    fi
+    run $IMAGE $COMMAND
 elif [ "$1" == "create" ]; then
-    fail_if_project_already_exists $2
-    create $2 $3
+    # Select image
+    NAME="$2"
+    IMAGE="$3" 
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+    fail_if_image_does_not_exist $IMAGE
+    fail_if_project_already_exists $NAME
+    create $NAME $IMAGE
 elif [ "$1" == "notebook" ]; then
-    fail_if_project_already_exists $2
-    notebook $2 $3
+    NAME="$2"
+    IMAGE="$3" 
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+    fail_if_image_does_not_exist $IMAGE
+    fail_if_project_already_exists $NAME
+    notebook $NAME $IMAGE
 elif [ "$1" == "start" ]; then
-    check_name $2
-    start $2
-elif [ "$1" == "list" ]; then
-    list
+    NAME="$2"
+    check_name $NAME 
+    start $NAME
 elif [ "$1" == "pull" ]; then
-    pull $2
+    IMAGE="$2" 
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+    fail_if_image_does_not_exist $IMAGE
+    pull $IMAGE
 elif [ "$1" == "clean-cache" ]; then
-    clean-cache $2
+    IMAGE="$2" 
+    : ${IMAGE:="$DEFAULT_IMAGE"}
+    fail_if_image_does_not_exist $IMAGE
+    clean-cache $IMAGE
 else
     help
     exit 1
