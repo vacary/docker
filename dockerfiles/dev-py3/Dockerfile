@@ -18,6 +18,6 @@ ENV FENICS_PYTHON_MAJOR_VERSION=3 \
     FENICS_PYTHON_MINOR_VERSION=4 \
     FENICS_BUILD_TYPE=Release
 
-RUN /bin/bash -l -c "fenics_update"
+RUN /bin/bash -l -c "fenics-update"
 
 COPY WELCOME $HOME/WELCOME
