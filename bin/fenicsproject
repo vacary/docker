@@ -271,6 +271,7 @@ fail_if_image_does_not_exist () {
 if [ "$1" == "run" ]; then
     IMAGE="$2" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
+    fail_if_image_does_not_exist $IMAGE
     # Select command (if any)
     if [ $# -ge 3 ]; then
         shift; shift;
