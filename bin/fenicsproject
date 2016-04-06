@@ -27,7 +27,6 @@ help ()
     echo "  fenicsproject create <name> [image]   - create standard project with given name"
     echo "  fenicsproject notebook <name> [image] - create notebook project with given name"
     echo "  fenicsproject start <name>            - start session in project with given name"
-    echo "  fenicsproject list                    - list all projects"
     echo "  fenicsproject pull <image>            - pull latest version of given image"
     echo "  fenicsproject clean-cache [image]     - clean the shared FEniCS (Instant) cache"
 
@@ -177,12 +176,6 @@ start ()
         CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
         command $CMD
     fi
-}
-
-list ()
-{
-    CMD="docker ps -a --format '{{ .Names }} @{{ .Image }} @{{ .Status }}' | column -t -s='@'"
-    command $CMD
 }
 
 pull ()
