@@ -238,14 +238,55 @@ notebook ()
     echo ""
 }
 
+check_name () {
+    NAME=$1
+    if [ -z "$NAME" ]; then
+        echo -e "${RED}Error${NORMAL}: You must specify the name of the project you want to start."
+        exit 1
+    fi
+    set +e
+    IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2> /dev/null) 
+    if [ $? -eq 1 ]; then
+        echo -e "${RED}Error${NORMAL}: Project $NAME does not exist."
+        echo "You can create a project with the command:"
+        echo ""
+        echo "    fenicsproject create $NAME"
+        echo ""
+        echo "and then try running this command again." 
+        exit 1 
+    fi
+    set -e
+}
+
+fail_if_project_already_exists () {
+    NAME=$1
+    set +e
+    IS_RUNNING=$(docker inspect -f '{{.State.Running}}' $NAME 2> /dev/null)
+    if [ $? -eq 0 ]; then
+        echo -e "${RED}Error${NORMAL}: Project $NAME already exists!"
+        echo ""
+        echo -e "You can try a different name, or ${BLUE}permanently${NORMAL} delete the existing project"
+        echo "with the command:"
+        echo ""
+        echo "    docker rm $NAME"
+        echo ""
+        echo -e "Files in the folder ~/shared will ${BLUE}not${NORMAL} be deleted."
+        exit 1
+    fi
+    set -e
+}
+
 # Check command-line arguments
 if [ "$1" == "run" ]; then
     run $2 $3
 elif [ "$1" == "create" ]; then
+    fail_if_project_already_exists $2
     create $2 $3
 elif [ "$1" == "notebook" ]; then
+    fail_if_project_already_exists $2
     notebook $2 $3
 elif [ "$1" == "start" ]; then
+    check_name $2
     start $2
 elif [ "$1" == "list" ]; then
     list
