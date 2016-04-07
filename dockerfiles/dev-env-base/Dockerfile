@@ -21,7 +21,7 @@ RUN apt-get -qq update && \
         bison cmake flex g++ gfortran git ipython mpich pkg-config wget \
         libopenblas-dev libboost-filesystem-dev libboost-system-dev \
         libboost-program-options-dev libboost-thread-dev libboost-timer-dev \
-        libboost-iostreams-dev libeigen3-dev liblapack-dev \ 
+        libboost-iostreams-dev libeigen3-dev liblapack-dev \
         libmpich-dev libpcre3-dev libhdf5-mpich2-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -38,7 +38,7 @@ RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
 
 # Version numbers
 ENV PETSC_VERSION=3.6.3 \
-    SLEPC_VERSION=3.6.2 \
+    SLEPC_VERSION=3.6.3 \
     SWIG_VERSION=3.0.8 \
     MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.6.0 \
