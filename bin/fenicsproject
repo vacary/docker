@@ -178,7 +178,13 @@ start ()
             cleanup_ssh () {
                 if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
                     # Find the running ssh PID that created our tunnel and kill it.
-                    PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                    if [ "$OS" == "Darwin"]; then
+                        PID=$(ps -a | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                    elif [ "$OS" == "Windows" ]; then
+                        # Windows has very limited output from ps. I just kill the ssh
+                        # related to the current tty that the script is running in.
+                        PID=$(ps -a | grep ssh | grep $(tty | cut -d/ -f3) | awk '{print $1}')
+                    fi
                     kill $PID
                 fi
             }
