@@ -159,6 +159,10 @@ start ()
         if [ "$PROJECT_TYPE" == "notebook" ]; then
             # TODO: When Docker shifts over to new Docker for Mac and Docker
             # for Windows, all of this SSH madness should be over.
+            if [ "$OS" == "Windows" ]; then
+                echo -e "${BLUE}Note${NORMAL}: Notebook support is experimental on Windows."
+            fi
+            
             CMD="docker start $NAME"
             command $CMD
 
@@ -174,18 +178,20 @@ start ()
             fi
 
             echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
+            # TODO: Broken on Windows.
             # Manually cleanup ssh port forwarding on terminate signal.
             cleanup_ssh () {
                 if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
                     # Find the running ssh PID that created our tunnel and kill it.
-                    if [ "$OS" == "Darwin"]; then
-                        PID=$(ps -a | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                    if [ "$OS" == "Darwin" ]; then
+                        PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
+                        kill $PID
                     elif [ "$OS" == "Windows" ]; then
                         # Windows has very limited output from ps. I just kill the ssh
                         # related to the current tty that the script is running in.
                         PID=$(ps -a | grep ssh | grep $(tty | cut -d/ -f3) | awk '{print $1}')
+                        kill $PID
                     fi
-                    kill $PID
                 fi
             }
             trap cleanup_ssh SIGINT
