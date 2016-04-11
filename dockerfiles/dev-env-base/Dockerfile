@@ -28,10 +28,10 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Our helper scripts
-COPY fenics.env.conf $HOME/fenics.env.conf
-COPY bin $HOME/bin
-RUN mkdir $HOME/build && \
-    chown -R fenics:fenics $HOME
+COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
+COPY bin $FENICS_HOME/bin
+RUN mkdir $FENICS_HOME/build && \
+    chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
 

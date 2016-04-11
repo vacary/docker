@@ -85,4 +85,4 @@ RUN pip install jupyter && \
 
 USER fenics
 WORKDIR /home/fenics
-COPY WELCOME $HOME/WELCOME
+COPY WELCOME $FENICS_HOME/WELCOME

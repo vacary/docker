@@ -49,7 +49,7 @@ USER fenics
 ENV HOME /home/fenics
 
 # Print something nice on entry.
-COPY WELCOME $HOME/WELCOME
+COPY WELCOME $FENICS_HOME/WELCOME
 
 WORKDIR /home/fenics
 ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]

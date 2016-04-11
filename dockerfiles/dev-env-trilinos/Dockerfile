@@ -50,5 +50,5 @@ RUN wget -nc --quiet http://trilinos.csbsju.edu/download/files/trilinos-${TRILIN
     rm -rf /tmp/*
 
 USER fenics
-WORKDIR $HOME
-COPY WELCOME $HOME/WELCOME
+WORKDIR $FENICS_HOME
+COPY WELCOME $FENICS_HOME/WELCOME
