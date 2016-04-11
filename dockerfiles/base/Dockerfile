@@ -19,7 +19,7 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 USER root
 RUN apt-get update && \ 
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
-    apt-get -y install locales && \
+    apt-get -y install locales sudo && \
     echo "C.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
