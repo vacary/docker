@@ -12,7 +12,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.9.18
+FROM jhale/baseimage:latest 
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Get Ubuntu updates
