@@ -22,10 +22,14 @@ WORKDIR /tmp
 RUN apt-get -qq update && \
     apt-get -y install \
          python-dev gdb valgrind python-numpy python-six python-ply python-pytest \
-         python-h5py python-urllib3 python-setuptools python-pip python-flufl.lock \
-         python-matplotlib && \
+         python-h5py python-urllib3 python-flufl.lock python-matplotlib && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    pip install setuptools && \
+    rm -rf /tmp/*
 
 # Install PETSc from source
 RUN wget -nc --quiet http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \

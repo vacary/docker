@@ -17,17 +17,22 @@ USER root
 RUN echo "3" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
 RUN echo "4" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
+WORKDIR /tmp
+
 # Install Python3 based environment 
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
         python3-dev python3-numpy python3-six python3-ply python3-pytest \ 
-        python3-h5py python3-urllib3 python3-setuptools python3-pip python3-flufl.lock \
-        python3-matplotlib && \
+        python3-h5py python3-urllib3 python3-flufl.lock python3-matplotlib && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-WORKDIR /tmp
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    pip install setuptools && \
+    rm -rf /tmp/*
+
 # Install PETSc from source
 RUN wget -nc --quiet http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
     tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \

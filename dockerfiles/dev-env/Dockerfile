@@ -23,10 +23,14 @@ RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
         python-dev python-numpy python-six python-ply python-pytest python-h5py \
-        python-urllib3 python-setuptools python-pip python-flufl.lock \
-        python-matplotlib && \
+        python-urllib3 python-flufl.lock python-matplotlib && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN wget https://bootstrap.pypa.io/get-pip.py && \ 
+    python get-pip.py && \
+    pip install setuptools && \
+    rm -rf /tmp/*
 
 # Install PETSc from source
 RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
@@ -65,9 +69,6 @@ RUN export PETSC_DIR=/usr/local && \
     rm -rf /tmp/*
 ENV SLEPC_DIR=/usr/local \
     PETSC_DIR=/usr/local
-
-RUN pip install --upgrade pip && \
-    pip install --upgrade setuptools
 
 # Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and swig from source
 RUN pip install jupyter && \
