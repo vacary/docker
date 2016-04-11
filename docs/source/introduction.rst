@@ -5,6 +5,8 @@
 Introduction
 ============
 
+.. note:: Want to get up and running quickly? Try the ``fenicsproject`` script
+          in :ref:`quickstart`.
 
 What is Docker?
 ---------------

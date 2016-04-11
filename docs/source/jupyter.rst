@@ -10,7 +10,8 @@ https://jupyter.org.
 It only takes two commands to get a Jupyter notebook up and running with
 a FEniCS environment installed.
 
-.. note:: The ``fenicsproject`` launcher script automates the tasks below.
+.. note:: The ``fenicsproject notebook myproject`` command automates the tasks
+          outlined below. See :ref:`quickstart` for instructions.
 
 First of all we ``run`` a new Docker container with the ``jupyter-notebook``
 command specified and the default port ``8888`` forwarded to the host::
