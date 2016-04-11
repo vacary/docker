@@ -52,5 +52,3 @@ ENV FENICS_HOME /home/fenics
 COPY WELCOME $FENICS_HOME/WELCOME
 
 WORKDIR /home/fenics
-ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]
-CMD ["/bin/bash","-i"]
