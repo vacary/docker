@@ -46,7 +46,7 @@ COPY set-home-permissions.sh /etc/my_init.d/set-home-permissions.sh
 RUN chmod +x /etc/my_init.d/set-home-permissions.sh
 
 USER fenics
-ENV HOME /home/fenics
+ENV FENICS_HOME /home/fenics
 
 # Print something nice on entry.
 COPY WELCOME $FENICS_HOME/WELCOME
