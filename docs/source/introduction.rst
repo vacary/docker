@@ -48,7 +48,7 @@ First of all we will check that we have a working install of Docker::
 You should see a message saying that your Docker installation is working
 correctly.
 
-*Not working?* Check out the :ref:`troubleshooting` section.
+.. note:: *Not working?* Check out the :ref:`troubleshooting` section.
 
 Now we will ``pull`` the ``quay.io/fenicsproject/stable`` image from
 our cloud infrastructure::

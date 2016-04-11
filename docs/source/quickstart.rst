@@ -19,7 +19,7 @@ To get started, follow these two steps:
    If running on Mac or Windows, make sure you run this and other
    commands inside the Docker Quickstart Terminal. 
 
-*Didn't work?* Try the :ref:`troubleshooting` section.
+.. note:: *Not working?* Try the :ref:`troubleshooting` section.
 
 Once both Docker and the FEniCS Docker script have been installed, you can
 easily start a FEniCS session by running the following command::
