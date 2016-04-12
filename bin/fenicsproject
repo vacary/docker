@@ -157,44 +157,20 @@ start ()
     if [ "$IS_RUNNING" == "false" ]; then
         echo "Starting project named $NAME."
         if [ "$PROJECT_TYPE" == "notebook" ]; then
-            # TODO: When Docker shifts over to new Docker for Mac and Docker
-            # for Windows, all of this SSH madness should be over.
-            if [ "$OS" == "Windows" ]; then
-                echo -e "${BLUE}Note${NORMAL}: Notebook support is experimental on Windows."
-            fi
-            
             CMD="docker start $NAME"
             command $CMD
 
-            # Some SSH tunneling to get the Jupyter session available for people
-            # on Mac OS X and Windows (Cygwin). We only expose out to localhost
-            # for security.
+            # Ask Docker for the port mapping.
             PORT=$(docker port $NAME 8888 | cut -d: -f2)
             if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
-                # Ask Docker for the port mapping.
+                # Ask docker-machine for the IP address of the instance
                 ACTIVE_MACHINE=$(docker-machine active)
-                CMD="docker-machine ssh $ACTIVE_MACHINE -fN -L localhost:$PORT:localhost:$PORT"
-                command $CMD
+                IP=$(docker-machine ip $ACTIVE_MACHINE)
+            else
+                IP="localhost"
             fi
 
-            echo -e "${BLUE}You can access the Jupyter notebook at http://localhost:${PORT}${NORMAL}"
-            # TODO: Broken on Windows.
-            # Manually cleanup ssh port forwarding on terminate signal.
-            cleanup_ssh () {
-                if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
-                    # Find the running ssh PID that created our tunnel and kill it.
-                    if [ "$OS" == "Darwin" ]; then
-                        PID=$(ps -ax | grep ssh | grep $PORT:localhost:$PORT | awk '{print $1}')
-                        kill $PID
-                    elif [ "$OS" == "Windows" ]; then
-                        # Windows has very limited output from ps. I just kill the ssh
-                        # related to the current tty that the script is running in.
-                        PID=$(ps -a | grep ssh | grep $(tty | cut -d/ -f3) | awk '{print $1}')
-                        kill $PID
-                    fi
-                fi
-            }
-            trap cleanup_ssh SIGINT
+            echo -e "${BLUE}You can access the Jupyter notebook at http://${IP}:${PORT}${NORMAL}"
             CMD="docker attach $NAME"
             command $CMD
         else
@@ -225,9 +201,21 @@ notebook ()
 
     # Setup a container for instant cache
     create-cache-container $IMAGE
+   
+    # For security: 
+    # On Windows and Mac we bind to the Virtualbox IP. Only the
+    # host machine can see this IP.
+    # On Linux we bind only on localhost. Only the host machine
+    # can see this IP.
+    if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
+        # Ask docker-machine for the IP address of the VM 
+        ACTIVE_MACHINE=$(docker-machine active)
+        IP=$(docker-machine ip $ACTIVE_MACHINE)
+    else
+        IP="127.0.0.1"
+    fi
 
-    # Run container. We only expose out to localhost for security.
-    CMD="docker create -p 127.0.0.1:3000-4000:8888 \
+    CMD="docker create -p $IP:3000-4000:8888 \
            -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
            -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
