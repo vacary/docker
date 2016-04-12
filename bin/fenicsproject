@@ -21,11 +21,16 @@ NORMAL="\033[0m"
 
 # Detect OS
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-if [ "$(uname)" == "Darwin" ]; then
-    # Mac OS X with Docker installed however you want.
+if [ "$(docker info | grep -c Alpine)" == "1" ]; then
+    # If we are on Alpine Linux then we are most
+    # probably using the new 'native' Docker Mac
+    # and Docker Windows.
+    OS="Docker"
+elif [ "$(uname)" == "Darwin" ]; then
+    # Mac OS X with Docker installed using docker-machine.
     OS="Darwin"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    # If we have Linux, it should work.
+    # If we are running locally on Linux.
     OS="Linux"
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
     # The Docker environment installed by Docker Toolbox is MinGW based.
@@ -166,6 +171,8 @@ start ()
                 # Ask docker-machine for the IP address of the instance
                 ACTIVE_MACHINE=$(docker-machine active)
                 IP=$(docker-machine ip $ACTIVE_MACHINE)
+            elif [[ "$OS" == "Docker" ]]; then
+                IP=$(docker inspect --format='{{ ( index (index .NetworkSettings.Ports "8888/tcp") 0).HostIp }}' $NAME 2>/dev/null) 
             else
                 IP="localhost"
             fi
@@ -203,19 +210,26 @@ notebook ()
     create-cache-container $IMAGE
    
     # For security: 
-    # On Windows and Mac we bind to the Virtualbox IP. Only the
+    # On Windows and Mac with docker-machine we bind to the Virtualbox IP. Only the
     # host machine can see this IP.
+    # On Docker for Mac or Docker for Windows we bind
+    # to the default private IP only visible to the host.
     # On Linux we bind only on localhost. Only the host machine
     # can see this IP.
     if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
         # Ask docker-machine for the IP address of the VM 
         ACTIVE_MACHINE=$(docker-machine active)
         IP=$(docker-machine ip $ACTIVE_MACHINE)
+    elif [[ "$OS" == "Docker" ]]; then
+        # Will bind to private IP by default.
+        # Can we work out what this IP is? Specific is more secure.
+        IP=""
     else
+        # Conservative default, works on Linux.
         IP="127.0.0.1"
     fi
 
-    CMD="docker create -p $IP:3000-4000:8888 \
+    CMD="docker create -p ${IP}:3000-4000:8888 \
            -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
            -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
