@@ -1,6 +1,6 @@
 #!/bin/bash
 # pull fenics projects
-# 
+#
 # usage: fenics-pull [ffc] [dolfin]
 #
 # With no args, will pull all fenics projects
@@ -31,8 +31,7 @@ function pull () {
 }
 
 if [ -z "$1" ]; then
-    pull fiat instant ufl ffc dolfin
+    pull fiat dijitso instant ufl ffc dolfin
 else
     pull $@
 fi
-

@@ -19,7 +19,7 @@ function build_cmake () {
     # build a project with cmake (dolfin, mshr)
     project="$1"
     echo "FENICS-BUILDER: Building $project with CMake..."
-    
+
     build="$SRC_DIR/$project/build"
     test -d "$build" && rm -r "$build"
     mkdir -p "$build"
@@ -47,8 +47,7 @@ function build () {
 }
 
 if [ -z "$1" ]; then
-    build fiat instant ufl ffc dolfin
+    build fiat dijitso instant ufl ffc dolfin
 else
     build $@
 fi
-
