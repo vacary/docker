@@ -130,7 +130,7 @@ create ()
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
-           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
+           -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
            $SHARE_BUILD_DIR \
            -w $PROJECT_DIR_CONTAINER \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
@@ -229,7 +229,7 @@ notebook ()
     # Run container. We only expose out to localhost for security.
     CMD="docker create -p 127.0.0.1:3000-4000:8888 \
            -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
-           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
+           -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
