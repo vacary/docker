@@ -21,11 +21,20 @@ For setting the DNS system-wide, see
 <https://docs.docker.com/engine/admin/systemd/> and
 <https://stackoverflow.com/questions/33784295/setting-dns-for-docker-daemon-using-systemd-drop-in/>.
 
+I can't share a folder into the container
+-----------------------------------------
+
+*Mac OS X*: By default, only files and directories under  ``/Users/`` can be
+shared into a container using the ``-v`` flag.
+
+*Windows*: By default, only files and directories under ``C:\Users`` can be
+shared into a container using the ``-v`` flag.
+
 I've run out of space for new containers or images
 --------------------------------------------------
 
 Users running on Mac OS X and Windows are actually running the Docker
-containers inside a Virtual Machine. If you `pull` too many images from
+containers inside a Virtual Machine. If you ``pull`` too many images from
 Dockerhub then you may fill up the virtual machine's disk drive.
 
 You can see how much space you have left using the following command::
