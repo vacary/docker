@@ -37,7 +37,7 @@ To see more options, run the following command::
           can be shared into the container. On Linux there are no restrictions.
 
 .. warning:: We *strongly* advise against using your entire home directory as a
-             project, i.e. running ``fenicsproject create`` in ``C:\Users\<username>`` or
+             project, i.e. running ``fenicsproject create`` in ``C:\Users\<username>``
              or ``/Users/<username>``. Make a logical folder for each project, 
              e.g. ``/Users/<username>/myproject``.
 
