@@ -33,6 +33,14 @@ To see more options, run the following command::
 
     fenicsproject help
 
+.. note:: Only folders under ``C:\Users`` on Windows and ``/Users`` on Mac OS X
+          can be shared into the container. On Linux there are no restrictions.
+
+.. warning:: We *strongly* advise against using your entire home directory as a
+             project, i.e. running ``fenicsproject create`` in ``C:\Users\<username>`` or
+             or ``/Users/<username>``. Make a logical folder for each project, 
+             e.g. ``/Users/<username>/myproject``.
+
 The above instructions will get you quickly up and running with FEniCS in
 Docker. We recommend continuing to the :ref:`introduction` if you want to learn
 more about using the ``docker`` command for greater control over running FEniCS
