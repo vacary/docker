@@ -47,7 +47,11 @@ function build () {
 }
 
 if [ -z "$1" ]; then
-    build fiat dijitso instant ufl ffc dolfin
+    if [ "${FENICS_VERSION}" == "1.6.0" ]; then
+        pull fiat instant ufl ffc dolfin
+    else
+        pull fiat dijitso instant ufl ffc dolfin
+    fi
 else
     build $@
 fi
