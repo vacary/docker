@@ -6,6 +6,8 @@
 IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
+BUILD_DIR_CONTAINER="/home/fenics/build"
+SRC_DIR_CONTAINER="/home/fenics/build/src"
 PROJECT_DIR_HOST=$(pwd)
 PROJECT_DIR_CONTAINER="/home/fenics/shared"
 # Workaround for issue https://github.com/docker/docker/issues/9299
@@ -108,6 +110,13 @@ create-cache-container ()
     command $CMD
 }
 
+create-build-container ()
+{
+    NAME="$1"
+    CMD="docker volume create --name fenics-build-${NAME}"
+    command $CMD
+}
+
 clean-cache ()
 {
     IMAGE="$1"
@@ -123,19 +132,29 @@ create ()
     echo -e "Creating new ${GREEN}FEniCS Project${NORMAL} terminal project ${BLUE}$NAME${NORMAL}."
     echo ""
 
-    # Share FENiCS_SRC_DIR if set
+    # Share FENICS_SRC_DIR if set
     if [ ! -z "$FENICS_SRC_DIR" ]; then
-        SHARE_BUILD_DIR="-v $FENICS_SRC_DIR:/home/fenics/build/src"
+        SHARE_SRC_DIR="-v '$FENICS_SRC_DIR':$SRC_DIR_CONTAINER"
     fi
 
-    # Create the container
+    # In the case that a container is created from a dev-env image, we store
+    # the compiled FEniCS library inside a Docker volume.  This will allow us
+    # to share compiled FEniCS versions between containers by mounting the
+    # volume read-only in a new dev-env container.
+    if [ $IMAGE == "dev-env" ]; then
+       create-build-container $NAME
+       VOLUME_BUILD_DIR="-v fenics-build-${NAME}:$BUILD_DIR_CONTAINER" 
+    fi 
+
+    # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
-           $SHARE_BUILD_DIR \
+           $SHARE_SRC_DIR \
+           $VOLUME_BUILD_DIR \
            -w $PROJECT_DIR_CONTAINER \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
