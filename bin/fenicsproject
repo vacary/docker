@@ -317,6 +317,20 @@ fail_if_image_does_not_exist () {
     fi
 }
 
+# Fail if user tries to share in entire home directory.
+if [ $(pwd) == $HOME ]; then
+    echo -e "${RED}Error${NORMAL}: We strongly advise against sharing your entire home directory"
+    echo "into a container. Instead, make a logical folder for each project:"
+    echo ""
+    echo "    mkdir ${HOME}/my-project"
+    echo ""
+    echo -e "and then run the ${BLUE}fenicsproject${NORMAL} script there:"
+    echo ""
+    echo "    cd ${HOME}/my-project"
+    echo "    fenicsproject $@"
+    exit 1
+fi
+
 # Check command-line arguments
 if [ "$1" == "run" ]; then
     IMAGE="$2" 
