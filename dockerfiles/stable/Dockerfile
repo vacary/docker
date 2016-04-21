@@ -21,4 +21,13 @@ RUN /bin/bash -l -c "fenics-update && \
                      rm -rf $HOME/build/src && \
                      cp -r $HOME/build/share/dolfin/demo $HOME/demo"
 
+# Make sure we get something that basically works on this stable build.  It
+# would be better to run unit tests, but at the moment even the quick tests
+# take too long to run. 
+RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
+    cd /tmp/poisson_test && \
+    python $HOME/demo/documented/poisson/python/demo_poisson.py && \
+    instant-clean && \
+    rm -r /tmp/poisson_test"
+
 COPY WELCOME $HOME/WELCOME
