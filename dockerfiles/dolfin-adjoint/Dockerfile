@@ -29,4 +29,4 @@ RUN /bin/bash -l -c "source $HOME/dolfin-adjoint.conf && \
                      rm -rf $HOME/build/src"
 
 COPY WELCOME $HOME/WELCOME
-RUN echo "source $HOME/dolfin-adjoint.conf" >> $HOME/.bashrc
+RUN echo "source $HOME/dolfin-adjoint.conf" >> $HOME/.bash_profile
