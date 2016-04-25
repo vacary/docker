@@ -12,7 +12,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM fenicsproject/phusion:latest 
+FROM quay.io/fenicsproject/phusion:latest 
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Get Ubuntu updates
