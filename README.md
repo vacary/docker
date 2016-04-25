@@ -63,5 +63,5 @@ the Dockerfiles in this repository. The FEniCS Project quay.io page is at
 ## Authors
 
 * Jack S. Hale (<jack.hale@uni.lu>)
-* Lizao Li (<lixx1445@umn.edu>)
+* Lizao Li (<lzlarryli@gmail.com>)
 * Garth N. Wells (<gnw20@cam.ac.uk>)

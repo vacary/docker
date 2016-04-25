@@ -19,9 +19,8 @@ function build_cmake () {
     # build a project with cmake (dolfin, mshr)
     project="$1"
     echo "FENICS-BUILDER: Building $project with CMake..."
-    
+
     build="$SRC_DIR/$project/build"
-    test -d "$build" && rm -r "$build"
     mkdir -p "$build"
     cd "$build"
     cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev ${CMAKE_EXTRA_ARGS}
@@ -47,8 +46,11 @@ function build () {
 }
 
 if [ -z "$1" ]; then
-    build fiat instant ufl ffc dolfin
+    if [ "${FENICS_VERSION}" == "1.6.0" ]; then
+        build fiat instant ufl ffc dolfin
+    else
+        build fiat dijitso instant ufl ffc dolfin
+    fi
 else
     build $@
 fi
-

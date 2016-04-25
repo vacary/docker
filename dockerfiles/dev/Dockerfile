@@ -4,7 +4,7 @@
 #    https://quay.io/repository/fenicsproject/dev
 #
 # Authors:
-# Lizao Li <lixx1445@umn.edu>
+# Lizao Li <lzlarryli@gmail.com>
 # Jack S. Hale <jack.hale@uni.lu>
 
 FROM quay.io/fenicsproject/dev-env:latest

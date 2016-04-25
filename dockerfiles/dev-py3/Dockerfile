@@ -5,7 +5,7 @@
 # we do not build this image automatically on quay.io.
 #
 # Authors:
-# Lizao Li <lixx1445@umn.edu>
+# Lizao Li <lzlarryli@gmail.com>
 # Jack S. Hale <jack.hale@uni.lu>
 # Johannes Ring <johannr@simula.no>
 

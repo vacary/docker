@@ -29,6 +29,18 @@ easily start a FEniCS session by running the following command::
 The FEniCS Docker script can also be used to create persistent sessions
 (``fenicsproject create myproject`` followed by ``fenicsproject run
 myproject``) or to run different versions of FEniCS ``fenicsproject run dev``).
+
+For all ``fenicsproject`` commands, the contents of the current directory will
+be shared into the project at ``~/shared``.
+
+.. note:: Only folders under ``C:\Users`` on Windows and ``/Users`` on Mac OS X
+          can be shared into a project. On Linux there are no restrictions.
+
+.. warning:: We *strongly* advise against sharing your entire home directory into a
+             project, i.e. running ``fenicsproject create`` in ``C:\Users\<username>``
+             or ``/Users/<username>``. Make a logical folder for each project, 
+             e.g. ``/Users/<username>/myproject``.
+
 To see more options, run the following command::
 
     fenicsproject help
