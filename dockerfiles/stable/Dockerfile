@@ -17,7 +17,7 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
     FENICS_VERSION=1.6.0
 
 RUN /bin/bash -l -c "fenics-update && \
-                     fenics-update mshr && \
+                     FENICS_VERSION="" fenics-update mshr && \
                      rm -rf $HOME/build/src && \
                      cp -r $HOME/build/share/dolfin/demo $HOME/demo"
 
