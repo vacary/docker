@@ -15,7 +15,7 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
 RUN echo "3" > /etc/container_environment/FENICS_PYTHON_MAJOR_VERSION
-RUN echo "4" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
+RUN echo "5" > /etc/container_environment/FENICS_PYTHON_MINOR_VERSION
 
 WORKDIR /tmp
 
@@ -29,8 +29,8 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-    pip install setuptools && \
+    python3 get-pip.py && \
+    pip3 install setuptools && \
     rm -rf /tmp/*
 
 # Install PETSc from source
