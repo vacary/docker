@@ -18,16 +18,16 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
 
 RUN /bin/bash -l -c "fenics-update && \
                      FENICS_VERSION='' fenics-update mshr && \
-                     rm -rf $HOME_FENICS/build/src && \
-                     cp -r $HOME_FENICS/build/share/dolfin/demo $HOME_FENICS/demo"
+                     rm -rf $FENICS_HOME/build/src && \
+                     cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
 
 # Make sure we get something that basically works on this stable build.  It
 # would be better to run unit tests, but at the moment even the quick tests
 # take too long to run. 
 RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
-    python $HOME_FENICS/demo/documented/poisson/python/demo_poisson.py && \
+    python $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     instant-clean && \
     rm -r /tmp/poisson_test"
 
-COPY WELCOME $HOME_FENICS/WELCOME
+COPY WELCOME $FENICS_HOME/WELCOME
