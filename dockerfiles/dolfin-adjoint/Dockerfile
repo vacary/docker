@@ -23,10 +23,10 @@ RUN git clone https://github.com/funsim/moola.git && \
 USER fenics
 ENV DOLFIN_ADJOINT_VERSION 1.6
 COPY dolfin-adjoint.conf /home/fenics/dolfin-adjoint.conf
-RUN /bin/bash -l -c "source $HOME/dolfin-adjoint.conf && \
+RUN /bin/bash -l -c "source $HOME_FENICS/dolfin-adjoint.conf && \
                      update_libadjoint && \
                      update_dolfin-adjoint && \
-                     rm -rf $HOME/build/src"
+                     rm -rf $HOME_FENICS/build/src"
 
-COPY WELCOME $HOME/WELCOME
-RUN echo "source $HOME/dolfin-adjoint.conf" >> $HOME/.bash_profile
+COPY WELCOME $HOME_FENICS/WELCOME
+RUN echo "source $HOME_FENICS/dolfin-adjoint.conf" >> $HOME_FENICS/.bash_profile
