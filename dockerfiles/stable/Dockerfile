@@ -18,7 +18,7 @@ ENV FENICS_PYTHON_MAJOR_VERSION=2 \
 
 # Currently mshr tagged mshr-1.6.0 will not compile in this container.
 RUN /bin/bash -l -c "fenics-update && \
-                     FENICS_VERSION='' fenics-update mshr && \
+                      FENICS_VERSION='' fenics-update mshr && \
                      rm -rf $FENICS_HOME/build/src && \
                      cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
 
