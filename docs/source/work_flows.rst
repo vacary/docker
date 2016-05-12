@@ -450,10 +450,10 @@ at the official Docker `tutorials
 
 Use GUI in Linux
 ------------------------------------
-This enables plotting via VTK or Matplotlib etc on Linux systems. To use GUI, 
-first run `xhost +` and then append 
-`-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix` to the 
-docker run line. For example, run the stable version with:
+This enables plotting via VTK or Matplotlib etc on Linux systems. To use GUI,
+first run ``xhost +`` and then append ``-e DISPLAY=$DISPLAY -v
+/tmp/.X11-unix:/tmp/.X11-unix`` to the docker run line. For example, run the
+stable version with::
 
     xhost +
     docker run --rm -ti \
@@ -461,4 +461,4 @@ docker run line. For example, run the stable version with:
        -v /tmp/.X11-unix:/tmp/.X11-unix \
        quay.io/fenicsproject/stable
 
-After exiting docker, execute `xhost -` on the host to restore X settings.
+After exiting docker, execute ``xhost -`` on the host to restore X settings.
