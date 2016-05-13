@@ -448,16 +448,15 @@ at the official Docker `tutorials
 <https://docs.docker.com/engine/userguide/containers/dockerimages/>`_ and
 `manual <https://docs.docker.com/engine/reference/builder/>`_ pages.
 
-Use GUI in Linux
-------------------------------------
-This enables plotting via VTK or Matplotlib etc on Linux systems. To use GUI,
-first run ``xhost +`` and then append ``-e DISPLAY=$DISPLAY -v
-/tmp/.X11-unix:/tmp/.X11-unix`` to the docker run line. For example, run the
-stable version with::
+Use graphical applications on Linux hosts
+-----------------------------------------
+This allows X11 applications (e.g. matplotlib plot windows) to be displayed on
+Linux host systems. To enable this, first run ``xhost +`` and then append ``-e
+DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix`` to the Docker `run`
+command. For example, you can run the stable version with::
 
     xhost +
-    docker run --rm -ti \
-       -e DISPLAY=$DISPLAY \
+    docker run -ti -e DISPLAY=$DISPLAY \
        -v /tmp/.X11-unix:/tmp/.X11-unix \
        quay.io/fenicsproject/stable
 
