@@ -15,7 +15,7 @@ Once you have Docker installed, you can run any of the images below using the
 following command:
 
     docker run -ti quay.io/fenicsproject/<image-name>:latest
-        
+
 To start with you probably want to try the `stable` image which includes a full
 stable version of FEniCS with PETSc, SLEPc, petsc4py and slepc4py already
 compiled.
@@ -34,13 +34,14 @@ construction at <https://fenics-containers.readthedocs.org/>.
 
 ## Images
 
-We currently offer eight end-user images. A full description of the images can be found at 
+We currently offer eleven end-user images. A full description of the images can be found at
 <https://fenics-containers.readthedocs.org/>.
 
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
 | stable           | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev)                           | Stable release, with PETSc and SLEPc.         |
 | dolfin-adjoint   | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)      | As `stable`, but with dolfin-adjoint.         |
+| dev-dolfin-adjoint   | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-dolfin-adjoint)      | As `dev`, but with dolfin-adjoint.         |
 | dev              | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)     | Development version.                          |
 | dev-env          | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env)                   | Development environment with PETSc and SLEPc. |
 | dev-env-dbg      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-dbg/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-dbg)           | As `dev-env`, but with debugging symbols.     |
@@ -52,7 +53,7 @@ We currently offer eight end-user images. A full description of the images can b
 
 > Note: The *Build status* column refers to the latest *attempted* build. Even
 > if a build is marked as failed, there will still be a working image available
-> on the `latest` tag that you can use. 
+> on the `latest` tag that you can use.
 
 ## Building images
 
