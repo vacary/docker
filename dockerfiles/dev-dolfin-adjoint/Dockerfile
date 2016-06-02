@@ -15,17 +15,13 @@ RUN apt-get -qq update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN git clone https://github.com/funsim/moola.git && \
-    cd moola && \
-    python setup.py install && \
-    rm -rf /tmp/*
-
 USER fenics
 ENV DOLFIN_ADJOINT_VERSION master
 COPY dolfin-adjoint.conf $FENICS_HOME/dolfin-adjoint.conf
 RUN /bin/bash -l -c "source $FENICS_HOME/dolfin-adjoint.conf && \
                      update_libadjoint && \
                      update_dolfin-adjoint && \
+                     update_moola && \
                      rm -rf $FENICS_HOME/build/src"
 
 COPY WELCOME $FENICS_HOME/WELCOME
