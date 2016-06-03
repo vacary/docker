@@ -1,4 +1,4 @@
-# dolfin-adjoint stable version image
+# dolfin-adjoint development version image
 
 This image provides the most recent development release of dolfin-adjoint
 (<http://dolfin-adjoint.org>). The FEniCS installation is built against the
