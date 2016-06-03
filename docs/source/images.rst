@@ -19,6 +19,8 @@ Summary of available images
             :target: https://quay.io/repository/fenicsproject/stable
 .. |dolfin-adjoint| image:: https://quay.io/repository/fenicsproject/dolfin-adjoint/status
                     :target: https://quay.io/repository/fenicsproject/dolfin-adjoint
+.. |dev-dolfin-adjoint| image:: https://quay.io/repository/fenicsproject/dev-dolfin-adjoint/status
+                    :target: https://quay.io/repository/fenicsproject/dev-dolfin-adjoint
 .. |dev| image:: https://quay.io/repository/fenicsproject/dev/status
          :target: https://quay.io/repository/fenicsproject/dev
 .. |dev-env| image:: https://quay.io/repository/fenicsproject/dev-env/status
@@ -36,29 +38,31 @@ Summary of available images
 .. |dev-env-base| image:: https://quay.io/repository/fenicsproject/dev-env-base/status
                   :target: https://quay.io/repository/fenicsproject/dev-env-base
 
-+----------------------+---------------------+-------------------------------------------------+
-| **Image name**       | **Build status**    | **Short Description**                           |
-+----------------------+---------------------+-------------------------------------------------+
-| ``stable``           | |stable|            | Stable release, with PETSc and SLEPc.           |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dolfin-adjoint``   | |dolfin-adjoint|    | As ``stable``, but with dolfin-adjoint.         |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev``              | |dev|               | Development version.                            |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-env``          | |dev-env|           | Development environment with PETSc and SLEPc.   |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-env-dbg``      | |dev-env-dbg|       | As ``dev-env``, but with debugging symbols.     |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-env-trilinos`` | |dev-env-trilinos|  | As ``dev-env``, but with Trilinos.              |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-env-py3``      | |dev-env-py3|       | As ``dev-env``, but with Python 3.              |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-py3``          | |dev-py3|           | As ``dev``, but with Python 3.                  |
-+----------------------+---------------------+-------------------------------------------------+
-| ``base``             | |base|              | Base image, not for end users.                  |
-+----------------------+---------------------+-------------------------------------------------+
-| ``dev-env-base``     | |dev-env-base|      | Base image, not for end users.                  |
-+----------------------+---------------------+-------------------------------------------------+
++--------------------------+----------------------+-------------------------------------------------+
+| **Image name**           | **Build status**     | **Short Description**                           |
++--------------------------+----------------------+-------------------------------------------------+
+| ``stable``               | |stable|             | Stable release, with PETSc and SLEPc.           |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dolfin-adjoint``       | |dolfin-adjoint|     | As ``stable``, but with dolfin-adjoint.         |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev``                  | |dev|                | Development version.                            |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-env``              | |dev-env|            | Development environment with PETSc and SLEPc.   |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-dolfin-adjoint``   | |dev-dolfin-adjoint| | As ``dev``, but with dolfin-adjoint.            |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-env-dbg``          | |dev-env-dbg|        | As ``dev-env``, but with debugging symbols.     |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-env-trilinos``     | |dev-env-trilinos|   | As ``dev-env``, but with Trilinos.              |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-env-py3``          | |dev-env-py3|        | As ``dev-env``, but with Python 3.              |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-py3``              | |dev-py3|            | As ``dev``, but with Python 3.                  |
++--------------------------+----------------------+-------------------------------------------------+
+| ``base``                 | |base|               | Base image, not for end users.                  |
++--------------------------+----------------------+-------------------------------------------------+
+| ``dev-env-base``         | |dev-env-base|       | Base image, not for end users.                  |
++--------------------------+----------------------+-------------------------------------------------+
 
 Note: The *Build Status* column refers to the latest *attempted* build. Even if a build is marked
 as failed, there will still be a working image on the ``latest`` tag that you can use.
