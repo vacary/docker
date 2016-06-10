@@ -18,7 +18,7 @@ USER root
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-        bison cmake flex g++ gfortran git ipython mpich pkg-config wget \
+        bison cmake flex g++ gfortran git ipython mpich nano pkg-config wget \
         libopenblas-dev libboost-filesystem-dev libboost-system-dev \
         libboost-program-options-dev libboost-thread-dev libboost-timer-dev \
         libboost-iostreams-dev libeigen3-dev liblapack-dev \
