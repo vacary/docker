@@ -165,7 +165,7 @@ create ()
     echo ""
     echo "  fenicsproject start $NAME"
     echo ""
-    echo "You will find the current working directory under ~/shared."
+    echo "You will find the current working directory $PROJECT_DIR_HOST under ~/shared."
 }
 
 start ()
@@ -263,6 +263,7 @@ notebook ()
     echo ""
     echo "  fenicsproject start $NAME"
     echo ""
+    echo "You will find the current working directory $PROJECT_DIR_HOST under ~/shared."
 }
 
 check_name () {
