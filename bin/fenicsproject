@@ -8,7 +8,7 @@ DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 BUILD_DIR_CONTAINER="/home/fenics/build"
 SRC_DIR_CONTAINER="/home/fenics/build/src"
-PROJECT_DIR_HOST=$(pwd)
+PROJECT_DIR_HOST="'$(pwd)'"
 PROJECT_DIR_CONTAINER="/home/fenics/shared"
 # Workaround for issue https://github.com/docker/docker/issues/9299
 DEFAULT_COMMAND="/bin/bash -l -c 'export TERM=xterm; bash -i'"
@@ -152,7 +152,7 @@ create ()
            -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
-           -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            $SHARE_SRC_DIR \
            $VOLUME_BUILD_DIR \
            -w $PROJECT_DIR_CONTAINER \
