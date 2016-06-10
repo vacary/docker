@@ -144,7 +144,16 @@ create ()
     if [ $IMAGE == "dev-env" ]; then
        create-build-container $NAME
        VOLUME_BUILD_DIR="-v fenics-build-${NAME}:$BUILD_DIR_CONTAINER" 
-    fi 
+    fi
+
+    # People using dev-env-dbg might want to use gdb. Because docker
+    # has very strict isolation, we need to add some capabilities
+    # into the container to allow gdb to work.
+    if [ $IMAGE == "dev-env-dbg" ]; then
+        # First option is less than ideal security wise.
+        # should be improved.
+        CAPABILITIES="--security-opt=seccomp=unconfined --cap-add=SYS_PTRACE"
+    fi
 
     # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
@@ -155,6 +164,7 @@ create ()
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            $SHARE_SRC_DIR \
            $VOLUME_BUILD_DIR \
+           $CAPABILITIES \
            -w $PROJECT_DIR_CONTAINER \
            $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
     command $CMD
