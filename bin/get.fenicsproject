@@ -33,7 +33,7 @@ elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
     OS="Windows"
 else
     echo -e "${RED}Error${NORMAL}: We do not currently support your operating system $(uname)."
-    echo "Contact ${BLUE}fenics-support@googlegroups.com${NORMAL} for assistance."
+    echo -e "Contact ${BLUE}fenics-support@googlegroups.com${NORMAL} for assistance."
 fi
 
 SUDO="sudo"
@@ -45,9 +45,9 @@ quickstart ()
 {
     echo "To get started, run the command"
     echo ""
-    echo "  ${BLUE}fenicsproject run${NORMAL}"
+    echo -e "  ${BLUE}fenicsproject run${NORMAL}"
     echo ""
-    echo "For more information, see ${BLUE}fenicsproject help${NORMAL}."
+    echo -e "For more information, see ${BLUE}fenicsproject help${NORMAL}."
 }
 
 # Check if we have Docker
@@ -56,16 +56,16 @@ if [ ! $? -eq 0 ]; then
     echo ""
     OS=$(uname)
     if [ "$OS"="Linux" ]; then
-        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo -e "It appears that ${RED}Docker is not installed${NORMAL} on your system."
         echo ""
         echo "Follow these instructions to install Docker, then come back and try again:"
         echo ""
         echo "  https://docs.docker.com/linux/step_one/"
         echo ""
     else
-        echo "It appears that ${RED}Docker is not installed${NORMAL} on your system."
+        echo -e "It appears that ${RED}Docker is not installed${NORMAL} on your system."
         echo ""
-        echo "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
+        echo -e "Or you forgot to run this script in the ${GREEN}Docker Quickstart Terminal${NORMAL}."
         echo "Follow these instructions to install Docker, then come back and try again:"
         echo ""
         echo "  https://www.docker.com/products/docker-toolbox"
@@ -81,14 +81,15 @@ chmod +x $TMPDEST
 
 # Check if user is in sudoers
 if [ "$OS" != "Windows" ]; then
+    echo -e "We need your sudo password to install a script into $DEST".
     sudo -v
     if [ ! $? -eq 0 ]; then
         echo ""
-        echo "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
-        echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
-        echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
-        echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
-        echo "When you have done this, follow the instructions below to get started."
+        echo -e "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
+        echo -e "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
+        echo -e "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
+        echo -e "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
+        echo -e "When you have done this, follow the instructions below to get started."
         echo ""
         quickstart
         exit
@@ -98,6 +99,6 @@ fi
 # Copy the script to PATH
 $SUDO cp $TMPDEST $DEST
 $SUDO chmod +x $DEST
-echo "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
+echo -e "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
 echo ""
 quickstart
