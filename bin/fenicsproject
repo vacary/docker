@@ -249,7 +249,7 @@ notebook ()
 
     CMD="docker create -p ${IP}:3000-4000:8888 \
            -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
-           -v '$PROJECT_DIR_HOST':$PROJECT_DIR_CONTAINER \
+           -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
