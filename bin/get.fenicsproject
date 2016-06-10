@@ -14,6 +14,33 @@ BLUE="\033[1;34m"
 GREEN="\033[1;32m"
 NORMAL="\033[0m"
 
+# https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+if [ "$(docker info | grep -c Alpine)" == "1" ]; then
+    # If we are on Alpine Linux then we are most
+    # probably using the new 'native' Docker Mac
+    # and Docker Windows.
+    OS="Docker"
+elif [ "$(uname)" == "Darwin" ]; then
+    # Mac OS X with Docker installed using docker-machine.
+    OS="Darwin"
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # If we are running locally on Linux.
+    OS="Linux"
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
+    # The Docker environment installed by Docker Toolbox is MinGW based.
+    # Docker does not run on 32-bit environments.
+    # Don't know if we want to support MSYS or Cygwin as well.
+    OS="Windows"
+else
+    echo -e "${RED}Error${NORMAL}: We do not currently support your operating system $(uname)."
+    echo "Contact ${BLUE}fenics-support@googlegroups.com${NORMAL} for assistance."
+fi
+
+SUDO="sudo"
+if [ "$OS" == "Windows" ]; then
+    SUDO="" # Docker in a MinGW environment doesn't need sudo (and doesn't provide it!)
+fi
+
 quickstart ()
 {
     echo "To get started, run the command"
@@ -53,22 +80,24 @@ curl -s $URLBASE/fenicsproject > $TMPDEST
 chmod +x $TMPDEST
 
 # Check if user is in sudoers
-sudo -v
-if [ ! $? -eq 0 ]; then
-    echo ""
-    echo "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
-    echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
-    echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
-    echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
-    echo "When you have done this, follow the instructions below to get started."
-    echo ""
-    quickstart
-    exit
+if [ "$OS" != "Windows" ]; then
+    sudo -v
+    if [ ! $? -eq 0 ]; then
+        echo ""
+        echo "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
+        echo "You therefore need to manually copy the ${GREEN}fenicsproject${NORMAL} script to a"
+        echo "location of your choice and update your ${BLUE}PATH${NORMAL} environment variable"
+        echo "accordingly. The script is currently located at ${BLUE}${TMPDEST}${NORMAL}."
+        echo "When you have done this, follow the instructions below to get started."
+        echo ""
+        quickstart
+        exit
+    fi
 fi
 
 # Copy the script to PATH
-sudo cp $TMPDEST $DEST
-sudo chmod +x $DEST
+$SUDO cp $TMPDEST $DEST
+$SUDO chmod +x $DEST
 echo "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
 echo ""
 quickstart
