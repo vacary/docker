@@ -317,25 +317,28 @@ fail_if_image_does_not_exist () {
     fi
 }
 
-# Fail if user tries to share in entire home directory.
-if [ $(pwd) == $HOME ]; then
-    echo -e "${RED}Error${NORMAL}: We strongly advise against sharing your entire home directory"
-    echo "into a container. Instead, make a logical folder for each project:"
-    echo ""
-    echo "    mkdir ${HOME}/my-project"
-    echo ""
-    echo -e "and then run the ${BLUE}fenicsproject${NORMAL} script there:"
-    echo ""
-    echo "    cd ${HOME}/my-project"
-    echo "    fenicsproject $@"
-    exit 1
-fi
+fail_if_home_directory ()
+{
+    if [ $(pwd) == $HOME ]; then
+        echo -e "${RED}Error${NORMAL}: We strongly advise against sharing your entire home directory"
+        echo "into a container. Instead, make a logical folder for each project:"
+        echo ""
+        echo "    mkdir ${HOME}/my-project"
+        echo ""
+        echo -e "and then run the ${BLUE}fenicsproject${NORMAL} script there:"
+        echo ""
+        echo "    cd ${HOME}/my-project"
+        echo "    fenicsproject $@"
+        exit 1
+    fi
+}
 
 # Check command-line arguments
 if [ "$1" == "run" ]; then
     IMAGE="$2" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
     fail_if_image_does_not_exist $IMAGE
+    fail_if_home_directory
     # Select command (if any)
     if [ $# -ge 3 ]; then
         shift; shift;
@@ -350,6 +353,7 @@ elif [ "$1" == "create" ]; then
     : ${IMAGE:="$DEFAULT_IMAGE"}
     fail_if_image_does_not_exist $IMAGE
     fail_if_project_already_exists $NAME
+    fail_if_home_directory
     create $NAME $IMAGE
 elif [ "$1" == "notebook" ]; then
     NAME="$2"
@@ -357,6 +361,7 @@ elif [ "$1" == "notebook" ]; then
     : ${IMAGE:="$DEFAULT_IMAGE"}
     fail_if_image_does_not_exist $IMAGE
     fail_if_project_already_exists $NAME
+    fail_if_home_directory
     notebook $NAME $IMAGE
 elif [ "$1" == "start" ]; then
     NAME="$2"
