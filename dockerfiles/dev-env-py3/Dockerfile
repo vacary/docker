@@ -95,3 +95,5 @@ RUN pip3 install jupyter && \
 USER fenics
 WORKDIR /home/fenics
 COPY WELCOME $FENICS_HOME/WELCOME
+
+USER root

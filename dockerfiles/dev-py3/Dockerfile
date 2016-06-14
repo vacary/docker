@@ -21,3 +21,5 @@ ENV FENICS_PYTHON_MAJOR_VERSION=3 \
 RUN /bin/bash -l -c "fenics-update"
 
 COPY WELCOME $FENICS_HOME/WELCOME
+
+USER root

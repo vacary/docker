@@ -33,3 +33,5 @@ RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
     python -c 'import mshr'"
 
 COPY WELCOME $FENICS_HOME/WELCOME
+
+USER root

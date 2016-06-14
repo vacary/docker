@@ -26,3 +26,5 @@ RUN /bin/bash -l -c "source $FENICS_HOME/dolfin-adjoint.conf && \
 
 COPY WELCOME $FENICS_HOME/WELCOME
 RUN echo "source $FENICS_HOME/dolfin-adjoint.conf" >> $FENICS_HOME/.bash_profile
+
+USER root
