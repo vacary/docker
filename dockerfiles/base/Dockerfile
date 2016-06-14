@@ -47,10 +47,12 @@ RUN chmod +x /etc/my_init.d/set-home-permissions.sh
 
 USER fenics
 ENV FENICS_HOME /home/fenics
+RUN touch $FENICS_HOME/.sudo_as_admin_successful
 
 # Print something nice on entry.
 COPY WELCOME $FENICS_HOME/WELCOME
 
 WORKDIR /home/fenics
-ENTRYPOINT ["sudo","/sbin/my_init","--quiet","--","sudo","-u","fenics","/bin/bash","-l","-c"]
+USER root
+ENTRYPOINT ["/sbin/my_init","--quiet","--","/sbin/setuser","fenics","/bin/bash","-l","-c"]
 CMD ["/bin/bash","-i"]
