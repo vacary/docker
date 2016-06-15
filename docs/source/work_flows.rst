@@ -404,7 +404,7 @@ the following text::
         apt-get -y install python-scipy \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-    USER fenics
+    USER root 
 
 Let's go through each directive one-by-one. The ``FROM`` directive instructions
 Docker to build the new image using ``quay.io/fenicsproject/stable:latest``
@@ -414,7 +414,7 @@ preferred to using ``sudo`` in the ``Dockerfile``. Then, we ``RUN`` a few shell
 commands that update the ``apt-get`` cache and install ``scipy``. Note that we
 clean up and delete the ``apt-get`` cache after using it. This reduces the
 space requirements of the final image. Finally, we switch back to the ``USER``
-``fenics``. The reasons for switching back to the user ``fenics`` are outside
+``root``. The reasons for switching back to the user ``root`` are outside
 the scope of this tutorial.
 
 Save ``Dockerfile`` and exit back to the terminal, and then run::
