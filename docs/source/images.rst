@@ -3,9 +3,9 @@
 List of FEniCS Docker images
 ============================
 
-We currently offer eight end-user images. The stable image is
-recommended for most users, but advanced users or developers may
-want to use other images.
+We currently offer the following end-user images. The ``stable`` image is
+recommended for most users, but advanced users or developers may want to use
+other images.
 
 The images are automatically built on quay.io at
 https://quay.io/repository/fenicsproject/. The Dockerfiles for the
@@ -17,10 +17,6 @@ Summary of available images
 
 .. |stable| image:: https://quay.io/repository/fenicsproject/stable/status
             :target: https://quay.io/repository/fenicsproject/stable
-.. |dolfin-adjoint| image:: https://quay.io/repository/fenicsproject/dolfin-adjoint/status
-                    :target: https://quay.io/repository/fenicsproject/dolfin-adjoint
-.. |dev-dolfin-adjoint| image:: https://quay.io/repository/fenicsproject/dev-dolfin-adjoint/status
-                    :target: https://quay.io/repository/fenicsproject/dev-dolfin-adjoint
 .. |dev| image:: https://quay.io/repository/fenicsproject/dev/status
          :target: https://quay.io/repository/fenicsproject/dev
 .. |dev-env| image:: https://quay.io/repository/fenicsproject/dev-env/status
@@ -38,18 +34,16 @@ Summary of available images
 .. |dev-env-base| image:: https://quay.io/repository/fenicsproject/dev-env-base/status
                   :target: https://quay.io/repository/fenicsproject/dev-env-base
 
+.. note:: Looking for images with dolfin-adjoint? Check out https://bitbucket.org/dolfin-adjoint/virtual.
+
 +--------------------------+----------------------+-------------------------------------------------+
 | **Image name**           | **Build status**     | **Short Description**                           |
 +--------------------------+----------------------+-------------------------------------------------+
 | ``stable``               | |stable|             | Stable release, with PETSc and SLEPc.           |
 +--------------------------+----------------------+-------------------------------------------------+
-| ``dolfin-adjoint``       | |dolfin-adjoint|     | As ``stable``, but with dolfin-adjoint.         |
-+--------------------------+----------------------+-------------------------------------------------+
 | ``dev``                  | |dev|                | Development version.                            |
 +--------------------------+----------------------+-------------------------------------------------+
 | ``dev-env``              | |dev-env|            | Development environment with PETSc and SLEPc.   |
-+--------------------------+----------------------+-------------------------------------------------+
-| ``dev-dolfin-adjoint``   | |dev-dolfin-adjoint| | As ``dev``, but with dolfin-adjoint.            |
 +--------------------------+----------------------+-------------------------------------------------+
 | ``dev-env-dbg``          | |dev-env-dbg|        | As ``dev-env``, but with debugging symbols.     |
 +--------------------------+----------------------+-------------------------------------------------+
@@ -64,8 +58,8 @@ Summary of available images
 | ``dev-env-base``         | |dev-env-base|       | Base image, not for end users.                  |
 +--------------------------+----------------------+-------------------------------------------------+
 
-Note: The *Build Status* column refers to the latest *attempted* build. Even if a build is marked
-as failed, there will still be a working image on the ``latest`` tag that you can use.
+.. note:: The *Build Status* column refers to the latest *attempted* build. Even if a build is marked
+          as failed, there will still be a working image on the ``latest`` tag that you can use.
 
 Detailed image descriptions
 ---------------------------
@@ -74,18 +68,11 @@ FEniCS library images
 ^^^^^^^^^^^^^^^^^^^^^
 
 Application images are designed for typical end-users. Most users are
-probably looking for either the ``stable`` or ``dolfin-adjoint``
-images.
+probably looking for the ``stable`` image:
 
 * ``stable``: Provides the most recent release of FEniCS and is
   recommended for users who need the latest versions of PETSc, SLEPc,
   petsc4py and slepc4py.
-
-* ``dolfin-adjoint``: Identical to stable, but includes
-  dolfin-adjoint_.
-
-.. _dolfin-adjoint: http://dolfin-adjoint.org
-
 
 Development and advanced images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

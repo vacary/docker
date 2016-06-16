@@ -37,12 +37,12 @@ construction at <https://fenics-containers.readthedocs.org/>.
 We currently offer following end-user images. A full description of the images can be found at
 <https://fenics-containers.readthedocs.org/>.
 
+> Looking for images with dolfin-adjoint already installed? Check out <https://bitbucket.org/dolfin-adjoint/virtual>.
+
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| stable           | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev)                           | Stable release, with PETSc and SLEPc.         |
-| dolfin-adjoint   | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)      | As `stable`, but with dolfin-adjoint.         |
-| dev-dolfin-adjoint   | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-dolfin-adjoint)      | As `dev`, but with dolfin-adjoint.         |
-| dev              | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dolfin-adjoint/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dolfin-adjoint)     | Development version.                          |
+| stable           | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/stable/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/stable)                           | Stable release, with PETSc and SLEPc.         |
+| dev              | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev)     | Development version.                          |
 | dev-env          | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env)                   | Development environment with PETSc and SLEPc. |
 | dev-env-dbg      | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-dbg/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-dbg)           | As `dev-env`, but with debugging symbols.     |
 | dev-env-trilinos | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-trilinos/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-trilinos) | As `dev-env`, but with Trilinos.              |
