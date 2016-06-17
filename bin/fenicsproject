@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 #
 # This script wraps Docker commands to simplify the use of FEniCS Docker images.
+# Authors: Jack S. Hale <jack.hale@uni.lu>
+#          Anders Logg <logg@simula.no>
 
 # Config
-IMAGE_HOST="quay.io/fenicsproject"
+DEFAULT_IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 BUILD_DIR_CONTAINER="/home/fenics/build"
@@ -106,7 +108,8 @@ run ()
 create-cache-container ()
 {
     IMAGE="$1"
-    CMD="docker volume create --name instant-cache-${IMAGE}"
+    echo $IMAGE
+    CMD="docker volume create --name instant-cache-${IMAGE////}"
     command $CMD
 }
 
@@ -120,7 +123,7 @@ create-build-container ()
 clean-cache ()
 {
     IMAGE="$1"
-    CMD="docker run --rm -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER $IMAGE_HOST/$IMAGE 'rm -rf $CACHE_DIR_CONTAINER/*'"
+    CMD="docker run --rm -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER $IMAGE 'rm -rf $CACHE_DIR_CONTAINER/*'"
     command $CMD
 }
 
@@ -141,7 +144,7 @@ create ()
     # the compiled FEniCS library inside a Docker volume.  This will allow us
     # to share compiled FEniCS versions between containers by mounting the
     # volume read-only in a new dev-env container.
-    if [ $IMAGE == "dev-env" ]; then
+    if [[ $IMAGE == *dev-env ]]; then
        create-build-container $NAME
        VOLUME_BUILD_DIR="-v fenics-build-${NAME}:$BUILD_DIR_CONTAINER" 
     fi
@@ -149,7 +152,7 @@ create ()
     # People using dev-env-dbg might want to use gdb. Because docker
     # has very strict isolation, we need to add some capabilities
     # into the container to allow gdb to work.
-    if [ $IMAGE == "dev-env-dbg" ]; then
+    if [[ $IMAGE == *dev-env-dbg ]]; then
         # First option is less than ideal security wise.
         # should be improved.
         CAPABILITIES="--security-opt=seccomp=unconfined --cap-add=SYS_PTRACE"
@@ -158,7 +161,7 @@ create ()
     # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
-           -v instant-cache-${IMAGE}:$CACHE_DIR_CONTAINER \
+           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
@@ -166,7 +169,7 @@ create ()
            $VOLUME_BUILD_DIR \
            $CAPABILITIES \
            -w $PROJECT_DIR_CONTAINER \
-           $IMAGE_HOST/$IMAGE $DEFAULT_COMMAND"
+           $IMAGE $DEFAULT_COMMAND"
     command $CMD
 
     # Print summary
@@ -222,7 +225,7 @@ start ()
 pull ()
 {
     IMAGE="$1"
-    CMD="docker pull $IMAGE_HOST/$IMAGE"
+    CMD="docker pull $IMAGE"
     command $CMD
 }
 
@@ -258,13 +261,13 @@ notebook ()
     fi
 
     CMD="docker create -p ${IP}:3000-4000:8888 \
-           -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
+           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
            --name $NAME \
-           $IMAGE_HOST/$IMAGE 'jupyter-notebook --ip=0.0.0.0'"
+           $IMAGE 'jupyter-notebook --ip=0.0.0.0'"
     command $CMD
 
     # Print summary
@@ -314,17 +317,31 @@ fail_if_project_already_exists () {
     set -e
 }
 
-fail_if_image_does_not_exist () {
+preprocess_image_name () {
     IMAGE=$1
-    fail=true
-    for image in 'stable' 'dev' 'dev-env' 'dev-env-py3' 'dev-py3' 'dev-env-trilinos' 'dolfin-adjoint' 'dev-env-dbg'; do
-        if [ "$IMAGE" == $image ]; then
-           fail=false
-        fi 
-    done
-    if [ $fail == true ]; then
-        echo -e "${RED}Error${NORMAL}: Image with name $IMAGE does not exist. Try stable, dev-env or dev."
-        exit 1
+    # Check if we have a fully qualified image name, e.g. quay.io/dolfinadjoint/dolfin-adjoint
+    if [[ "$IMAGE" == *\/* ]]; then
+        :
+        # Do nothing, user passing their own fully qualified image name and we assume
+        # they know what they are doing. 
+    else
+        # Otherwise, they are passing an abbreviated name, e.g. stable.
+        # so we need to make it a fully qualified name.
+        if [ "$DEFAULT_IMAGE_HOST" == "quay.io/fenicsproject" ]; then
+            fail=true
+            # List should contain all of our official images suitable for end-users.
+            for image in 'stable' 'dev' 'dev-env' 'dev-env-py3' 'dev-py3' 'dev-env-trilinos' 'dev-env-dbg'; do
+                if [ "$IMAGE" == $image ]; then
+                   fail=false
+                fi 
+            done
+            if [ $fail == true ]; then
+                echo -e "${RED}Error${NORMAL}: Image with name $IMAGE does not exist. Try stable, dev-env or dev."
+                exit 1
+            fi
+        fi
+        # Prepend DEFAULT_IMAGE_HOST so we have a fully qualified name.
+        IMAGE=$DEFAULT_IMAGE_HOST"/"$IMAGE 
     fi
 }
 
@@ -348,7 +365,7 @@ fail_if_home_directory ()
 if [ "$1" == "run" ]; then
     IMAGE="$2" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
-    fail_if_image_does_not_exist $IMAGE
+    preprocess_image_name $IMAGE
     fail_if_home_directory
     # Select command (if any)
     if [ $# -ge 3 ]; then
@@ -362,7 +379,7 @@ elif [ "$1" == "create" ]; then
     NAME="$2"
     IMAGE="$3" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
-    fail_if_image_does_not_exist $IMAGE
+    preprocess_image_name $IMAGE
     fail_if_project_already_exists $NAME
     fail_if_home_directory
     create $NAME $IMAGE
@@ -370,7 +387,7 @@ elif [ "$1" == "notebook" ]; then
     NAME="$2"
     IMAGE="$3" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
-    fail_if_image_does_not_exist $IMAGE
+    preprocess_image_name $IMAGE
     fail_if_project_already_exists $NAME
     fail_if_home_directory
     notebook $NAME $IMAGE
@@ -381,12 +398,12 @@ elif [ "$1" == "start" ]; then
 elif [ "$1" == "pull" ]; then
     IMAGE="$2" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
-    fail_if_image_does_not_exist $IMAGE
+    preprocess_image_name $IMAGE
     pull $IMAGE
 elif [ "$1" == "clean-cache" ]; then
     IMAGE="$2" 
     : ${IMAGE:="$DEFAULT_IMAGE"}
-    fail_if_image_does_not_exist $IMAGE
+    preprocess_image_name $IMAGE
     clean-cache $IMAGE
 else
     help
