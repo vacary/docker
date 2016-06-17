@@ -97,11 +97,11 @@ run ()
 
     # Run container
     CMD="docker run --rm -ti \
-           -v instant-cache-$IMAGE:$CACHE_DIR_CONTAINER \
+           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
-           $IMAGE_HOST/$IMAGE $COMMAND"
+           $IMAGE $COMMAND"
     command $CMD
 }
 
