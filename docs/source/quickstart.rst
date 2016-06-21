@@ -10,7 +10,7 @@ To get started, follow these two steps:
 
 #. Install Docker for your platform by following `these
    instructions <https://docs.docker.com/engine/getstarted/step_one/>`_.
-.. note:: Windows users must continue to use the Docker Toolbox, *not* Docker
+   Windows users must continue to use the Docker Toolbox, *not* Docker
    for Windows, if they wish to use the FEniCS Docker script described below.
 #. Install the FEniCS Docker script::
     
