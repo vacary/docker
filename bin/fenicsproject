@@ -217,7 +217,7 @@ start ()
        fi
     else
         echo "Starting new session in project named $NAME."
-        CMD="docker exec -ti $NAME $DEFAULT_COMMAND"
+        CMD="docker exec -u fenics -ti $NAME $DEFAULT_COMMAND"
         command $CMD
     fi
 }
