@@ -24,7 +24,7 @@ For setting the DNS system-wide, see
 I can't share a folder into the container
 -----------------------------------------
 
-*Mac OS X*: By default, only files and directories under  ``/Users/`` can be
+*macOS*: By default, only files and directories under  ``/Users/`` can be
 shared into a container using the ``-v`` flag.
 
 *Windows*: By default, only files and directories under ``C:\Users`` can be
@@ -33,7 +33,7 @@ shared into a container using the ``-v`` flag.
 I've run out of space for new containers or images
 --------------------------------------------------
 
-Users running on Mac OS X and Windows are actually running the Docker
+Users using the Docker Toolbox on macOS and Windows are actually running the Docker
 containers inside a Virtual Machine. If you ``pull`` too many images from
 Dockerhub then you may fill up the virtual machine's disk drive.
 

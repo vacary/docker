@@ -7,9 +7,9 @@ images for FEniCS (<http://fenicsproject.org>).
 
 ## Introduction
 
-To install Docker for your platform (Windows, Mac OS X, Linux, cloud platforms,
+To install Docker for your platform (Windows, macOS, Linux, cloud platforms,
 etc.), follow the instructions at
-<https://docs.docker.com/engine/installation/>.
+(<https://docs.docker.com/engine/getstarted/step_one/>).
 
 Once you have Docker installed, you can run any of the images below using the
 following command:
