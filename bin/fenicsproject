@@ -347,7 +347,7 @@ preprocess_image_name () {
 
 fail_if_home_directory ()
 {
-    if [ $(pwd) == $HOME ]; then
+    if [ "$(pwd)" == $HOME ]; then
         echo -e "${RED}Error${NORMAL}: We strongly advise against sharing your entire home directory"
         echo "into a container. Instead, make a logical folder for each project:"
         echo ""
