@@ -14,11 +14,10 @@ USER fenics
 ENV FENICS_PYTHON_MAJOR_VERSION=2 \
     FENICS_PYTHON_MINOR_VERSION=7 \
     FENICS_BUILD_TYPE=Release \
-    FENICS_VERSION=1.6.0
+    FENICS_VERSION=2016.1.0
 
 # Currently mshr tagged mshr-1.6.0 will not compile in this container.
-RUN /bin/bash -l -c "fenics-update && \
-                      FENICS_VERSION='' fenics-update mshr && \
+RUN /bin/bash -l -c "fenics-update && \ 
                      rm -rf $FENICS_HOME/build/src && \
                      cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
 
@@ -29,8 +28,7 @@ RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
     python $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     instant-clean && \
-    rm -r /tmp/poisson_test && \
-    python -c 'import mshr'"
+    rm -r /tmp/poisson_test"
 
 COPY WELCOME $FENICS_HOME/WELCOME
 
