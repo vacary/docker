@@ -7,11 +7,24 @@
 # Config
 DEFAULT_IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
+# Where to mount the Instant/dijitso cache 
+# in the container.
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
+# Where to build FEniCS.
 BUILD_DIR_CONTAINER="/home/fenics/build"
+# Where to store the FEniCS source code.
 SRC_DIR_CONTAINER="/home/fenics/build/src"
+# Share in the current working directory
 PROJECT_DIR_HOST="'$(pwd)'"
+# to the following directory in the container.
 PROJECT_DIR_CONTAINER="/home/fenics/shared"
+# Linux users have an issue with sharing files because
+# the UID and GID in the container sometimes does not match
+# the UID and GID on the host. By passing the UID and GID
+# on the host, the container will modify the fenics user to
+# match the user on the host, resulting in seamless sharing.
+HOST_UID=$(id -u)
+HOST_GID=$(id -g)
 # Workaround for issue https://github.com/docker/docker/issues/9299
 DEFAULT_COMMAND="/bin/bash -l -c 'export TERM=xterm; bash -i'"
 
@@ -97,6 +110,8 @@ run ()
 
     # Run container
     CMD="docker run --rm -ti \
+           --env HOST_UID=${HOST_UID} \
+           --env HOST_GID=${HOST_GID} \
            -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
@@ -161,6 +176,8 @@ create ()
     # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
+           --env HOST_UID=${HOST_UID} \
+           --env HOST_GID=${HOST_GID} \
            -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
@@ -261,6 +278,8 @@ notebook ()
     fi
 
     CMD="docker create -p ${IP}:3000-4000:8888 \
+           --env HOST_UID=${HOST_UID} \
+           --env HOST_GID=${HOST_GID} \
            -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
