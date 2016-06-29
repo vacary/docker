@@ -13,8 +13,8 @@ a FEniCS environment installed.
 .. note:: The ``fenicsproject notebook myproject`` command automates the tasks
           outlined below. See :ref:`quickstart` for instructions.
 
-Linux users
------------
+Docker for Mac, Docker for Windows and Linux users
+--------------------------------------------------
 First of all we ``run`` a new Docker container with the ``jupyter-notebook``
 command specified and the default port ``8888`` exposed on ``localhost``::
 
@@ -22,8 +22,8 @@ command specified and the default port ``8888`` exposed on ``localhost``::
 
 The notebook will be available at ``http://localhost:8888`` in your web browser.
 
-Mac and Windows users
----------------------
+Docker Toolbox for Windows and Mac users
+----------------------------------------
 
 First of all we ``run`` a new Docker container with the ``jupyter-notebook``
 command specified and the default port ``8888`` exposed on the IP of the
