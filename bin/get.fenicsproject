@@ -26,7 +26,7 @@ else
 fi
 
 # Config
-URLBASE="http://get.fenicsproject.org"
+URLBASE="https://get.fenicsproject.org"
 TMPDEST="/tmp/fenicsproject"
 DEST="/usr/local/bin/fenicsproject"
 # On MINGW64_NT /usr/local/bin does not exist and we cannot
