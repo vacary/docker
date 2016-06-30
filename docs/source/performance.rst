@@ -3,6 +3,10 @@
 Performance
 ===========
 
+In short, running FEniCS in Docker may actually be faster than using a native
+build since our Docker images have been tuned for performance, even when
+running Docker using virtualisation technologies on Mac and Windows.
+
 Linux
 -----
 
@@ -11,9 +15,19 @@ FEniCS in Docker, compared to running natively on the host system.  In
 practice, the containers are usually faster than user installations
 because they have been tuned for performance.
 
-Mac and Windows
+Docker for Mac
 ---------------
 
-On Mac or Windows, Docker will run inside a virtual machine.  Running
-FEniCS in Docker may actually be faster than using a native build
-since our Docker images have been tuned for performance.
+On macOS, Docker runs inside an extremely lightweight hypervisor provided by
+Apple's Hypervisor framework. 
+
+Docker for Windows
+------------------
+
+On Windows, Docker runs inside Microsoft's Hyper-V, a native and lightweight
+hypervisor technology. 
+
+Docker Toolbox
+--------------
+
+On Mac or Windows, Docker runs inside a Virtualbox-based virtual machine.
