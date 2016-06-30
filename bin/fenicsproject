@@ -283,7 +283,7 @@ notebook ()
     elif [[ "$OS" == "Docker" ]]; then
         # Will bind to private IP by default.
         # Can we work out what this IP is? Specific is more secure.
-        IP=""
+        IP="127.0.0.1"
     else
         # Conservative default, works on Linux.
         IP="127.0.0.1"
