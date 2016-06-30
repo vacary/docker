@@ -83,7 +83,6 @@ fi
 # Download script
 rm -f $TMPDEST
 curl -s $URLBASE/fenicsproject > $TMPDEST
-chmod +x $TMPDEST
 
 # Check if user is in sudoers
 if [ "$OS" != "Windows" ]; then
@@ -104,7 +103,7 @@ fi
 
 # Copy the script to PATH
 $SUDO cp $TMPDEST $DEST
-$SUDO chmod +x $DEST
+$SUDO chmod a+rx $DEST
 echo -e "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
 echo ""
 quickstart
