@@ -101,6 +101,19 @@ command-swallow-stderr ()
     eval $@ 2> /dev/null
 }
 
+clean-string () {
+    # Docker cannot name any objects (volumes, containers)
+    # with strings containing / or :. As we use the image
+    # name as a (somewhat) unique identifier to create
+    # various caches, strip these components out.
+    local IMAGE="$1"
+    # Remove slashes
+    IMAGE=${IMAGE////}
+    # Remove colons
+    IMAGE=${IMAGE/:/}
+    echo $IMAGE
+}
+
 run ()
 {
     IMAGE="$1"
@@ -112,7 +125,7 @@ run ()
     CMD="docker run --rm -ti \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
-           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
+           -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
@@ -123,8 +136,7 @@ run ()
 create-cache-container ()
 {
     IMAGE="$1"
-    echo $IMAGE
-    CMD="docker volume create --name instant-cache-${IMAGE////}"
+    CMD="docker volume create --name instant-cache-$(clean-string $IMAGE)"
     command $CMD
 }
 
@@ -138,7 +150,7 @@ create-build-container ()
 clean-cache ()
 {
     IMAGE="$1"
-    CMD="docker run --rm -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER $IMAGE 'rm -rf $CACHE_DIR_CONTAINER/*'"
+    CMD="docker run --rm -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER $IMAGE 'rm -rf $CACHE_DIR_CONTAINER/*'"
     command $CMD
 }
 
@@ -178,7 +190,7 @@ create ()
     CMD="docker create -ti --name $NAME \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
-           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
+           -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
@@ -280,7 +292,7 @@ notebook ()
     CMD="docker create -p ${IP}:3000-4000:8888 \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
-           -v instant-cache-${IMAGE////}:$CACHE_DIR_CONTAINER \
+           -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
