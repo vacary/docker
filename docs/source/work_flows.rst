@@ -152,7 +152,7 @@ In my ``my-code.py`` I have the following simple Python/FEniCS code::
     mesh = UnitSquareMesh(10, 10)
     V = FunctionSpace(mesh, "CG", 1)
     f = interpolate(Constant(1.0), V)
-    File("f.xdmf") << f
+    XDMFFile("f.xdmf").write(f)
 
 Running the ``docker run`` command above then gives me the output::
 
