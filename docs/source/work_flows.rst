@@ -284,7 +284,7 @@ Now, back on the host, we must ``commit`` the container. This
 `freezes` the modifications to the filesystem we made when we compiled
 FEniCS. Make a note from your terminal of the unique hash in the bash
 prompt of the container when it was running e.g.
-`fenics@88794e9fdcf5:~$` and then run, e.g.::
+``fenics@88794e9fdcf5:~$`` and then run, e.g.::
 
     docker commit 88794
 
