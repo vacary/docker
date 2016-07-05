@@ -231,9 +231,9 @@ almost instantly.
 
 This environment contains everything we need to compile the latest
 version of FEniCS from the ``master`` branch. We provide a helper
-script ``update_fenics`` that will take care of pulling the source
+script ``fenics-update`` that will take care of pulling the source
 from git, compiling them, and installing them in the right
-locations. Using ``update_fenics`` is optional, you can pull and build
+locations. Using ``fenics-update`` is optional, you can pull and build
 FEniCS in anyway you wish inside the container.
 
 For more advanced usage, see :ref:`developing`.
