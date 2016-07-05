@@ -274,7 +274,7 @@ with::
 
 and in the new container::
 
-    update_fenics
+    fenics-update
 
 After the compile has finished, ``exit`` the container::
 
