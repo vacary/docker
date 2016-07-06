@@ -398,7 +398,7 @@ the following text::
     USER root
     RUN apt-get -qq update && \
         apt-get -y upgrade && \
-        apt-get -y install python-scipy \
+        apt-get -y install python-scipy && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     USER root 
