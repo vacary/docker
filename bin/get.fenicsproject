@@ -28,13 +28,15 @@ fi
 # Config
 URLBASE="https://get.fenicsproject.org"
 TMPDEST="/tmp/fenicsproject"
-DEST="/usr/local/bin/fenicsproject"
+DEST_DIR="/usr/local/bin/"
 # On MINGW64_NT /usr/local/bin does not exist and we cannot
 # even create it! However, $HOME/bin seems to work and be
 # in the PATH by default on systems that I have checked.
 if [ "$OS" == "Windows" ]; then
-    DEST="$HOME/bin/fenicsproject"
+    DEST_DIR="$HOME/bin/"
 fi
+
+DEST="${DEST_DIR}fenicsproject"
 
 # Setup
 RED="\033[1;31m"
@@ -102,6 +104,7 @@ if [ "$OS" != "Windows" ]; then
 fi
 
 # Copy the script to PATH
+$SUDO mkdir -p $DEST_DIR
 $SUDO cp $TMPDEST $DEST
 $SUDO chmod a+rx $DEST
 echo -e "Successfully installed the ${GREEN}fenicsproject${NORMAL} script in ${DEST}."
