@@ -24,7 +24,8 @@ RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
         python3-dev python3-numpy python3-six python3-ply python3-pytest \ 
-        python3-h5py python3-urllib3 python3-flufl.lock python3-matplotlib && \
+        python3-h5py python3-urllib3 python3-flufl.lock python3-matplotlib \
+	python3-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

@@ -22,7 +22,8 @@ WORKDIR /tmp
 RUN apt-get -qq update && \
     apt-get -y install \
          python-dev gdb valgrind python-numpy python-six python-ply python-pytest \
-         python-h5py python-urllib3 python-flufl.lock python-matplotlib && \
+         python-h5py python-urllib3 python-flufl.lock python-matplotlib \
+	 python-scipy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
