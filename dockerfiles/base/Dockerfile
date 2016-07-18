@@ -12,7 +12,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM quay.io/fenicsproject/phusion:latest 
+FROM phusion/baseimage:0.9.19 
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 # Get Ubuntu updates
@@ -33,10 +33,6 @@ ENV LC_ALL=C.UTF-8 \
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
     echo "fenics:docker" | chpasswd && \
     echo "fenics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# OpenBLAS threads should be 1 to ensure performance
-RUN echo 1 > /etc/container_environment/OPENBLAS_NUM_THREADS && \
-    echo 0 > /etc/container_environment/OPENBLAS_VERBOSE
 
 # See https://github.com/phusion/baseimage-docker/issues/186
 RUN touch /etc/service/syslog-forwarder/down

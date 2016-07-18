@@ -37,13 +37,15 @@ USER fenics
 
 RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
 
-# Version numbers
+# Environment variables 
 ENV PETSC_VERSION=3.7.0 \
     SLEPC_VERSION=3.7.0 \
     SWIG_VERSION=3.0.10 \
     MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.7.0 \
     SLEPC4PY_VERSION=3.7.0 \
-    TRILINOS_VERSION=12.6.3
+    TRILINOS_VERSION=12.6.3 \
+    OPENBLAS_NUM_THREADS=1 \
+    OPENBLAS_VERBOSE=0
 
 USER root

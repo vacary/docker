@@ -8,6 +8,9 @@ fi
 if [ "$HOST_GID" ]; then
     groupmod -g $HOST_GID fenics
 fi
-# This makes sure that all files in /home/fenics (including any
-# shared volumes) are accessible by the user fenics.
-chown -R fenics:fenics /home/fenics 2> /dev/null || true
+# This makes sure that all files in /home/fenics are accessible by the user
+# fenics. We exclude the folder ~/shared to reduce IO out to the host. Docker
+# for Mac, Docker for Windows and the UID/GID trick above should mean that file
+# permissions work seamlessly now.
+cd /home/fenics
+find . -maxdepth 1 | grep -v "./shared" | xargs chown -R fenics:fenics
