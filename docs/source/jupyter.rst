@@ -40,6 +40,43 @@ your web browser.
 
 .. note:: All images except ``base`` and ``dev-env-base`` include Jupyter.
 
+Plotting
+--------
+
+Basic two and three-dimensional plotting are available from within the Jupyter
+notebook.
+
+You can see an example of what's possible check out :download:`this notebook
+<jupyter-fenics-plotting-example.html>`.
+
+.. note:: Safari and Firefox are currently recommended for 3D plotting. Chrome
+          has an intermittent issue where plots may not render.
+
+For `matplotlib`_ plotting (2D), open up a new Jupyter notebook, and in the
+first cell type::
+
+    %matplotlib inline
+
+Execute (Shift-Enter) the cell. In the next cell, we will load in the code from
+the DOLFIN Python Poisson demo::
+
+    %load ~/demo/documented/poisson/python/demo_poisson.py
+
+Execute (Shift-Enter) the cell. In the same cell, the code from the
+``demo_poisson.py`` file will be shown. Click in the cell and execute
+(Shift-Enter) again. A plot of the solution variable ``u`` will appear.
+
+For `X3DOM`_ plotting (3D), continuing from above, in a new cell type::
+
+    from IPython.display import HTML
+    HTML(X3DOM().html(u))
+
+Execute (Shift-Enter) the cell. A 3D plot will appear that you can rotate
+and zoom using the mouse.
+
+.. _matplotlib: http://matplotlib.org
+.. _X3DOM: http://www.x3dom.org
+
 Further instructions
 --------------------
 
