@@ -46,7 +46,7 @@ Plotting
 Basic two and three-dimensional plotting are available from within the Jupyter
 notebook.
 
-You can see an example of what's possible check out :download:`this notebook
+To see an example of what's possible check out :download:`this notebook
 <jupyter-fenics-plotting-example.html>`.
 
 .. note:: Safari and Firefox are currently recommended for 3D plotting. Chrome
