@@ -11,12 +11,9 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
 
-ENV FENICS_PYTHON_MAJOR_VERSION=2 \
-    FENICS_PYTHON_MINOR_VERSION=7 \
-    FENICS_BUILD_TYPE=Release \
+ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.1.0
 
-# Currently mshr tagged mshr-1.6.0 will not compile in this container.
 RUN /bin/bash -l -c "fenics-update && \ 
                      rm -rf $FENICS_HOME/build/src && \
                      cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"

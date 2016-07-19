@@ -13,8 +13,8 @@ FROM quay.io/fenicsproject/dev-env-base:latest
 MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER root
-ENV FENICS_PYTHON_MAJOR_VERSION 2 \
-    FENICS_PYTHON_MINOR_VERSION 7
+ENV FENICS_PYTHON_MAJOR_VERSION=2 \
+    FENICS_PYTHON_MINOR_VERSION=7
 
 WORKDIR /tmp
 

@@ -14,9 +14,7 @@ MAINTAINER fenics-project <fenics@fenicsproject.org>
 
 USER fenics
 
-ENV FENICS_PYTHON_MAJOR_VERSION=3 \
-    FENICS_PYTHON_MINOR_VERSION=5 \
-    FENICS_BUILD_TYPE=Release
+ENV FENICS_BUILD_TYPE=Release
 
 RUN /bin/bash -l -c "fenics-update"
 
