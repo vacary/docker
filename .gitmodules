@@ -1,3 +1,0 @@
-[submodule "dockerfiles/phusion"]
-	path = dockerfiles/phusion
-	url = https://github.com/jhale/baseimage-docker.git 
