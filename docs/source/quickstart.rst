@@ -14,7 +14,7 @@ To get started, follow these two steps:
    for Windows, if they wish to use the FEniCS Docker script described below.
 #. Install the FEniCS Docker script::
     
-    curl -s https://get.fenicsproject.org | sh
+    curl -s https://get.fenicsproject.org | bash
    
    If using the Docker Toolbox (macOS versions < 10.10 or Windows versions <
    10), make sure you run this and other commands inside the Docker Quickstart
