@@ -27,15 +27,18 @@ RUN apt-get -qq update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget https://bootstrap.pypa.io/get-pip.py && \ 
+# Install Python pip
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     pip install setuptools && \
     rm -rf /tmp/*
 
-# Install PETSc from source
+# Get the PETSc source and unpack
 RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
-    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
-    cd petsc-${PETSC_VERSION} && \
+    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz
+
+# Build and install 32-bit PETSc from source
+RUN cd petsc-${PETSC_VERSION} && \
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
@@ -58,15 +61,19 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
      make install && \
      rm -rf /tmp/*
 
-# Install SLEPc from source
+# Get the SLEPc source and unpack
 RUN export PETSC_DIR=/usr/local && \
     wget -nc --quiet http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
-    tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
+    tar -xf slepc-${SLEPC_VERSION}.tar.gz
+
+# Build and install SLEPc from source
+RUN tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
     cd slepc-${SLEPC_VERSION} && \
     ./configure --prefix=/usr/local && \
     make && \
     make install && \
     rm -rf /tmp/*
+
 ENV SLEPC_DIR=/usr/local \
     PETSC_DIR=/usr/local
 

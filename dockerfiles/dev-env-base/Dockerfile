@@ -37,9 +37,9 @@ USER fenics
 
 RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
 
-# Environment variables 
-ENV PETSC_VERSION=3.7.0 \
-    SLEPC_VERSION=3.7.0 \
+# Environment variables
+ENV PETSC_VERSION=3.7.3 \
+    SLEPC_VERSION=3.7.2 \
     SWIG_VERSION=3.0.10 \
     MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.7.0 \
