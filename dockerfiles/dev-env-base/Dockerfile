@@ -24,7 +24,7 @@ RUN apt-get -qq update && \
         g++ \
         gfortran \
         git \
-        libboost-filesystem-dev
+        libboost-filesystem-dev \
         libboost-iostreams-dev \
         libboost-program-options-dev \
         libboost-system-dev \
@@ -35,10 +35,10 @@ RUN apt-get -qq update && \
         libmpich-dev \
         libopenblas-dev \
         libpcre3-dev \
-        libhdf5-mpich-dev
+        libhdf5-mpich-dev \
         libgmp-dev \
         libcln-dev \
-        libmpfr-dev && \
+        libmpfr-dev \
         mpich \
         nano \
         pkg-config \
