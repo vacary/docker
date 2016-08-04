@@ -18,12 +18,31 @@ USER root
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-        bison cmake flex g++ gfortran git ipython mpich nano pkg-config wget \
-        libopenblas-dev libboost-filesystem-dev libboost-system-dev \
-        libboost-program-options-dev libboost-thread-dev libboost-timer-dev \
-        libboost-iostreams-dev libeigen3-dev liblapack-dev \
-        libmpich-dev libpcre3-dev libhdf5-mpich-dev libgmp-dev \
-        libcln-dev libmpfr-dev && \
+        bison \
+        cmake \
+        flex \
+        g++ \
+        gfortran \
+        git \
+        libboost-filesystem-dev
+        libboost-iostreams-dev \
+        libboost-program-options-dev \
+        libboost-system-dev \
+        libboost-thread-dev \
+        libboost-timer-dev \
+        libeigen3-dev \
+        liblapack-dev \
+        libmpich-dev \
+        libopenblas-dev \
+        libpcre3-dev \
+        libhdf5-mpich-dev
+        libgmp-dev \
+        libcln-dev \
+        libmpfr-dev && \
+        mpich \
+        nano \
+        pkg-config \
+        wget && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

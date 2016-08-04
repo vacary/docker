@@ -10,7 +10,7 @@
 # Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/dev-env-base:latest
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+MAINTAINER fenics-project <fenics-support@googlegroups.org>
 
 USER root
 ENV FENICS_PYTHON_MAJOR_VERSION=2 \
@@ -22,23 +22,27 @@ WORKDIR /tmp
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs upgrade && \
     apt-get -y install \
-        python-dev python-numpy python-six python-ply python-pytest python-h5py \
-        python-urllib3 python-flufl.lock python-matplotlib python-scipy && \
-    apt-get clean && \
+        python-dev \
+        python-flufl.lock \
+        python-matplotlib \
+        python-numpy \
+        python-ply \
+        python-pytest \
+        python-scipy \
+        python-six \
+        python-urllib3  && \
+apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install Python pip
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     pip install setuptools && \
     rm -rf /tmp/*
 
-# Get the PETSc source and unpack
+# Install PETSc from source
 RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
-    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz
-
-# Build and install 32-bit PETSc from source
-RUN cd petsc-${PETSC_VERSION} && \
+    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
+    cd petsc-${PETSC_VERSION} && \
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
@@ -59,33 +63,48 @@ RUN cd petsc-${PETSC_VERSION} && \
                 --prefix=/usr/local && \
      make && \
      make install && \
+    ./configure --COPTFLAGS="-O2" \
+                --CXXOPTFLAGS="-O2" \
+                --FOPTFLAGS="-O2" \
+                --with-64-bit-indices \
+                --with-blas-lib=/usr/lib/libopenblas.a --with-lapack-lib=/usr/lib/liblapack.a \
+                --with-c-support \
+                --with-debugging=0 \
+                --with-shared-libraries \
+                --download-suitesparse \
+                --download-metis \
+                --download-parmetis \
+                --download-ptscotch \
+                --download-hypre \
+                --download-superlu_dist \
+                --prefix=/usr/local/petsc-64 && \
+     make && \
+     make install && \
      rm -rf /tmp/*
 
-# Get the SLEPc source and unpack
-RUN export PETSC_DIR=/usr/local && \
-    wget -nc --quiet http://www.grycap.upv.es/slepc/download/download.php?filename=slepc-${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
-    tar -xf slepc-${SLEPC_VERSION}.tar.gz
-
-# Build and install SLEPc from source
-RUN tar -xf slepc-${SLEPC_VERSION}.tar.gz && \
-    cd slepc-${SLEPC_VERSION} && \
+# Install SLEPc from source
+RUN wget -nc --quiet https://bitbucket.org/slepc/slepc/get/v${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
+    mkdir -p slepc-src && tar -xf slepc-${SLEPC_VERSION}.tar.gz -C slepc-src --strip-components 1 && \
+    export PETSC_DIR=/usr/local && \
+    cd slepc-src && \
     ./configure --prefix=/usr/local && \
     make && \
     make install && \
+    export PETSC_DIR=/usr/local/petsc-64 && \
+    ./configure --prefix=/usr/local/slepc-64 && \
+    make && \
+    make install && \
     rm -rf /tmp/*
-
 ENV SLEPC_DIR=/usr/local \
     PETSC_DIR=/usr/local
 
-# Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and swig from source
+# Install Jupyter, sympy, mpi4py, petsc4py and slepc4py
+#  and swig from source
 RUN pip install jupyter && \
     pip install sympy && \
-    pip install \
-     https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
-    pip install \
-     https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
-    pip install \
-     https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
+    pip install https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
+    pip install https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
+    pip install https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     cd /tmp && \
     wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz && \
     tar xf swig-${SWIG_VERSION}.tar.gz && \
