@@ -133,7 +133,7 @@ run ()
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
-           $IMAGE $COMMAND"
+           $IMAGE '$COMMAND'"
     command $CMD
 }
 
@@ -408,7 +408,7 @@ if [ "$1" == "run" ]; then
         COMMAND="$@"
         : ${COMMAND:="$DEFAULT_COMMAND"}
     fi
-    run $IMAGE $COMMAND
+    run $IMAGE "$COMMAND"
 elif [ "$1" == "create" ]; then
     # Select image
     NAME="$2"
