@@ -7,6 +7,9 @@
 # Config
 DEFAULT_IMAGE_HOST="quay.io/fenicsproject"
 DEFAULT_IMAGE="stable"
+DEFAULT_MAKEFLAGS="-j1"
+# Alternatively, to detect:
+#DEFAULT_MAKEFLAGS=$(grep -c '^processor' /proc/cpuinfo)
 # Where to mount the Instant/dijitso cache 
 # in the container.
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
@@ -129,8 +132,9 @@ run ()
     CMD="docker run --rm -ti \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
+           --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
@@ -195,8 +199,9 @@ create ()
     CMD="docker create -ti --name $NAME \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
+           --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
@@ -298,8 +303,9 @@ notebook ()
     CMD="docker create -p ${IP}:3000-4000:8888 \
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
+           --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
