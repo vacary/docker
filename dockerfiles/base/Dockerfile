@@ -13,7 +13,7 @@
 # Garth N. Wells <gnw20@cam.ac.uk>
 
 FROM phusion/baseimage:0.9.19 
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 # Get Ubuntu updates
 USER root

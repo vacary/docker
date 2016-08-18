@@ -11,7 +11,7 @@
 # Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/base:latest
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 # Non-Python utilities and libraries
 USER root

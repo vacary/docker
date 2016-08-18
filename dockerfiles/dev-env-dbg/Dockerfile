@@ -10,7 +10,7 @@
 # Jan Blechta <blechta@karlin.mff.cuni.cz>
 
 FROM quay.io/fenicsproject/dev-env-base:latest
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 USER root
 ENV FENICS_PYTHON_MAJOR_VERSION=2 \

@@ -8,7 +8,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 
 FROM quay.io/fenicsproject/dev-env:latest
-MAINTAINER fenics-project <fenics@fenicsproject.org>
+MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 USER fenics
 
