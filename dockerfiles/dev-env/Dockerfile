@@ -31,7 +31,7 @@ RUN apt-get -qq update && \
         python-scipy \
         python-six \
         python-urllib3  && \
-apt-get clean && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
