@@ -43,12 +43,6 @@ BLUE="\033[1;34m"
 GREEN="\033[1;32m"
 NORMAL="\033[0m"
 
-SUDO="sudo"
-if [[ "$OS" == "Windows" || "$OS" == "Linux" ]]; then
-    # Docker in a MinGW environment doesn't need sudo (and doesn't provide it!)
-    # On Linux we don't need sudo to get at ~/
-    SUDO=""
-fi
 
 quickstart ()
 {
@@ -88,10 +82,12 @@ rm -f $TMPDEST
 curl -s $URLBASE/fenicsproject > $TMPDEST
 
 # Check if user is in sudoers
+SUDO=""
 if [ "$OS" == "Darwin" ]; then
     echo -e "On macOS we need your sudo password to install a script into $DEST".
     sudo -k
     sudo -v
+    SUDO="sudo"
     if [ ! $? -eq 0 ]; then
         echo ""
         echo -e "It appears that you are ${RED}not allowed to run sudo${NORMAL} on your system."
