@@ -14,9 +14,10 @@ USER fenics
 ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.1.0
 
-RUN /bin/bash -l -c "fenics-update && \ 
-                     rm -rf $FENICS_HOME/build/src && \
-                     cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
+RUN /bin/bash -c "source ~/fenics.env.conf && \
+                  fenics-update && \ 
+                  rm -rf $FENICS_HOME/build/src && \
+                  cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
 
 # Make sure we get something that basically works on this stable build.  It
 # would be better to run unit tests, but at the moment even the quick tests

@@ -53,8 +53,9 @@ RUN mkdir $FENICS_HOME/build && \
     chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
-
-RUN echo "source /home/fenics/fenics.env.conf" >> /home/fenics/.bash_profile
+RUN echo 'export MAKEFLAGS="-j$(grep -c ^processor /proc/cpuinfo)"' >> /home/fenics/.bashrc && \
+    echo 'source .profile' >> /home/fenics/.bash_profile && \
+    echo '. fenics.env.conf' >> /home/fenics/.profile
 
 # Environment variables
 ENV PETSC_VERSION=3.7.3 \

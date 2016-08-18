@@ -14,7 +14,8 @@ USER fenics
 
 ENV FENICS_BUILD_TYPE=Release
 
-RUN bash -l -c "fenics-update"
+RUN bash -c "source ~/fenics.env.conf && \
+             fenics-update"
 
 COPY WELCOME $FENICS_HOME/WELCOME
 
