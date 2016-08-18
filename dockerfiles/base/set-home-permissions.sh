@@ -12,4 +12,4 @@ fi
 # fenics. We exclude the folder ~/shared to reduce IO out to the host. Docker
 # for Mac, Docker for Windows and the UID/GID trick above should mean that file
 # permissions work seamlessly now.
-find /home/fenics -maxdepth 1 | grep -v "/home/fenics/shared" | xargs chown -R fenics:fenics 2> /dev/null || true
+find /home/fenics -maxdepth 1 | sed "1d" | grep -v "/home/fenics/shared" | xargs chown -R fenics:fenics 2> /dev/null || true
