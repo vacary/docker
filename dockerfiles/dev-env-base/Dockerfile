@@ -53,8 +53,7 @@ RUN mkdir $FENICS_HOME/build && \
     chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
-RUN echo 'export MAKEFLAGS="-j$(grep -c ^processor /proc/cpuinfo)"' >> /home/fenics/.bashrc && \
-    echo 'source .profile' >> /home/fenics/.bash_profile && \
+RUN echo 'source .profile' >> /home/fenics/.bash_profile && \
     echo '. fenics.env.conf' >> /home/fenics/.profile
 
 # Environment variables
