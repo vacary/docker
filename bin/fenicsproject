@@ -130,6 +130,7 @@ run ()
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
+           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
@@ -195,6 +196,7 @@ create ()
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
+           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
@@ -297,6 +299,7 @@ notebook ()
            --env HOST_UID=${HOST_UID} \
            --env HOST_GID=${HOST_GID} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
+           -e INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
