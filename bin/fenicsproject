@@ -26,7 +26,7 @@ PROJECT_DIR_CONTAINER="/home/fenics/shared"
 HOST_UID=$(id -u)
 HOST_GID=$(id -g)
 # Workaround for issue https://github.com/docker/docker/issues/9299
-DEFAULT_COMMAND="/bin/bash -l -c 'export TERM=xterm; bash -i'"
+DEFAULT_COMMAND='/bin/bash -l -c "export TERM=xterm; bash -i"'
 
 # Setup
 set -e
@@ -409,7 +409,8 @@ if [ "$1" == "run" ]; then
     if [ $# -ge 3 ]; then
         shift; shift;
         COMMAND="$@"
-        : ${COMMAND:="$DEFAULT_COMMAND"}
+    else
+        COMMAND=$DEFAULT_COMMAND
     fi
     run $IMAGE "$COMMAND"
 elif [ "$1" == "create" ]; then
