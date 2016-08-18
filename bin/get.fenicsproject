@@ -89,6 +89,7 @@ curl -s $URLBASE/fenicsproject > $TMPDEST
 # Check if user is in sudoers
 if [ "$OS" != "Windows" ]; then
     echo -e "We need your sudo password to install a script into $DEST".
+    sudo -k
     sudo -v
     if [ ! $? -eq 0 ]; then
         echo ""
