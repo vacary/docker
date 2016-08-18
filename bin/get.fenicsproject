@@ -4,12 +4,7 @@
 # simplified use of FEniCS Docker images.
 
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-if [ "$(docker info | grep -c Alpine)" == "1" ]; then
-    # If we are on Alpine Linux then we are most
-    # probably using the new 'native' Docker Mac
-    # and Docker Windows.
-    OS="Docker"
-elif [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ]; then
     # Mac OS X with Docker installed using docker-machine.
     OS="Darwin"
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
@@ -28,15 +23,19 @@ fi
 # Config
 URLBASE="https://get.fenicsproject.org"
 TMPDEST="/tmp/fenicsproject"
-DEST_DIR="/usr/local/bin/"
-# On MINGW64_NT /usr/local/bin does not exist and we cannot
-# even create it! However, $HOME/bin seems to work and be
-# in the PATH by default on systems that I have checked.
-if [ "$OS" == "Windows" ]; then
-    DEST_DIR="$HOME/bin/"
+# On MINGW64_NT /usr/local/bin does not exist and we cannot even create it!
+# However, $HOME/bin seems to work and be in the PATH by default on systems
+# that I have checked.  On Linux the vast majority of distributions now have
+# ~/.local/bin in the PATH by default.
+if [ "$OS" == "Linux" ]; then
+    DEST_DIR="$HOME/.local/bin"
+elif [ "$OS" == "Windows" ]; then
+    DEST_DIR="$HOME/bin"
+elif [ "$OS" == "Darwin" ]; then
+    DEST_DIR="/usr/local/bin"
 fi
 
-DEST="${DEST_DIR}fenicsproject"
+DEST="${DEST_DIR}/fenicsproject"
 
 # Setup
 RED="\033[1;31m"
@@ -45,8 +44,10 @@ GREEN="\033[1;32m"
 NORMAL="\033[0m"
 
 SUDO="sudo"
-if [ "$OS" == "Windows" ]; then
-    SUDO="" # Docker in a MinGW environment doesn't need sudo (and doesn't provide it!)
+if [[ "$OS" == "Windows" || "$OS" == "Linux" ]]; then
+    # Docker in a MinGW environment doesn't need sudo (and doesn't provide it!)
+    # On Linux we don't need sudo to get at ~/
+    SUDO=""
 fi
 
 quickstart ()
@@ -87,8 +88,8 @@ rm -f $TMPDEST
 curl -s $URLBASE/fenicsproject > $TMPDEST
 
 # Check if user is in sudoers
-if [ "$OS" != "Windows" ]; then
-    echo -e "We need your sudo password to install a script into $DEST".
+if [ "$OS" == "Darwin" ]; then
+    echo -e "On macOS we need your sudo password to install a script into $DEST".
     sudo -k
     sudo -v
     if [ ! $? -eq 0 ]; then
