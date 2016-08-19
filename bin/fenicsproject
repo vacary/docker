@@ -379,6 +379,11 @@ preprocess_image_name () {
                    fail=false
                 fi 
             done
+            # We keep a tag stable:current so we can shift stable conservatively.
+            # All other images shift with default tag :latest.
+            if [ "$IMAGE" == "stable" ]; then
+                IMAGE=${IMAGE}":current" 
+            fi
             if [ $fail == true ]; then
                 echo -e "${RED}Error${NORMAL}: Image with name $IMAGE does not exist. Try stable, dev-env or dev."
                 exit 1
