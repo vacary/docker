@@ -15,7 +15,7 @@ ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.1.0
 
 RUN /bin/bash -c "source ~/fenics.env.conf && \
-                  fenics-update && \ 
+                  PIP_NO_CACHE_DIR=off fenics-update && \ 
                   rm -rf $FENICS_HOME/build/src && \
                   cp -r $FENICS_HOME/build/share/dolfin/demo $FENICS_HOME/demo"
 

@@ -15,7 +15,7 @@ USER fenics
 ENV FENICS_BUILD_TYPE=Release
 
 RUN bash -c "source ~/fenics.env.conf && \
-             fenics-update"
+             PIP_NO_CACHE_DIR=off fenics-update"
 
 COPY WELCOME $FENICS_HOME/WELCOME
 
