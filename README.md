@@ -16,9 +16,12 @@ using the following command:
 
     docker run -ti quay.io/fenicsproject/<image-name>:latest
 
-To start with you probably want to try the `stable` image which
-includes a full stable version of FEniCS with PETSc, SLEPc, petsc4py
-and slepc4py already compiled.
+To start with you probably want to try the `stable:current` image
+which includes a full stable version of FEniCS with PETSc, SLEPc,
+petsc4py and slepc4py already compiled. This image has been checked by
+the FEniCS Project team:
+
+    docker run -ti quay.io/fenicsproject/stable:current
 
 If you want to share your current working directory into the container
 use the following command:
@@ -54,6 +57,29 @@ https://fenics-containers.readthedocs.org/.
 > Note: The *Build status* column refers to the latest *attempted*
 > build. Even if a build is marked as failed, there will still be a
 > working image available on the `latest` tag that you can use.
+
+## Tags
+
+We only maintain tags on the `quay.io/fenicsproject/stable` image:
+
+https://quay.io/repository/fenicsproject/stable?tab=tags
+
+The current policy for producing these tags is as follows:
+
+* The `:latest` (default) tag refers to the latest image built by
+quay.io.
+* We maintain a permanent set of rolling release tags, e.g.
+`:2016.1.0.r1`, `2016.1.0.r2` that contain the `xxxx.x.x` version of
+FEniCS, but contain minor updates `.rx` to underlying dependencies
+(e.g. PETSc) and the container environment. These images have been
+checked thoroughly by the FEniCS project team.
+* The latest rolling release is tagged with a *moving* tag `:current`.
+This tag is the default tag used by the `bin/fenicsproject` script
+when the user specifies `stable`.
+* When we release a new version of FEniCS the last rolling release of
+the image for the previous version will be tagged `xxxx.x.x` for
+permanent archival. We will endeavour to keep all `xxxx.x.x.rx` tags
+as well, but this is not guaranteed.
 
 ## Building images
 
