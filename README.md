@@ -28,7 +28,7 @@ use the following command:
 
     docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
     
-Users with SELinux-enabled Linux distributions (Redhat, Fedora, CentOS) 
+Users with SELinux-enabled Linux distributions (Redhat, Fedora, CentOS, and others) 
 will need to add the `:z` flag to the volume mount, e.g.:
 
     docker run -ti -v $(pwd):/home/fenics/shared:z quay.io/fenicsproject/<image-name>:latest
