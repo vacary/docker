@@ -7,10 +7,10 @@
 FEniCS in Docker
 ================
 
-An easy way to run `FEniCS <http://fenicsproject.org>`_ is to
-use our prebuilt, high-performance Docker images.  This documentation
-explains how to get quickly started with using FEniCS in Docker, as
-well as how to take advantage of more advanced features of Docker.
+An easy way to run `FEniCS <http://fenicsproject.org>`_ is to use our
+prebuilt, high-performance Docker images.  This documentation explains
+how to get quickly started with using FEniCS in Docker, as well as how
+to take advantage of more advanced features of Docker.
 
 .. note:
 
@@ -41,6 +41,12 @@ Development mailing list (fenics-dev@googlegroups.com). Bugs can be
 registered on the Bitbucket Issue Tracker
 (https://bitbucket.org/fenics-project/docker/issues).
 
+
+Background
+==========
+
+Background on the use of containers with FEniCS, including performance
+data, is available in a paper at http://arxiv.org/abs/1608.07573.
 
 
 Indices and tables
