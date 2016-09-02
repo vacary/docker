@@ -307,7 +307,7 @@ notebook ()
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
-           -w $PROJECT_DIR_CONTAINER \
+           -w /home/fenics \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='notebook' \
            --name $NAME \
