@@ -18,7 +18,7 @@ Docker for Mac, Docker for Windows and Linux users
 First of all we ``run`` a new Docker container with the ``jupyter-notebook``
 command specified and the default port ``8888`` exposed on ``localhost``::
 
-    docker run --name notebook -w /home/fenics/shared -v $(pwd):/home/fenics/shared -d -p 127.0.0.1:8888:8888 quay.io/fenicsproject/stable 'jupyter-notebook --ip=0.0.0.0'
+    docker run --name notebook -w /home/fenics -v $(pwd):/home/fenics/shared -d -p 127.0.0.1:8888:8888 quay.io/fenicsproject/stable 'jupyter-notebook --ip=0.0.0.0'
 
 The notebook will be available at ``http://localhost:8888`` in your web browser.
 
@@ -29,7 +29,7 @@ First of all we ``run`` a new Docker container with the ``jupyter-notebook``
 command specified and the default port ``8888`` exposed on the IP of the
 virtual machine where docker is running::
 
-    docker run --name notebook -w /home/fenics/shared -v $(pwd):/home/fenics/shared -d -p $(docker-machine ip $(docker-machine active)):8888:8888 quay.io/fenicsproject/stable 'jupyter-notebook --ip=0.0.0.0'
+    docker run --name notebook -w /home/fenics -v $(pwd):/home/fenics/shared -d -p $(docker-machine ip $(docker-machine active)):8888:8888 quay.io/fenicsproject/stable 'jupyter-notebook --ip=0.0.0.0'
 
 To find out the IP of the virtual machine::
 
