@@ -27,8 +27,8 @@ If you want to share your current working directory into the container
 use the following command:
 
     docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
-    
-Users with SELinux-enabled Linux distributions (Redhat, Fedora, CentOS, and others) 
+
+Users with SELinux-enabled Linux distributions (Redhat, Fedora, CentOS, and others)
 will need to add the `:z` flag to the volume mount, e.g.:
 
     docker run -ti -v $(pwd):/home/fenics/shared:z quay.io/fenicsproject/<image-name>:latest
@@ -42,8 +42,7 @@ available at https://fenics-containers.readthedocs.org/.
 ## Images
 
 We currently offer following end-user images. A full description of
-the images can be found at
-https://fenics-containers.readthedocs.org/.
+the images can be found at https://fenics-containers.readthedocs.org/.
 
 > Looking for images with dolfin-adjoint already installed? Check out
 > https://bitbucket.org/dolfin-adjoint/virtual.
