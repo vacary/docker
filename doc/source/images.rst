@@ -17,8 +17,6 @@ Summary of available images
 
 .. |stable| image:: https://quay.io/repository/fenicsproject/stable/status
             :target: https://quay.io/repository/fenicsproject/stable
-.. |dev| image:: https://quay.io/repository/fenicsproject/dev/status
-         :target: https://quay.io/repository/fenicsproject/dev
 .. |dev-env| image:: https://quay.io/repository/fenicsproject/dev-env/status
              :target: https://quay.io/repository/fenicsproject/dev-env
 .. |dev-env-dbg| image:: https://quay.io/repository/fenicsproject/dev-env-dbg/status
@@ -36,8 +34,6 @@ Summary of available images
 | **Image name**           | **Build status**     | **Short Description**                           |
 +--------------------------+----------------------+-------------------------------------------------+
 | ``stable``               | |stable|             | Stable release, with PETSc and SLEPc.           |
-+--------------------------+----------------------+-------------------------------------------------+
-| ``dev``                  | |dev|                | Development version.                            |
 +--------------------------+----------------------+-------------------------------------------------+
 | ``dev-env``              | |dev-env|            | Development environment with PETSc and SLEPc.   |
 +--------------------------+----------------------+-------------------------------------------------+
@@ -71,9 +67,6 @@ Development and advanced images
 
 Developers and more advanced users may be interested in the following
 images:
-
-* ``dev``: Provides the latest development version of FEniCS. It is
-  for users looking for the latest features.
 
 * ``dev-env``: Provides a development environment in which a user can
   compile FEniCS easily. It provides the necessary dependencies for
