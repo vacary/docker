@@ -21,13 +21,6 @@ SRC_DIR_CONTAINER="/home/fenics/build/src"
 PROJECT_DIR_HOST="'$(pwd)'"
 # to the following directory in the container.
 PROJECT_DIR_CONTAINER="/home/fenics/shared"
-# Linux users have an issue with sharing files because
-# the UID and GID in the container sometimes does not match
-# the UID and GID on the host. By passing the UID and GID
-# on the host, the container will modify the fenics user to
-# match the user on the host, resulting in seamless sharing.
-HOST_UID=$(id -u)
-HOST_GID=$(id -g)
 # Workaround for issue https://github.com/docker/docker/issues/9299
 DEFAULT_COMMAND='/bin/bash -l -c "export TERM=xterm; bash -i"'
 
@@ -61,16 +54,30 @@ else
     echo "Contact ${BLUE}fenics-support@googlegroups.com${NORMAL} for assistance."
 fi
 
+# Linux users have an issue with sharing files because the UID and GID in the
+# container sometimes does not match the UID and GID on the host. By passing
+# the UID and GID on the host, the container will modify the fenics user to
+# match the user on the host, resulting in seamless sharing.
+# Only use this trick on Linux, reduces complexity and not needed on Windows
+# and Mac hosts. Problems have been reported using Docker Toolbox for Mac
+# that were fixed when not using the UID/GID mapping.
+CHANGE_UID_GID=""
+if [ "$OS" == "Linux" ]; then
+    HOST_UID=$(id -u)
+    HOST_GID=$(id -g)
+    CHANGE_UID_GID="--env HOST_UID=${HOST_UID} --env HOST_GID=${HOST_GID}"
+fi
+
 help ()
 {
     echo "Usage: fenicsproject <command> [options]"
     echo ""
-    echo "  fenicsproject run [image] [command]   - run a simple FEniCS session"
-    echo "  fenicsproject create <name> [image]   - create standard project with given name"
-    echo "  fenicsproject notebook <name> [image] - create notebook project with given name"
-    echo "  fenicsproject start <name>            - start session in project with given name"
-    echo "  fenicsproject pull <image>            - pull latest version of given image"
-    echo "  fenicsproject clean-cache [image]     - clean the shared FEniCS (Instant) cache"
+    echo "  fenicsproject run [image] [command]   - run a simple FEniCS session."
+    echo "  fenicsproject create <name> [image]   - create standard project with given name."
+    echo "  fenicsproject notebook <name> [image] - create notebook project with given name."
+    echo "  fenicsproject start <name>            - start session in project with given name."
+    echo "  fenicsproject pull <image>            - pull latest version of given image."
+    echo "  fenicsproject clean-cache [image]     - clean the shared FEniCS (Instant) cache."
 
     echo ""
     echo "Use 'fenicsproject run' for simple (non-persistent) FEniCS sessions."
@@ -80,9 +87,8 @@ help ()
     echo ""
     echo "Available images:"
     echo ""
-    echo "  stable  - latest stable release [default]"
-    echo "  dev     - latest development version, master branch"
-    echo "  dev-env - development environment including dependencies but not FEniCS"
+    echo "  stable  - latest stable release [default]."
+    echo "  dev-env - development environment including dependencies but not FEniCS."
     echo ""
     echo "You can update to the latest version of this script at any time using:"
     echo ""
@@ -130,8 +136,7 @@ run ()
 
     # Run container
     CMD="docker run --rm -ti \
-           --env HOST_UID=${HOST_UID} \
-           --env HOST_GID=${HOST_GID} \
+           ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
@@ -197,8 +202,7 @@ create ()
     # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
-           --env HOST_UID=${HOST_UID} \
-           --env HOST_GID=${HOST_GID} \
+           ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
@@ -301,8 +305,7 @@ notebook ()
     fi
 
     CMD="docker create -p ${IP}:3000-4000:8888 \
-           --env HOST_UID=${HOST_UID} \
-           --env HOST_GID=${HOST_GID} \
+           ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
            --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
@@ -374,7 +377,7 @@ preprocess_image_name () {
         if [ "$DEFAULT_IMAGE_HOST" == "quay.io/fenicsproject" ]; then
             fail=true
             # List should contain all of our official images suitable for end-users.
-            for image in 'stable' 'dev' 'dev-env' 'dev-env-py3' 'dev-py3' 'dev-env-trilinos' 'dev-env-dbg'; do
+            for image in 'stable' 'dev-env' 'dev-env-trilinos' 'dev-env-dbg'; do
                 if [ "$IMAGE" == $image ]; then
                    fail=false
                 fi 
