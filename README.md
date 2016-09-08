@@ -85,15 +85,15 @@ as well, but this is not guaranteed.
 
 ## Development images
 
-We also provide a set of *unsupported* images containing the output
-of builds produced during our continuous integration and testing system 
-hosted at https://bamboo.fenicsproject.org:
+We also provide a set of *unsupported* images containing the output of
+builds produced during our continuous integration and testing
+[system](https://bamboo.fenicsproject.org):
 
 [https://quay.io/organization/fenicsproject_dev](https://quay.io/organization/fenicsproject_dev)
 
 These images are not guaranteed to work and we do not provide end-user
-support. They may be of use to developers and contributors in debugging
-issues in pull requests.
+support. They may be of use to developers and contributors for
+debugging issues in pull requests or trying out bleeding edge features.
 
 ## Building images
 
