@@ -9,7 +9,7 @@ images for FEniCS (http://fenicsproject.org).
 
 To install Docker for your platform (Windows, macOS, Linux, cloud
 platforms, etc.), follow the instructions at
-https://docs.docker.com/engine/getstarted/step_one/.
+[docker.com](https://docs.docker.com/engine/getstarted/step_one/).
 
 Once you have Docker installed, you can run any of the images below
 using the following command:
@@ -82,6 +82,18 @@ when the user specifies `stable`.
 the image for the previous version will be tagged `xxxx.x.x` for
 permanent archival. We will endeavour to keep all `xxxx.x.x.rx` tags
 as well, but this is not guaranteed.
+
+## Development images
+
+We also provide a set of *unsupported* images containing the output
+of builds produced during our continuous integration and testing system 
+hosted at https://bamboo.fenicsproject.org:
+
+[https://quay.io/organization/fenicsproject_dev](https://quay.io/organization/fenicsproject_dev)
+
+These images are not guaranteed to work and we do not provide end-user
+support. They may be of use to developers and contributors in debugging
+issues in pull requests.
 
 ## Building images
 
