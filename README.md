@@ -45,7 +45,7 @@ We currently offer following end-user images. A full description of
 the images can be found at https://fenics-containers.readthedocs.org/.
 
 > Looking for images with dolfin-adjoint already installed? Check out
-> https://bitbucket.org/dolfin-adjoint/virtual.
+> [this page](https://bitbucket.org/dolfin-adjoint/dolfin-adjoint/src/master/docker/?at=master).
 
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
