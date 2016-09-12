@@ -1,7 +1,10 @@
-# Builds a Docker image with FEniCS development versions built from
-# git sources. The image is at:
+# This Dockerfile is used by Bamboo https://bamboo.fenicsproject.org to build
+# the image:
 #
 #    https://quay.io/repository/fenicsproject/dev
+#
+# On a successful build, Bamboo pushes the created image
+# to quay.io.
 #
 # Authors:
 # Lizao Li <lzlarryli@gmail.com>
