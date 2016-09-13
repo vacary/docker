@@ -378,7 +378,7 @@ preprocess_image_name () {
         if [ "$DEFAULT_IMAGE_HOST" == "quay.io/fenicsproject" ]; then
             fail=true
             # List should contain all of our official images suitable for end-users.
-            for image in 'stable' 'dev' 'dev-env' 'dev-env-py3' 'dev-py3' 'dev-env-trilinos' 'dev-env-dbg'; do
+            for image in 'stable' 'dev' 'dev-env' 'dev-env-trilinos' 'dev-env-dbg'; do
                 if [ "$IMAGE" == $image ]; then
                    fail=false
                 fi 
