@@ -109,7 +109,7 @@ command::
 
 We can make a new shell in the container using the command::
 
-    docker exec -ti new-project /bin/bash -l
+    docker exec -ti new-project -u fenics /bin/bash -l
 
 Conversely, you can stop a running container using the command::
 

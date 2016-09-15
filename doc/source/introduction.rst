@@ -156,7 +156,7 @@ Now you can easily ``stop``, ``start``, and run a new shell in your container
 
     docker stop fenics
     docker start fenics
-    docker exec -ti /bin/bash -l
+    docker exec -ti -u fenics /bin/bash -l
 
 If you want to see the name and other information of every container you have
 ever created, just type::
