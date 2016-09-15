@@ -149,14 +149,14 @@ You can give every container a name so that you can easily refer to it in the
 future. To do this simply pass the ``--name`` flag to the ``docker run``
 command, e.g.::
 
-    docker run -ti -v $(pwd):/home/fenics/shared --name fenics quay.io/fenicsproject/stable
+    docker run -ti -v $(pwd):/home/fenics/shared --name fenics-container quay.io/fenicsproject/stable
 
 Now you can easily ``stop``, ``start``, and run a new shell in your container
-``fenics``::
+``fenics-container``::
 
-    docker stop fenics
-    docker start fenics
-    docker exec -ti -u fenics /bin/bash -l
+    docker stop fenics-container
+    docker start fenics-container
+    docker exec -ti -u fenics fenics-container /bin/bash -l
 
 If you want to see the name and other information of every container you have
 ever created, just type::
