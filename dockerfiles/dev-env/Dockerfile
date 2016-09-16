@@ -60,7 +60,7 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --download-blacs \
                 --download-spai \
                 --download-ml \
-                --prefix=/usr/local && \
+                --prefix=/usr/local/petsc-32 && \
      make && \
      make install && \
     ./configure --COPTFLAGS="-O2" \
@@ -85,9 +85,9 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
 # Install SLEPc from source
 RUN wget -nc --quiet https://bitbucket.org/slepc/slepc/get/v${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
     mkdir -p slepc-src && tar -xf slepc-${SLEPC_VERSION}.tar.gz -C slepc-src --strip-components 1 && \
-    export PETSC_DIR=/usr/local && \
+    export PETSC_DIR=/usr/local/petsc-32 && \
     cd slepc-src && \
-    ./configure --prefix=/usr/local && \
+    ./configure --prefix=/usr/local/slepc-32 && \
     make && \
     make install && \
     export PETSC_DIR=/usr/local/petsc-64 && \
@@ -95,8 +95,8 @@ RUN wget -nc --quiet https://bitbucket.org/slepc/slepc/get/v${SLEPC_VERSION}.tar
     make && \
     make install && \
     rm -rf /tmp/*
-ENV SLEPC_DIR=/usr/local \
-    PETSC_DIR=/usr/local
+ENV SLEPC_DIR=/usr/local/slepc-32 \
+    PETSC_DIR=/usr/local/petsc-32
 
 # Install Jupyter, sympy, mpi4py, petsc4py and slepc4py
 #  and swig from source
