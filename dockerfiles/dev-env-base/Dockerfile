@@ -16,7 +16,8 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 # Non-Python utilities and libraries
 USER root
 RUN apt-get -qq update && \
-    apt-get -y --with-new-pkgs upgrade && \
+    apt-get -y --with-new-pkgs \
+        -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
         bison \
         cmake \

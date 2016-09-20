@@ -20,7 +20,8 @@ WORKDIR /tmp
 
 # Install Python2 based environment
 RUN apt-get -qq update && \
-    apt-get -y --with-new-pkgs upgrade && \
+    apt-get -y --with-new-pkgs \
+        -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
         python-dev \
         python-flufl.lock \
