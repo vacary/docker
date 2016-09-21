@@ -153,9 +153,8 @@ RUN pip install --no-cache-dir jupyter && \
     pip install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
-    cd /tmp && \
-    wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz && \
-    tar xf swig-${SWIG_VERSION}.tar.gz && \
+    wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz -O swig-${SWIG_VERSION}.tar.gz && \
+    tar -xf swig-${SWIG_VERSION}.tar.gz && \
     cd swig-${SWIG_VERSION} && \
     ./configure && \
     make && \
