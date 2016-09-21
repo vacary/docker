@@ -5,13 +5,13 @@ set -e
 PYTHON="${PYTHON:-python}"
 FENICS_BUILD_TYPE="${FENICS_BUILD_TYPE:-Release}"
 
-if [ -z "$SRC_DIR" ]; then
-    echo "SRC_DIR must be defined" >&2
+if [ -z "$FENICS_SRC_DIR" ]; then
+    echo "FENICS_SRC_DIR must be defined" >&2
     exit -1
 fi
 
-if [ -z "${FENICS_HOME}" ]; then
-    echo "FENICS_HOME must be defined" >&2
+if [ -z "${FENICS_PREFIX}" ]; then
+    echo "FENICS_PREFIX must be defined" >&2
     exit -1
 fi
 
@@ -20,10 +20,10 @@ function build_cmake () {
     project="$1"
     echo "FENICS-BUILDER: Building $project with CMake..."
 
-    build="$SRC_DIR/$project/build"
+    build="$FENICS_SRC_DIR/$project/build"
     mkdir -p "$build"
     cd "$build"
-    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_HOME} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev ${CMAKE_EXTRA_ARGS}
+    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_PREFIX} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON} -Wno-dev ${CMAKE_EXTRA_ARGS}
     make
     make install
 }
@@ -31,7 +31,7 @@ function build_cmake () {
 function build () {
     for project in $@; do
         echo "FENICS-BUILDER: Building $project..."
-        path="$SRC_DIR/$project"
+        path="$FENICS_SRC_DIR/$project"
         if [ ! -d "$path" ]; then
             echo "FENICS-BUILDER: $project source cannot be found at $path. Please run fenics-pull first."
             exit -1
@@ -40,7 +40,7 @@ function build () {
             build_cmake "$project"
         else
             cd "$path"
-            ${PYTHON} -m pip install --prefix=${FENICS_HOME} --no-deps --upgrade .
+            ${PYTHON} -m pip install --prefix=${FENICS_PREFIX} --no-deps --upgrade .
         fi
     done
 }

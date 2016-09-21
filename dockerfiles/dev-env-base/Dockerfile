@@ -54,8 +54,8 @@ RUN mkdir $FENICS_HOME/build && \
     chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
-RUN echo 'source ~/.profile' >> /home/fenics/.bash_profile && \
-    echo '. ~/fenics.env.conf' >> /home/fenics/.profile
+RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
+    echo '. ~/fenics.env.conf' >> $FENICS_HOME/.profile
 
 # Environment variables
 ENV PETSC_VERSION=3.7.3 \
@@ -66,6 +66,7 @@ ENV PETSC_VERSION=3.7.3 \
     SLEPC4PY_VERSION=3.7.0 \
     TRILINOS_VERSION=12.6.3 \
     OPENBLAS_NUM_THREADS=1 \
-    OPENBLAS_VERBOSE=0
+    OPENBLAS_VERBOSE=0 \
+    FENICS_PREFIX=$FENICS_HOME/local
 
 USER root
