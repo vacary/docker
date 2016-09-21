@@ -15,10 +15,13 @@ ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.1.0 \
     FENICS_PREFIX=/usr/local
 
-RUN /bin/bash -c "source ~/fenics.env.conf && \
-                  sudo PIP_NO_CACHE_DIR=off fenics-update && \ 
-                  rm -rf $FENICS_PREFIX/src && \
-                  cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo"
+# Install fenics as root user into /usr/local then remove the fenics-* scripts
+# as the user really shouldn't be running them in the stable image! 
+RUN sudo -E /bin/bash -c "source ~/fenics.env.conf && \
+            PIP_NO_CACHE_DIR=off fenics-update && \
+            rm -rf $FENICS_PREFIX/src/* && \
+            cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo && \
+            rm -rf $FENICS_HOME/bin"
 
 # Make sure we get something that basically works on this stable build.  It
 # would be better to run unit tests, but at the moment even the quick tests

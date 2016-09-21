@@ -50,8 +50,7 @@ RUN apt-get -qq update && \
 # Our helper scripts
 COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
 COPY bin $FENICS_HOME/bin
-RUN mkdir $FENICS_HOME/build && \
-    chown -R fenics:fenics $FENICS_HOME
+RUN chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
 RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
