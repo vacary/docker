@@ -14,9 +14,9 @@ DEFAULT_MAKEFLAGS="-j1"
 # in the container.
 CACHE_DIR_CONTAINER="/home/fenics/.instant"
 # Where to build FEniCS.
-BUILD_DIR_CONTAINER="/home/fenics/build"
+BUILD_DIR_CONTAINER="/home/fenics/local"
 # Where to store the FEniCS source code.
-SRC_DIR_CONTAINER="/home/fenics/build/src"
+SRC_DIR_CONTAINER="/home/fenics/local/src"
 # Share in the current working directory
 PROJECT_DIR_HOST="'$(pwd)'"
 # to the following directory in the container.
