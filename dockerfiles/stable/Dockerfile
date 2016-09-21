@@ -16,7 +16,7 @@ ENV FENICS_BUILD_TYPE=Release \
     FENICS_PREFIX=/usr/local
 
 RUN /bin/bash -c "source ~/fenics.env.conf && \
-                  PIP_NO_CACHE_DIR=off fenics-update && \ 
+                  sudo PIP_NO_CACHE_DIR=off fenics-update && \ 
                   rm -rf $FENICS_PREFIX/src && \
                   cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo"
 
