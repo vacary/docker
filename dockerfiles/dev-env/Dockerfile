@@ -9,14 +9,58 @@
 # Garth N. Wells <gnw20@cam.ac.uk>
 # Jan Blechta <blechta@karlin.mff.cuni.cz>
 
-FROM quay.io/fenicsproject/dev-env-base:latest
+FROM quay.io/fenicsproject/base:latest
 MAINTAINER fenics-project <fenics-support@googlegroups.org>
 
 USER root
-ENV FENICS_PYTHON_MAJOR_VERSION=2 \
-    FENICS_PYTHON_MINOR_VERSION=7
-
 WORKDIR /tmp
+
+# Environment variables
+ENV PETSC_VERSION=3.7.3 \
+    SLEPC_VERSION=3.7.2 \
+    SWIG_VERSION=3.0.10 \
+    MPI4PY_VERSION=2.0.0 \
+    PETSC4PY_VERSION=3.7.0 \
+    SLEPC4PY_VERSION=3.7.0 \
+    TRILINOS_VERSION=12.6.3 \
+    OPENBLAS_NUM_THREADS=1 \
+    OPENBLAS_VERBOSE=0 \
+    FENICS_PYTHON_MAJOR_VERSION=2 \
+    FENICS_PYTHON_MINOR_VERSION=7 \
+    FENICS_PREFIX=$FENICS_HOME/local
+
+# Non-Python utilities and libraries
+RUN apt-get -qq update && \
+    apt-get -y --with-new-pkgs \
+        -o Dpkg::Options::="--force-confold" upgrade && \
+    apt-get -y install \
+        bison \
+        cmake \
+        flex \
+        g++ \
+        gfortran \
+        git \
+        libboost-filesystem-dev \
+        libboost-iostreams-dev \
+        libboost-program-options-dev \
+        libboost-system-dev \
+        libboost-thread-dev \
+        libboost-timer-dev \
+        libeigen3-dev \
+        liblapack-dev \
+        libmpich-dev \
+        libopenblas-dev \
+        libpcre3-dev \
+        libhdf5-mpich-dev \
+        libgmp-dev \
+        libcln-dev \
+        libmpfr-dev \
+        mpich \
+        nano \
+        pkg-config \
+        wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python2 based environment
 RUN apt-get -qq update && \
@@ -34,6 +78,8 @@ RUN apt-get -qq update && \
         python-urllib3  && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# TODO: Install Python3 based environment
 
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
@@ -96,11 +142,12 @@ RUN wget -nc --quiet https://bitbucket.org/slepc/slepc/get/v${SLEPC_VERSION}.tar
     make && \
     make install && \
     rm -rf /tmp/*
+
+# By default use the 32-bit build of SLEPc and PETSc.
 ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
-# Install Jupyter, sympy, mpi4py, petsc4py and slepc4py
-#  and swig from source
+# Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
 RUN pip install --no-cache-dir jupyter && \
     pip install --no-cache-dir sympy && \
     pip install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
@@ -115,8 +162,15 @@ RUN pip install --no-cache-dir jupyter && \
     make install && \
     rm -rf /tmp/*
 
-USER fenics
+# Our helper scripts
 WORKDIR $FENICS_HOME
+COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
+COPY bin $FENICS_HOME/bin
+RUN chown -R fenics:fenics $FENICS_HOME
+
+USER fenics
+RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
+    echo '. ~/fenics.env.conf' >> $FENICS_HOME/.profile
 COPY WELCOME $FENICS_HOME/WELCOME
 
 USER root
