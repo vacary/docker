@@ -75,6 +75,7 @@ RUN apt-get -qq update && \
         python-pytest \
         python-scipy \
         python-six \
+        python-subprocess32 \
         python-urllib3  && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
