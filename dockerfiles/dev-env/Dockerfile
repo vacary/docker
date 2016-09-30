@@ -33,6 +33,8 @@ ENV PETSC_VERSION=3.7.3 \
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs \
         -o Dpkg::Options::="--force-confold" upgrade && \
+    apt-get -y install curl && \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get -y install \
         bison \
         cmake \
@@ -40,11 +42,10 @@ RUN apt-get -qq update && \
         g++ \
         gfortran \
         git \
+        git-lfs \
         libboost-filesystem-dev \
         libboost-iostreams-dev \
         libboost-program-options-dev \
-        libboost-system-dev \
-        libboost-thread-dev \
         libboost-timer-dev \
         libeigen3-dev \
         liblapack-dev \
@@ -59,6 +60,7 @@ RUN apt-get -qq update && \
         nano \
         pkg-config \
         wget && \
+    git lfs install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -82,6 +84,8 @@ RUN apt-get -qq update && \
 
 # TODO: Install Python3 based environment
 
+
+# Install setuptools
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     pip install --no-cache-dir setuptools && \
