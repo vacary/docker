@@ -69,26 +69,26 @@ RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs \
         -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
-        python-dev \
-        python-flufl.lock \
-        python-matplotlib \
-        python-numpy \
-        python-ply \
-        python-pytest \
-        python-scipy \
-        python-six \
+        python-dev python3-dev \
+        python-flufl.lock python3-flufl.lock \
+        python-matplotlib python3-matplotlib \
+        python-numpy python3-numpy \
+        python-ply python3-ply \
+        python-pytest python3-pytest \
+        python-scipy python3-scipy \
+        python-six python3-six \
         python-subprocess32 \
-        python-urllib3  && \
+        python-urllib3  python3-urllib3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# TODO: Install Python3 based environment
 
 
 # Install setuptools
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-    pip install --no-cache-dir setuptools && \
+    python2 get-pip.py && \
+    pip2 install --no-cache-dir setuptools && \
+    python3 get-pip.py && \
+    pip3 install --no-cache-dir setuptools && \
     rm -rf /tmp/*
 
 # Install PETSc from source
@@ -153,11 +153,15 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
 # Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
-RUN pip install --no-cache-dir jupyter && \
-    pip install --no-cache-dir sympy && \
-    pip install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
-    pip install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
-    pip install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
+RUN pip2 install --no-cache-dir jupyter && \
+    pip2 install --no-cache-dir sympy && \
+    pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
+    pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
+    pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir sympy && \
+    pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz -O swig-${SWIG_VERSION}.tar.gz && \
     tar -xf swig-${SWIG_VERSION}.tar.gz && \
     cd swig-${SWIG_VERSION} && \
