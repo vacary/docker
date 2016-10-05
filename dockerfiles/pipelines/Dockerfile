@@ -32,7 +32,6 @@ RUN apt-get -qq update && \
         -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
         python-dev python3-dev \
-        python-flake8 python3-flake8 \
         python-minimal python3-minimal \
         python-numpy python3-numpy \
         python-pip python3-pip \
@@ -48,7 +47,9 @@ RUN apt-get -qq update && \
 
 # Pip install of packages
 RUN pip2 install --no-cache-dir sympy && \
-    pip2 install --no-cache-dir mpi4py && \
     pip3 install --no-cache-dir sympy && \
+    pip2 install --no-cache-dir mpi4py && \
     pip3 install --no-cache-dir mpi4py && \
+    pip2 install --no-cache-dir flake8 && \
+    pip3 install --no-cache-dir flake8 && \
     rm -rf /tmp/*
