@@ -35,12 +35,15 @@ COPY set-home-permissions.sh /etc/my_init.d/set-home-permissions.sh
 # See https://github.com/phusion/baseimage-docker/issues/186
 # Disable forward logging
 # Add script to set up permissions of home directory on myinit
+# Run ldconfig so that /usr/local/lib is in the default search
+# path for the dynamic linker.
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
     echo "fenics:docker" | chpasswd && \
     echo "fenics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     touch /etc/service/syslog-forwarder/down && \
     echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc && \
-    chmod +x /etc/my_init.d/set-home-permissions.sh
+    chmod +x /etc/my_init.d/set-home-permissions.sh && \
+    ldconfig
 
 USER fenics
 ENV FENICS_HOME /home/fenics
