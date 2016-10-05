@@ -1,0 +1,52 @@
+# Builds a Docker image with the necessary libraries for the Bitbucket
+# Pipeline tests of FEniCS components (excluding DOLFIN) FEniCS.  The
+# image is at:
+#
+#    https://quay.io/repository/fenicsproject/pipelines
+#
+# Authors:
+# Garth N. Wells <gnw20@cam.ac.uk>
+
+FROM ubuntu:16.04
+MAINTAINER fenics-project <fenics-support@googlegroups.org>
+
+USER root
+WORKDIR /tmp
+
+# Non-Python utilities and libraries
+RUN apt-get -qq update && \
+    apt-get -y --with-new-pkgs \
+        -o Dpkg::Options::="--force-confold" upgrade && \
+    apt-get -y install \
+        g++ \
+        git \
+        libmpich-dev \
+        mpich && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install Python2 based environment
+RUN apt-get -qq update && \
+    apt-get -y --with-new-pkgs \
+        -o Dpkg::Options::="--force-confold" upgrade && \
+    apt-get -y install \
+        python-dev python3-dev \
+        python-flake8 python3-flake8 \
+        python-minimal python3-minimal \
+        python-numpy python3-numpy \
+        python-pip python3-pip \
+        python-pytest python3-pytest \
+        python-pytest-cov python3-pytest-cov \
+        python-setuptools python3-setuptools \
+        python-six python3-six \
+        python-subprocess32 \
+        python-wheel python-wheel &&  \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# Pip install of packages
+RUN pip2 install --no-cache-dir sympy && \
+    pip2 install --no-cache-dir mpi4py && \
+    pip3 install --no-cache-dir sympy && \
+    pip3 install --no-cache-dir mpi4py && \
+    rm -rf /tmp/*
