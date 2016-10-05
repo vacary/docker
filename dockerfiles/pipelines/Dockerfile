@@ -1,6 +1,6 @@
 # Builds a Docker image with the necessary libraries for the Bitbucket
-# Pipeline tests of FEniCS components (excluding DOLFIN) FEniCS.  The
-# image is at:
+# Pipeline tests of FEniCS components (excluding DOLFIN).  The image
+# is at:
 #
 #    https://quay.io/repository/fenicsproject/pipelines
 #
@@ -21,8 +21,9 @@ RUN apt-get -qq update && \
         g++ \
         git \
         libmpich-dev \
-        mpich && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        mpich \
+        swig && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python2 based environment
 RUN apt-get -qq update && \
