@@ -18,6 +18,7 @@ RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs \
         -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
+        cmake \
         g++ \
         git \
         libmpich-dev \
