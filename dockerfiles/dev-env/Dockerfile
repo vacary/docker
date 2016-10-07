@@ -46,6 +46,8 @@ RUN apt-get -qq update && \
         libboost-filesystem-dev \
         libboost-iostreams-dev \
         libboost-program-options-dev \
+        libboost-system-dev \
+        libboost-thread-dev \
         libboost-timer-dev \
         libeigen3-dev \
         liblapack-dev \
