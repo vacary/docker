@@ -24,7 +24,7 @@ RUN apt-get -qq update && \
         libmpich-dev \
         mpich \
         swig && \
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python2 based environment
 RUN apt-get -qq update && \
