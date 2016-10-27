@@ -61,6 +61,7 @@ RUN apt-get -qq update && \
         mpich \
         nano \
         pkg-config \
+        man \
         wget && \
     git lfs install && \
     apt-get clean && \
