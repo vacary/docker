@@ -25,8 +25,6 @@ ENV PETSC_VERSION=3.7.4 \
     TRILINOS_VERSION=12.6.3 \
     OPENBLAS_NUM_THREADS=1 \
     OPENBLAS_VERBOSE=0 \
-    FENICS_PYTHON_MAJOR_VERSION=2 \
-    FENICS_PYTHON_MINOR_VERSION=7 \
     FENICS_PREFIX=$FENICS_HOME/local
 
 # Non-Python utilities and libraries
@@ -161,6 +159,7 @@ RUN pip2 install --no-cache-dir jupyter && \
     pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir jupyter && \
     pip3 install --no-cache-dir sympy && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
@@ -177,7 +176,11 @@ RUN pip2 install --no-cache-dir jupyter && \
 WORKDIR $FENICS_HOME
 COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
 COPY bin $FENICS_HOME/bin
-RUN chown -R fenics:fenics $FENICS_HOME
+RUN mkdir -p /home/fenics/local/lib/python2.7/site-packages && \
+    mkdir -p /home/fenics/local/lib/python3.5/site-packages && \
+    echo '/home/fenics/local/lib/python2.7/site-packages' >> /usr/local/lib/python2.7/dist-packages/fenics-user.pth && \
+    echo '/home/fenics/local/lib/python3.5/site-packages' >> /usr/local/lib/python3.5/dist-packages/fenics-user.pth && \
+    chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
 RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
