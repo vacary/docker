@@ -40,12 +40,19 @@ Pull the FEniCS sources
 
     cd $FENICS_SRC_DIR
     git clone git@bitbucket.org:fenics-project/fiat.git
-    git clone git@bitbucket.org:fenics-project/ffc.git
-    git clone git@bitbucket.org:fenics-project/ufl.git
-    git clone git@bitbucket.org:fenics-project/dijitso.git
     git clone git@bitbucket.org:fenics-project/instant.git
+    git clone git@bitbucket.org:fenics-project/dijitso.git
+    git clone git@bitbucket.org:fenics-project/ufl.git
+    git clone git@bitbucket.org:fenics-project/ffc.git
     git clone git@bitbucket.org:fenics-project/dolfin.git
     git clone git@bitbucket.org:fenics-project/mshr.git
+
+Alternatively, the following short form can be used in place of the
+string of clones:
+
+.. code-block:: console
+
+    for p in fiat instant dijitso ufl ffc dolfin mshr; do git clone git@bitbucket.org:fenics-project/$p.git; done
 
 Note that we pull the sources from outside the Docker container (which
 we have yet to create). This ensures that we pull using the ``ssh``
