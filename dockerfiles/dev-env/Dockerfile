@@ -177,10 +177,10 @@ RUN pip2 install --no-cache-dir sympy && \
 WORKDIR $FENICS_HOME
 COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
 COPY bin $FENICS_HOME/bin
-RUN PYTHON2_SITE_DIR=$(python2 -c "import site; print site.getsitepackages()[0]") && \
+RUN PYTHON2_SITE_DIR=$(python2 -c "import site; print(site.getsitepackages()[0])") && \
     PYTHON3_SITE_DIR=$(python3 -c "import site; print(site.getsitepackages()[0])") && \
-    PYTHON2_VERSION=$(python2 -c 'from __future__ import print_function; import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
-    PYTHON3_VERSION=$(python3 -c 'from __future__ import print_function; import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
+    PYTHON2_VERSION=$(python2 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
+    PYTHON3_VERSION=$(python3 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
     echo "$FENICS_HOME/local/lib/python$PYTHON2_VERSION/site-packages" >> $PYTHON2_SITE_DIR/fenics-user.pth && \
     echo "$FENICS_HOME/local/lib/python$PYTHON3_VERSION/site-packages" >> $PYTHON3_SITE_DIR/fenics-user.pth && \
     chown -R fenics:fenics $FENICS_HOME

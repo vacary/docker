@@ -15,9 +15,12 @@ if [ -z "${FENICS_PREFIX}" ]; then
     exit -1
 fi
 
-FENICS_PYTHON_MAJOR_VERSION=$(${FENICS_PYTHON} -c 'from __future__ import print_function; import sys; print(str(sys.version_info[0]))')
+FENICS_PYTHON_MAJOR_VERSION=$(${FENICS_PYTHON} -c \
+    'import sys; print(str(sys.version_info[0]))')
 
-FENICS_PYTHON_VERSION=$(${FENICS_PYTHON} -c 'from __future__ import print_function; import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))')
+FENICS_PYTHON_VERSION=$(${FENICS_PYTHON} -c \
+    'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))')
+
 if [ ! -d "${FENICS_PREFIX}/lib/python${FENICS_PYTHON_VERSION}/site-packages" ]; then
     mkdir -p "${FENICS_PREFIX}/lib/python${FENICS_PYTHON_VERSION}/site-packages"
 fi
@@ -38,7 +41,8 @@ function build_cmake () {
     build="$FENICS_SRC_DIR/$project/build"
     mkdir -p "$build"
     cd "$build"
-    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_PREFIX} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} -Wno-dev ${CMAKE_EXTRA_PYTHON_ARGS} ${CMAKE_EXTRA_ARGS}
+    cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_PREFIX} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} \
+              -Wno-dev ${CMAKE_EXTRA_PYTHON_ARGS} ${CMAKE_EXTRA_ARGS}
     make
     make install
 }
