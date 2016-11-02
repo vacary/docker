@@ -18,13 +18,6 @@ fi
 FENICS_PYTHON_MAJOR_VERSION=$(${FENICS_PYTHON} -c \
     'import sys; print(str(sys.version_info[0]))')
 
-FENICS_PYTHON_VERSION=$(${FENICS_PYTHON} -c \
-    'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))')
-
-if [ ! -d "${FENICS_PREFIX}/lib/python${FENICS_PYTHON_VERSION}/site-packages" ]; then
-    mkdir -p "${FENICS_PREFIX}/lib/python${FENICS_PYTHON_VERSION}/site-packages"
-fi
-
 function build_cmake () {
     # build a project with cmake (dolfin, mshr)
     project="$1"
