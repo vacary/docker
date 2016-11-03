@@ -195,8 +195,8 @@ run ()
     # Setup a container for instant cache
     create-cache-container $IMAGE
 
-    # Run container
-    CMD="docker run --rm -ti \
+    CMD="docker create -ti \
+           ${BIND_MPL} \
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
@@ -205,7 +205,14 @@ run ()
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
            $IMAGE '$COMMAND'"
-    command $CMD
+
+    NAME=$(command $CMD | tail -n 1)
+    command docker start $NAME
+
+    log_mpl_port $NAME
+
+    command docker attach $NAME
+    command docker rm $NAME
 }
 
 create-cache-container ()
