@@ -187,7 +187,9 @@ RUN PYTHON2_SITE_DIR=$(python2 -c "import site; print(site.getsitepackages()[0])
 
 USER fenics
 RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
-    echo '. ~/fenics.env.conf' >> $FENICS_HOME/.profile
+    echo '. ~/fenics.env.conf' >> $FENICS_HOME/.profile && \
+    mkdir -p $FENICS_HOME/.config/matplotlib
+COPY matplotlibrc $FENICS_HOME/.config/matplotlib/matplotlibrc
 COPY WELCOME $FENICS_HOME/WELCOME
 
 USER root
