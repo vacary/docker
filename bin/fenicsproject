@@ -24,6 +24,10 @@ PROJECT_DIR_CONTAINER="/home/fenics/shared"
 # Workaround for issue https://github.com/docker/docker/issues/9299
 DEFAULT_COMMAND='/bin/bash -l -c "export TERM=xterm; bash -i"'
 
+BIND_PORT_RANGE="3000-4000"
+DOCKER_NB_PORT="8888"
+DOCKER_MPL_PORT="8000"
+
 # Setup
 set -e
 RED="\033[1;31m"
@@ -67,6 +71,29 @@ if [ "$OS" == "Linux" ]; then
     HOST_GID=$(id -g)
     CHANGE_UID_GID="--env HOST_UID=${HOST_UID} --env HOST_GID=${HOST_GID}"
 fi
+
+# For security: 
+# On Windows and Mac with docker-machine we bind to the Virtualbox IP. Only the
+# host machine can see this IP.
+# On Docker for Mac or Docker for Windows we bind
+# to the default private IP only visible to the host.
+# On Linux we bind only on localhost. Only the host machine
+# can see this IP.
+if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
+    # Ask docker-machine for the IP address of the VM 
+    ACTIVE_MACHINE=$(docker-machine active)
+    DOCKER_BIND_IP=$(docker-machine ip $ACTIVE_MACHINE)
+elif [[ "$OS" == "Docker" ]]; then
+    # Will bind to private IP by default.
+    # Can we work out what this IP is? Specific is more secure.
+    DOCKER_BIND_IP="127.0.0.1"
+else
+    # Conservative default, works on Linux.
+    DOCKER_BIND_IP="127.0.0.1"
+fi
+
+BIND_NB="-p ${DOCKER_BIND_IP}:${BIND_PORT_RANGE}:${DOCKER_NB_PORT}"
+BIND_MPL="-p ${DOCKER_BIND_IP}:${BIND_PORT_RANGE}:${DOCKER_MPL_PORT}"
 
 help ()
 {
@@ -151,6 +178,16 @@ get_ip_port () {
     echo $IP $HOST_PORT
 }
 
+log_mpl_port () {
+    read IP MPL_PORT < <(get_ip_port $1 ${DOCKER_MPL_PORT})
+    echo -e "${BLUE}You can access matplotlib plots at http://${IP}:${MPL_PORT}${NORMAL}"
+}
+
+log_nb_port () {
+    read IP NB_PORT < <(get_ip_port $1 ${DOCKER_NB_PORT})
+    echo -e "${BLUE}You can access the Jupyter notebook at http://${IP}:${NB_PORT}${NORMAL}"
+}
+
 run ()
 {
     IMAGE="$1"
@@ -226,8 +263,7 @@ create ()
     # Create a shared container to hold the instant cache
     create-cache-container $IMAGE
     CMD="docker create -ti --name $NAME \
-           -p ${IP}:3000-4000:8888 \
-           -p ${IP}:8000-9000:8000 \
+           ${BIND_NB} ${BIND_MPL}\
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
@@ -265,12 +301,10 @@ start ()
         CMD="docker start $NAME"
         command $CMD
 
-        read IP MPL_PORT < <(get_ip_port $NAME 8000)
-        echo -e "${BLUE}You can access matplotlib plots at http://${IP}:${MPL_PORT}${NORMAL}"
+        log_mpl_port $NAME
 
         if [ "$PROJECT_TYPE" == "notebook" ]; then
-            read IP NB_PORT < <(get_ip_port $NAME 8888)
-            echo -e "${BLUE}You can access the Jupyter notebook at http://${IP}:${NB_PORT}${NORMAL}"
+            log_nb_port $NAME
         fi
         CMD="docker attach $NAME"
         command $CMD
@@ -298,30 +332,9 @@ notebook ()
 
     # Setup a container for instant cache
     create-cache-container $IMAGE
-   
-    # For security: 
-    # On Windows and Mac with docker-machine we bind to the Virtualbox IP. Only the
-    # host machine can see this IP.
-    # On Docker for Mac or Docker for Windows we bind
-    # to the default private IP only visible to the host.
-    # On Linux we bind only on localhost. Only the host machine
-    # can see this IP.
-    if [[ "$OS" == "Darwin" || "$OS" == "Windows" ]]; then
-        # Ask docker-machine for the IP address of the VM 
-        ACTIVE_MACHINE=$(docker-machine active)
-        IP=$(docker-machine ip $ACTIVE_MACHINE)
-    elif [[ "$OS" == "Docker" ]]; then
-        # Will bind to private IP by default.
-        # Can we work out what this IP is? Specific is more secure.
-        IP="127.0.0.1"
-    else
-        # Conservative default, works on Linux.
-        IP="127.0.0.1"
-    fi
 
     CMD="docker create \
-           -p ${IP}:3000-4000:8888 \
-           -p ${IP}:8000-9000:8000 \
+           ${BIND_NB} ${BIND_MPL}\
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
