@@ -180,7 +180,7 @@ get_ip_port () {
 
 log_mpl_port () {
     read IP MPL_PORT < <(get_ip_port $1 ${DOCKER_MPL_PORT})
-    echo -e "${BLUE}You can access matplotlib plots at http://${IP}:${MPL_PORT}${NORMAL}"
+    echo -e "${BLUE}After calling 'plt.show()' you can access matplotlib plots at http://${IP}:${MPL_PORT}${NORMAL}"
 }
 
 log_nb_port () {
