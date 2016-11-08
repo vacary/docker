@@ -35,7 +35,6 @@ RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
     python $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     instant-clean && \
-    dijitso clean && \
     rm -r /tmp/poisson_test"
 
 COPY WELCOME $FENICS_HOME/WELCOME
