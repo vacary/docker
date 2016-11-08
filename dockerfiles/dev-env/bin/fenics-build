@@ -15,27 +15,16 @@ if [ -z "${FENICS_PREFIX}" ]; then
     exit -1
 fi
 
-FENICS_PYTHON_MAJOR_VERSION=$(${FENICS_PYTHON} -c \
-    'import sys; print(str(sys.version_info[0]))')
-
 function build_cmake () {
     # build a project with cmake (dolfin, mshr)
     project="$1"
-    if [ "$FENICS_PYTHON_MAJOR_VERSION" == 3 ]; then
-        if [ "$1" == "dolfin" ]; then
-            CMAKE_EXTRA_PYTHON_ARGS="-DDOLFIN_USE_PYTHON3=True"
-        elif [ "$1" == "mshr" ]; then
-            CMAKE_EXTRA_PYTHON_ARGS="-DPYTHON_EXECUTABLE:FILEPATH=${FENICS_PYTHON}"
-        fi
-    fi
-     
     echo "FENICS-BUILDER: Building $project with CMake..."
 
     build="$FENICS_SRC_DIR/$project/build"
     mkdir -p "$build"
     cd "$build"
     cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_PREFIX} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} \
-              -Wno-dev ${CMAKE_EXTRA_PYTHON_ARGS} ${CMAKE_EXTRA_ARGS}
+              -Wno-dev -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) ${CMAKE_EXTRA_ARGS}
     make
     make install
 }
