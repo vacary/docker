@@ -34,8 +34,9 @@ Inside the container
     
     fenics-build
 
-The workflow is to edit the code on the host with your favourite
-tools, and then build and run inside the container.
+The workflow is to edit the code and interact with the ``git``
+repositories on the host with your favourite tools, and then build
+and run FEniCS inside the container.
 
 .. _start_of_full_instructions:
 
@@ -145,15 +146,24 @@ shared into the directory ``$HOME/local/src`` inside the container.
 Build FEniCS inside the Docker container
 ----------------------------------------
 
+To build all of the FEniCS components from the source you have shared
+into the container, simply run the following inside the container:
+
 .. code-block:: console
 
     fenics-build
 
-Run this command inside the Docker container to build all the sources
-residing in ``$HOME/local/src`` and install into ``$HOME/local``. Once
-all components have been built, you may run FEniCS programs without
-changing any paths or setting any other environment variables. These
-are already pointed to the ``$HOME/local`` installation directory.
+If you want to develop with a Python 3 version of FEniCS instead type:
+
+.. code-block:: console
+
+    FENICS_PYTHON=python3 fenics-build
+
+Both commands build all the sources residing in ``$HOME/local/src`` and install
+the results into ``$HOME/local``. Once all components have been built, you may
+run FEniCS programs without changing any paths or setting any other environment
+variables. Everything is already setup correctly to point at the
+``$HOME/local`` installation directory.
 
 Note that there is also a command named ``fenics-pull``. This will
 pull all the FEniCS sources into ``$HOME/local/src`` by entering each
