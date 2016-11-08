@@ -25,8 +25,6 @@ ENV PETSC_VERSION=3.7.4 \
     TRILINOS_VERSION=12.6.3 \
     OPENBLAS_NUM_THREADS=1 \
     OPENBLAS_VERBOSE=0 \
-    FENICS_PYTHON_MAJOR_VERSION=2 \
-    FENICS_PYTHON_MINOR_VERSION=7 \
     FENICS_PREFIX=$FENICS_HOME/local
 
 # Non-Python utilities and libraries
@@ -156,11 +154,13 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
 # Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
-RUN pip2 install --no-cache-dir jupyter && \
-    pip2 install --no-cache-dir sympy && \
+RUN pip2 install --no-cache-dir sympy && \
     pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir jupyter && \
+    pip2 install --no-cache-dir ipython ipykernel && \
+    python2 -m ipykernel install --prefix=/usr/local && \
     pip3 install --no-cache-dir sympy && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
@@ -177,7 +177,13 @@ RUN pip2 install --no-cache-dir jupyter && \
 WORKDIR $FENICS_HOME
 COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
 COPY bin $FENICS_HOME/bin
-RUN chown -R fenics:fenics $FENICS_HOME
+RUN PYTHON2_SITE_DIR=$(python2 -c "import site; print(site.getsitepackages()[0])") && \
+    PYTHON3_SITE_DIR=$(python3 -c "import site; print(site.getsitepackages()[0])") && \
+    PYTHON2_VERSION=$(python2 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
+    PYTHON3_VERSION=$(python3 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
+    echo "$FENICS_HOME/local/lib/python$PYTHON2_VERSION/site-packages" >> $PYTHON2_SITE_DIR/fenics-user.pth && \
+    echo "$FENICS_HOME/local/lib/python$PYTHON3_VERSION/site-packages" >> $PYTHON3_SITE_DIR/fenics-user.pth && \
+    chown -R fenics:fenics $FENICS_HOME
 
 USER fenics
 RUN echo 'source ~/.profile' >> $FENICS_HOME/.bash_profile && \
