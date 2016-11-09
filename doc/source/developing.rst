@@ -20,7 +20,7 @@ On the host:
 .. code-block:: console
    
     curl -s https://get.fenicsproject.org | bash
-    export FENICS_SRC_DIR=$HOME/fenics/dev
+    export FENICS_SRC_DIR=$HOME/dev/fenics
     mkdir -p $FENICS_SRC_DIR
     cd $FENICS_SRC_DIR
     for p in fiat instant dijitso ufl ffc dolfin mshr; do git clone git@bitbucket.org:fenics-project/$p.git; done
@@ -59,16 +59,16 @@ the host`, and just do the compilation and execution `inside the
 container`. You should also use ``git push`` and ``git pull`` on the
 host so that you can use your usual ``git`` SSH keys and setup.
 
-We need to make a folder, e.g. ``$HOME/fenics/dev`` on the host system
+We need to make a folder, e.g. ``$HOME/dev/fenics`` on the host system
 to hold the FEniCS source code: 
 
 .. code-block:: console
 
-    export FENICS_SRC_DIR=$HOME/fenics/dev
+    export FENICS_SRC_DIR=$HOME/dev/fenics
     mkdir -p $FENICS_SRC_DIR
 
 You can make this setup permanent by setting the environment variable
-``export FENICS_SRC_DIR=$HOME/fenics/dev`` in your ``$HOME/.profile``
+``export FENICS_SRC_DIR=$HOME/dev/fenics`` in your ``$HOME/.profile``
 or similar file. Feel free to choose another directory for your FEniCS
 sources.
 
