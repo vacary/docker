@@ -59,13 +59,13 @@ We would like to have another bash container running inside the
 container ``project-1``. We can execute a new process in the container
 using the ``docker exec`` command::
 
-    docker exec -ti project-1 /bin/bash -l
+    docker exec -ti -u fenics project-1 /bin/bash -l
 
 The ``-l`` is important and ensures that your environment in the
 container is setup correctly for FEniCS to run. You could also enter
 into an ``ipython`` prompt instantly using::
 
-    docker exec -ti project-1 /bin/bash -l -c ipython
+    docker exec -ti -u fenics project-1 /bin/bash -l -c ipython
 
 The ``-c`` flag makes ``bash`` read the commands from the string.
 
