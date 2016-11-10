@@ -13,8 +13,6 @@ push, edit and build FEniCS using Docker.
 Development quickstart
 ----------------------
 
-Go to :ref:`start_of_full_instructions` for full details. 
-
 On the host:
 
 .. code-block:: console
@@ -28,7 +26,7 @@ On the host:
     fenicsproject create my-dev-env dev-env
     fenicsproject start my-dev-env
 
-Inside the container
+Inside the container:
 
 .. code-block:: console
     
@@ -49,6 +47,7 @@ Install the ``fenicsproject`` script
 
 While it is possible to use straight ``docker`` commands to launch a
 development container, the script makes things significantly easier.
+Read on for full details: :ref:`start_of_full_instructions`.
 
 Set up your FEniCS source tree
 ------------------------------
@@ -147,7 +146,7 @@ Build FEniCS inside the Docker container
 ----------------------------------------
 
 To build all of the FEniCS components from the source you have shared
-into the container, simply run the following inside the container:
+into the container, simply run the following command inside the container:
 
 .. code-block:: console
 
