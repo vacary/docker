@@ -12,7 +12,7 @@ DEFAULT_MAKEFLAGS="-j1"
 #DEFAULT_MAKEFLAGS=$(grep -c '^processor' /proc/cpuinfo)
 # Where to mount the Instant/dijitso cache 
 # in the container.
-CACHE_DIR_CONTAINER="/home/fenics/.instant"
+CACHE_DIR_CONTAINER="/home/fenics/.cache/fenics"
 # Where to build FEniCS.
 BUILD_DIR_CONTAINER="/home/fenics/local"
 # Where to store the FEniCS source code.
@@ -200,7 +200,8 @@ run ()
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER/instant \
+           --env DIJITSO_CACHE_DIR=$CACHE_DIR_CONTAINER/dijitso \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w $PROJECT_DIR_CONTAINER \
            --label org.fenicsproject.created_by_script=true \
@@ -274,7 +275,8 @@ create ()
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER/instant \
+           --env DIJITSO_CACHE_DIR=$CACHE_DIR_CONTAINER/dijitso \
            --label org.fenicsproject.created_by_script=true \
            --label org.fenicsproject.project_type='standard' \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
@@ -345,7 +347,8 @@ notebook ()
            ${CHANGE_UID_GID} \
            --env MAKEFLAGS=${DEFAULT_MAKEFLAGS} \
            -v instant-cache-$(clean-string $IMAGE):$CACHE_DIR_CONTAINER \
-           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER \
+           --env INSTANT_CACHE_DIR=$CACHE_DIR_CONTAINER/instant \
+           --env DIJITSO_CACHE_DIR=$CACHE_DIR_CONTAINER/dijitso \
            -v $PROJECT_DIR_HOST:$PROJECT_DIR_CONTAINER \
            -w /home/fenics \
            --label org.fenicsproject.created_by_script=true \
