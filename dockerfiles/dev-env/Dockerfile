@@ -60,7 +60,8 @@ RUN apt-get -qq update && \
         nano \
         pkg-config \
         man \
-        wget && \
+        wget \
+        ccache && \
     git lfs install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
