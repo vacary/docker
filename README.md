@@ -59,13 +59,13 @@ the images can be found at https://fenics-containers.readthedocs.org/.
 > build. Even if a build is marked as failed, there will still be a
 > working image available on the `latest` tag that you can use.
 
-## Tags
+## Tagging policies
 
-We only maintain tags on the `quay.io/fenicsproject/stable` image:
+You can view the tags on the `stable` image here:
 
 https://quay.io/repository/fenicsproject/stable?tab=tags
 
-The current policy for producing these tags is as follows:
+The tagging policy for `stable` image is as follows:
 
 * The `:latest` (default) tag refers to the latest image built by
 quay.io.
@@ -77,10 +77,22 @@ checked thoroughly by the FEniCS project team.
 * The latest rolling release is tagged with a *moving* tag `:current`.
 This tag is the default tag used by the `bin/fenicsproject` script
 when the user specifies `stable`.
-* When we release a new version of FEniCS the last rolling release of
-the image for the previous version will be tagged `xxxx.x.x` for
+* When we release a new stable version of FEniCS the last rolling release
+`xxxx.x.x.rx` of the image for the previous version will be tagged `xxxx.x.x` for
 permanent archival. We will endeavour to keep all `xxxx.x.x.rx` tags
 as well, but this is not guaranteed.
+
+You can view the tags on the `dev-env` image here:
+
+https://quay.io/repository/fenicsproject/stable?tab=tags
+
+The tagging policy for the `dev-env` image is as follows:
+
+* The `:latest` (default) tag refers to the latest image build by
+quay.io.
+* When we release a new stable version of FEniCS the last `:latest` image is
+tagged `xxxx.x.x` for permanent archival. This could be useful if you
+want to compile an old version of FEniCS.
 
 ## Development images
 
