@@ -1,7 +1,8 @@
 # Docker for FEniCS
 
 This repository contains the scripts for building various Docker
-images for FEniCS (http://fenicsproject.org).
+images for [FEniCS](http://fenicsproject.org). The built images
+are available on [quay.io](https://quay.io/organization/fenicsproject/).
 
 [![Documentation Status](https://readthedocs.org/projects/fenics-containers/badge/?version=latest)](http://fenics.readthedocs.org/projects/containers/en/latest/?badge=latest)
 
@@ -61,6 +62,10 @@ the images can be found at https://fenics-containers.readthedocs.org/.
 
 ## Tagging policies
 
+### `stable`
+
+We currently maintain tags on the `stable` and `dev-env` images.
+
 You can view the tags on the `stable` image here:
 
 https://quay.io/repository/fenicsproject/stable?tab=tags
@@ -68,7 +73,8 @@ https://quay.io/repository/fenicsproject/stable?tab=tags
 The tagging policy for `stable` image is as follows:
 
 * The `:latest` (default) tag refers to the latest image built by
-quay.io.
+quay.io. The prior `:latest` image is automatically deleted by
+quay.io, unless it has been assigned another tag.
 * We maintain a permanent set of rolling release tags, e.g.
 `:2016.1.0.r1`, `2016.1.0.r2` that contain the `xxxx.x.x` version of
 FEniCS, but contain minor updates `.rx` to underlying dependencies
@@ -82,6 +88,8 @@ when the user specifies `stable`.
 permanent archival. We will endeavour to keep all `xxxx.x.x.rx` tags
 as well, but this is not guaranteed.
 
+### `dev-env`
+
 You can view the tags on the `dev-env` image here:
 
 https://quay.io/repository/fenicsproject/stable?tab=tags
@@ -89,7 +97,8 @@ https://quay.io/repository/fenicsproject/stable?tab=tags
 The tagging policy for the `dev-env` image is as follows:
 
 * The `:latest` (default) tag refers to the latest image build by
-quay.io.
+quay.io. The prior `:latest` image is automatically deleted by
+quay.io, unless it has been assigned another tag.
 * When we release a new stable version of FEniCS the last `:latest` image is
 tagged `xxxx.x.x` for permanent archival. This could be useful if you
 want to compile an old version of FEniCS.
@@ -97,7 +106,7 @@ want to compile an old version of FEniCS.
 ## Development images
 
 We also provide a set of *unsupported* images containing the output of
-builds produced during our continuous integration and testing
+all builds produced during our continuous integration and testing
 [system](https://bamboo.fenicsproject.org):
 
 [https://quay.io/organization/fenicsproject_dev](https://quay.io/organization/fenicsproject_dev)
@@ -106,11 +115,24 @@ These images are not guaranteed to work and we do not provide end-user
 support. They may be of use to developers and contributors for
 debugging issues in pull requests or trying out bleeding edge features.
 
-## Building images
+Development images are automatically deleted after a set period of
+time. Pushing a new commit to a branch will re-build the image.
 
-Images are hosted on quay.io, and are automatically built in the cloud
-on from the Dockerfiles in this repository. The FEniCS Project quay.io
-page is at https://quay.io/organization/fenicsproject/.
+## Process
+
+The `Dockerfile`s in this repository are built and distributed as
+Docker images by quay.io. For this to happen automatically on a change
+in a `Dockerfile` we have setup a [build
+trigger](https://docs.quay.io/guides/building.html) on quay.io for
+each image (e.g. `stable`). Setting up a trigger requires
+administrator access on this bitbucket repository and the
+`fenicsproject` quay.io team.
+
+The tagging policy is described in the section 'Tagging policies'.  To
+create tags you need to be an administrator on the `fenicsproject`
+quay.io team. The procedure is described
+[here](https://docs.quay.io/guides/tag-operations.html). Currently all
+tags are created manually via the web interface.
 
 ## Authors
 
