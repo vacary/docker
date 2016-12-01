@@ -12,7 +12,7 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 USER root 
 
 ENV FENICS_BUILD_TYPE=Release \
-    FENICS_VERSION=2016.1.0 \
+    FENICS_VERSION=2016.2.0 \
     FENICS_PREFIX=/usr/local
 
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
