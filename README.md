@@ -39,7 +39,6 @@ will need to add the `:z` flag to the volume mount, e.g.:
 More extensive documentation, including suggested workflows, is
 available at https://fenics-containers.readthedocs.org/.
 
-
 ## Images
 
 We currently offer following end-user images. A full description of
@@ -62,9 +61,9 @@ the images can be found at https://fenics-containers.readthedocs.org/.
 
 ## Tagging policies
 
-### `stable`
-
 We currently maintain tags on the `stable` and `dev-env` images.
+
+### `stable`
 
 You can view the tags on the `stable` image here:
 
@@ -75,24 +74,25 @@ The tagging policy for `stable` image is as follows:
 * The `:latest` (default) tag refers to the latest image built by
 quay.io. The prior `:latest` image is automatically deleted by
 quay.io, unless it has been assigned another tag.
-* We maintain a permanent set of rolling release tags, e.g.
-`:2016.1.0.r1`, `2016.1.0.r2` that contain the `xxxx.x.x` version of
-FEniCS, but contain minor updates `.rx` to underlying dependencies
-(e.g. PETSc) and the container environment. These images have been
-checked thoroughly by the FEniCS project team.
+* We maintain a set of rolling release tags, e.g.  `:2016.1.0.r1`,
+  `2016.1.0.r2` that contain the `xxxx.x.x` version of FEniCS, but
+contain minor updates `.rx` to underlying dependencies (e.g. PETSc)
+and the container environment. These images have been checked
+thoroughly by the FEniCS project team.
 * The latest rolling release is tagged with a *moving* tag `:current`.
 This tag is the default tag used by the `bin/fenicsproject` script
 when the user specifies `stable`.
 * When we release a new stable version of FEniCS the last rolling release
 `xxxx.x.x.rx` of the image for the previous version will be tagged `xxxx.x.x` for
 permanent archival. We will endeavour to keep all `xxxx.x.x.rx` tags
-as well, but this is not guaranteed.
+as well, but this is not guaranteed. We will always keep the last rolling
+release `xxxx.x.x` tag.
 
 ### `dev-env`
 
 You can view the tags on the `dev-env` image here:
 
-https://quay.io/repository/fenicsproject/stable?tab=tags
+https://quay.io/repository/fenicsproject/dev-env?tab=tags
 
 The tagging policy for the `dev-env` image is as follows:
 
