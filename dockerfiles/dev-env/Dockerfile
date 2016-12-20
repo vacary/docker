@@ -61,7 +61,8 @@ RUN apt-get -qq update && \
         pkg-config \
         man \
         wget \
-        ccache && \
+        ccache \
+        bash-completion && \
     git lfs install && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
