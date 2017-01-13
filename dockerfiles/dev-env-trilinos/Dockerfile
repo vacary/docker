@@ -20,8 +20,8 @@ RUN wget -nc --quiet http://trilinos.csbsju.edu/download/files/trilinos-${TRILIN
           -D MPI_C_COMPILER:FILEPATH=mpicc \
           -D CMAKE_CXX_FLAGS="-O2" \
           -D CMAKE_C_FLAGS="-O2" \
-	  -D Trilinos_ENABLE_ROL:BOOL=ON \
-	  -D Trilinos_ENABLE_MueLu:BOOL=ON \
+          -D Trilinos_ENABLE_ROL:BOOL=ON \
+          -D Trilinos_ENABLE_MueLu:BOOL=ON \
           -D Trilinos_ENABLE_Amesos2:BOOL=ON \
           -D Amesos2_ENABLE_KLU2:BOOL=ON \
           -D CMAKE_BUILD_TYPE:STRING=Release \
