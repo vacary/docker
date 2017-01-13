@@ -49,9 +49,3 @@ RUN wget -nc --quiet http://trilinos.csbsju.edu/download/files/trilinos-${TRILIN
     make -j 1 && \
     make install && \
     rm -rf /tmp/*
-
-USER fenics
-WORKDIR $FENICS_HOME
-COPY WELCOME $FENICS_HOME/WELCOME
-
-USER root
