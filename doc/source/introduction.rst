@@ -117,6 +117,8 @@ host system into the container by passing ``-v`` argument to the
    option to all subsequent host volume mounts ``-v``, e.g.::
    
        docker run -ti -v $(pwd):/home/fenics/shared:z quay.io/fenicsproject/stable
+      
+.. note:: Permissions issues on Linux? Check out the :ref:`troubleshooting` section.
 
 This command will ``run`` a new container with the current working directory
 ``$(pwd)`` shared into the container at the path ``/home/fenics/shared``.
