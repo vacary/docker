@@ -36,6 +36,7 @@ RUN apt-get -qq update && \
     apt-get -y install \
         bison \
         cmake \
+        doxygen \
         flex \
         g++ \
         gfortran \
