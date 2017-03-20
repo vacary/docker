@@ -18,7 +18,7 @@ WORKDIR /tmp
 # Environment variables
 ENV PETSC_VERSION=3.7.5 \
     SLEPC_VERSION=3.7.3 \
-    SWIG_VERSION=3.0.10 \
+    SWIG_VERSION=3.0.12 \
     MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.7.0 \
     SLEPC4PY_VERSION=3.7.0 \
@@ -88,10 +88,10 @@ RUN apt-get -qq update && \
 
 # Install setuptools
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python2 get-pip.py && \
-    pip2 install --no-cache-dir setuptools && \
     python3 get-pip.py && \
     pip3 install --no-cache-dir setuptools && \
+    python2 get-pip.py && \
+    pip2 install --no-cache-dir setuptools && \
     rm -rf /tmp/*
 
 # Install PETSc from source
