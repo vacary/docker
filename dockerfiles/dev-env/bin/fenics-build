@@ -2,7 +2,7 @@
 
 set -e
 
-FENICS_PYTHON="${FENICS_PYTHON:-python}"
+FENICS_PYTHON="${FENICS_PYTHON:-python3}"
 FENICS_BUILD_TYPE="${FENICS_BUILD_TYPE:-Release}"
 
 if [ -z "${FENICS_SRC_DIR}" ]; then
