@@ -13,7 +13,8 @@ USER root
 
 ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.2.0 \
-    FENICS_PREFIX=/usr/local
+    FENICS_PREFIX=/usr/local \
+    FENICS_PYTHON=python2
 
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
 # the fenics.env.conf file and the unnecessary /home/fenics/local directory as
