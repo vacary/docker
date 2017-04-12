@@ -15,7 +15,11 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 USER fenics
 
-ENV FENICS_BUILD_TYPE=Release
+ARG FENICS_BUILD_TYPE
+ENV FENICS_BUILD_TYPE ${FENICS_BUILD_TYPE:-Release}
+
+ARG FENICS_PYTHON
+ENV FENICS_PYTHON ${FENICS_PYTHON:-python3}
 
 RUN bash -c "source ~/fenics.env.conf && \
              PIP_NO_CACHE_DIR=off fenics-update"
