@@ -13,7 +13,8 @@ USER root
 
 ENV FENICS_BUILD_TYPE=Release \
     FENICS_VERSION=2016.2.0 \
-    FENICS_PREFIX=/usr/local
+    FENICS_PREFIX=/usr/local \
+    FENICS_PYTHON=python2
 
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
 # the fenics.env.conf file and the unnecessary /home/fenics/local directory as
@@ -33,7 +34,7 @@ USER fenics
 # take too long to run.
 RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
-    python $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
+    $FENICS_PYTHON $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     instant-clean && \
     rm -r /tmp/poisson_test"
 

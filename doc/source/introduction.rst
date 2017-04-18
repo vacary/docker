@@ -37,9 +37,11 @@ If running on Mac or Windows, start a `Docker Quickstart Terminal`. This can
 take a little while the first time so just be patient.
 
 If you are running on Linux, just use a standard terminal session. Note that
-you will need to prepend ``sudo`` to the commands below. To allow ``sudo``-less
-use, refer to the installation instructions for your distribution to add your
-user to the ``docker`` group.
+you will need to prepend ``sudo`` to the commands below. In addition, if you are executing
+docker via ``fenicsproject`` script, you must prepend it with ``sudo -E``. 
+This flag allows ``sudo`` to see the enviromental variables, such as ``$FENICS_SRC_DIR``. 
+To allow ``sudo``-less use, refer to the installation instructions for your distribution 
+to add your user to the ``docker`` group.
 
 First of all we will check that we have a working install of Docker::
 
