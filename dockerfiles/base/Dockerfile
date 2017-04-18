@@ -45,6 +45,10 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
     chmod +x /etc/my_init.d/set-home-permissions.sh && \
     ldconfig
 
+# Bug fix for phusion baseimage issue
+# https://github.com/phusion/baseimage-docker/commit/06b065782df0aa2398e1c9339cbf0b08b1cea720
+RUN sed -i '250s$.*$\t\tos.system("/usr/bin/sv -w %d down /etc/service/*" % KILL_PROCESS_TIMEOUT)$' /sbin/my_init
+
 USER fenics
 ENV FENICS_HOME /home/fenics
 RUN touch $FENICS_HOME/.sudo_as_admin_successful && \
@@ -53,6 +57,8 @@ VOLUME /home/fenics/shared
 
 # Print something nice on entry.
 COPY WELCOME $FENICS_HOME/WELCOME
+
+
 
 WORKDIR /home/fenics
 USER root
