@@ -16,7 +16,7 @@ USER root
 WORKDIR /tmp
 
 # Environment variables
-ENV PETSC_VERSION=3.7.5 \
+ENV PETSC_VERSION=3.7.6 \
     SLEPC_VERSION=3.7.3 \
     SWIG_VERSION=3.0.12 \
     MPI4PY_VERSION=2.0.0 \

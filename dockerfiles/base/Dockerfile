@@ -17,7 +17,7 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 # Get Ubuntu updates
 USER root
-RUN apt-get update && \ 
+RUN apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
     apt-get -y install locales sudo && \
     echo "C.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -57,8 +57,6 @@ VOLUME /home/fenics/shared
 
 # Print something nice on entry.
 COPY WELCOME $FENICS_HOME/WELCOME
-
-
 
 WORKDIR /home/fenics
 USER root
