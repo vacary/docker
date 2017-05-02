@@ -49,6 +49,11 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # https://github.com/phusion/baseimage-docker/commit/06b065782df0aa2398e1c9339cbf0b08b1cea720
 RUN sed -i '250s$.*$\t\tos.system("/usr/bin/sv -w %d down /etc/service/*" % KILL_PROCESS_TIMEOUT)$' /sbin/my_init
 
+# Bug fix for Debian python3 site path issue
+# https://bitbucket.org/fenics-project/dolfin/issues/787/debian-ubuntu-python-bug-leads-to-python3
+# https://bugs.launchpad.net/ubuntu/+source/python3.5/+bug/1408092?comments=all
+RUN echo "/usr/local/lib/python3/dist-packages" >> /usr/local/lib/python3.5/dist-packages/debian-ubuntu-sitepath-fix.pth
+
 USER fenics
 ENV FENICS_HOME /home/fenics
 RUN touch $FENICS_HOME/.sudo_as_admin_successful && \
