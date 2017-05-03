@@ -14,7 +14,7 @@ USER root
 # Python2 build.
 ENV FENICS_BUILD_TYPE=Release \
     FENICS_PREFIX=/usr/local \
-    FENICS_VERSION=2017.1.0
+    FENICS_VERSION=2017.1.0 \
     FENICS_PYTHON=python2
 
 RUN /bin/bash -c "FENICS_SRC_DIR=/tmp/src /home/fenics/bin/fenics-pull && \
