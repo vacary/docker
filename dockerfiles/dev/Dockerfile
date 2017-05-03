@@ -19,17 +19,12 @@ ARG FENICS_BUILD_TYPE
 ENV FENICS_BUILD_TYPE ${FENICS_BUILD_TYPE:-Release}
 
 # Python 2 build
-ENV FENICS_PYTHON=python2
-
 RUN bash -c "source ~/fenics.env.conf && \
-             PIP_NO_CACHE_DIR=off fenics-update"
+             FENICS_PYTHON=python2 PIP_NO_CACHE_DIR=off fenics-update"
 
 # Python 3 build
-ENV FENICS_PYTHON=python3
-
 RUN bash -c "source ~/fenics.env.conf && \
-             rm -r /home/fenics/local/src/dolfin/build && \
-             PIP_NO_CACHE_DIR=off fenics-build"
+             FENICS_PYTHON=python3 PIP_NO_CACHE_DIR=off fenics-build"
 
 COPY WELCOME $FENICS_HOME/WELCOME
 
