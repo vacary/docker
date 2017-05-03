@@ -23,7 +23,7 @@ function build_cmake () {
     project="$1"
     echo "FENICS-BUILDER: Building $project with CMake..."
 
-    build="$FENICS_SRC_DIR/$project/build"
+    build="$FENICS_SRC_DIR/$project/build-${FENICS_PYTHON}"
     mkdir -p "$build"
     cd "$build"
     cmake ../ -DCMAKE_INSTALL_PREFIX=${FENICS_PREFIX} -DCMAKE_BUILD_TYPE=${FENICS_BUILD_TYPE} \
