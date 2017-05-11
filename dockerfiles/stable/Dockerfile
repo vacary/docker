@@ -27,8 +27,7 @@ ENV FENICS_PYTHON=python3
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
 # the fenics.env.conf file and the unnecessary /home/fenics/local directory as
 # the user does not need them in the stable image! 
-RUN /bin/bash -c "rm -r /tmp/src/dolfin/build && \
-               FENICS_SRC_DIR=/tmp/src /home/fenics/bin/fenics-build && \
+RUN /bin/bash -c "FENICS_SRC_DIR=/tmp/src /home/fenics/bin/fenics-build && \
                ldconfig && \
                cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo && \
                rm -rf /home/fenics/local && \
