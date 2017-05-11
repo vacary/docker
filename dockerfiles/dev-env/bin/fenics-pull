@@ -27,7 +27,7 @@ function pull () {
             git clone https://bitbucket.org/fenics-project/$project.git
             cd $project
             if [ ! -z "${FENICS_VERSION}" ]; then
-                git checkout $project-${FENICS_VERSION}
+                git checkout ${FENICS_VERSION}
             fi
         fi
     done
