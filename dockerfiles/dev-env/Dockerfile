@@ -17,7 +17,7 @@ WORKDIR /tmp
 
 # Environment variables
 ENV PETSC_VERSION=3.7.6 \
-    SLEPC_VERSION=3.7.3 \
+    SLEPC_VERSION=3.7.4 \
     SWIG_VERSION=3.0.12 \
     MPI4PY_VERSION=2.0.0 \
     PETSC4PY_VERSION=3.7.0 \
