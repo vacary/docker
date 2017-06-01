@@ -14,6 +14,7 @@ Advanced users may find the `Docker Cheat Sheet
 <https://github.com/wsargent/docker-cheat-sheet>`_ useful for quick
 reference.
 
+
 .. _seperate-container:
 
 Separate container for each user project
@@ -68,6 +69,7 @@ into an ``ipython`` prompt instantly using::
     docker exec -ti -u fenics project-1 /bin/bash -l -c ipython
 
 The ``-c`` flag makes ``bash`` read the commands from the string.
+
 
 .. _exited-container:
 
@@ -183,12 +185,12 @@ container using the following command::
 
     docker run --rm -v instant-cache:/home/fenics/.instant -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "python my-code.py"
 
-The argument ``-v instant-cache:/home/fenics/.instant`` mounts the data volume
-``instant-cache`` container into the `one-shot`
-container we use to execute our Python code. If you run the command
-twice, you will notice on the second time that we do not need to
-just-in-time compile the Instant object that our Python script
-requires, because the cache is now stored inside the Docker volume.
+The argument ``-v instant-cache:/home/fenics/.instant`` mounts the
+data volume ``instant-cache`` container into the `one-shot` container
+we use to execute our Python code. If you run the command twice, you
+will notice on the second time that we do not need to just-in-time
+compile the Instant object that our Python script requires, because
+the cache is now stored inside the Docker volume.
 
 The second issue, that the above is cumbersome to write out, can be
 solved simply using a shell script. You might want to try putting the
@@ -326,16 +328,16 @@ image using::
 
     docker run -ti e82475
 
-Of course, your colleague can also ``tag`` the image for easy reference in the
-future.
+Of course, your colleague can also ``tag`` the image for easy
+reference in the future.
 
-The other option is to ``push`` your image up to a cloud repository like
-`Dockerhub <https://dockerhub.com>`_, or our preferred provider, `quay.io
-<https://quay.io>`_. Both of these services will store images for you and allow
-others to ``pull`` them, just like our images.
+The other option is to ``push`` your image up to a cloud repository
+like `Dockerhub <https://dockerhub.com>`_, or our preferred provider,
+`quay.io <https://quay.io>`_. Both of these services will store images
+for you and allow others to ``pull`` them, just like our images.
 
-First get an account on `Dockerhub <https://dockerhub.com>`_ or `quay.io
-<https://quay.io>`_.
+First get an account on `Dockerhub <https://dockerhub.com>`_ or
+`quay.io <https://quay.io>`_.
 
 In the case that you have chosen quay.io you need to login using
 ``docker login`` and the URL of the quay.io repository::
@@ -353,13 +355,13 @@ Then, you can push your image to the remote repository using
     docker tag e82475 quay.io/my-user/test-repo:latest
     docker push quay.io/my-user/test-repo:latest
 
-``quay.io`` is the remote repository I want to push to, ``my-user`` is my
-username on quay.io and ``test-repo`` is the name of the repository I want to
-create. Dockerhub users can leave off the ``quay.io/`` prefix as Dockerhub is
-the default remote repository.
+``quay.io`` is the remote repository I want to push to, ``my-user`` is
+my username on quay.io and ``test-repo`` is the name of the repository
+I want to create. Dockerhub users can leave off the ``quay.io/``
+prefix as Dockerhub is the default remote repository.
 
-Once the upload is complete anyone can ``pull`` your image from
-the repository::
+Once the upload is complete anyone can ``pull`` your image from the
+repository::
 
     docker pull quay.io/my-user/test-repo
 
@@ -367,31 +369,36 @@ and ``run`` it::
 
     docker run -ti quay.io/my-user/test-repo
 
+
 Create a custom image for my project
 ------------------------------------
-We probably haven't included every Python module, every application and every
-small utility that you need for your project. However, we have done all the
-work of compiling and maintaing FEniCS. 
 
-You can build off of our work by learning to write your own ``Dockerfile`` that
-inherits ``FROM`` one of our pre-built images. We won't go into all of the
-details of how to do this here, but can point you in the right direction. For
-full details, take a look at the official Docker `tutorials
-<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_ and
-`manual <https://docs.docker.com/engine/reference/builder/>`_ pages. 
+We probably haven't included every Python module, every application
+and every small utility that you need for your project. However, we
+have done all the work of compiling and maintaing FEniCS.
 
-Let's say that we need to run ``scipy`` alongside FEniCS in Python scripts
-within a container. Because our image is built to be as lean as possible, we
-don't include ``scipy`` by default. However, you can add it easily.
+You can build off of our work by learning to write your own
+``Dockerfile`` that inherits ``FROM`` one of our pre-built images. We
+won't go into all of the details of how to do this here, but can point
+you in the right direction. For full details, take a look at the
+official Docker `tutorials
+<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_
+and `manual <https://docs.docker.com/engine/reference/builder/>`_
+pages.
 
-Begin by making an empty folder, for example ``my-docker-image/`` and create
-a file called ``Dockerfile`` inside of it::
+Let's say that we need to run ``scipy`` alongside FEniCS in Python
+scripts within a container. Because our image is built to be as lean
+as possible, we don't include ``scipy`` by default. However, you can
+add it easily.
+
+Begin by making an empty folder, for example ``my-docker-image/`` and
+create a file called ``Dockerfile`` inside of it::
 
     mkdir my-docker-image
     cd my-docker-image
     touch Dockerfile
 
-Then open up ``Dockerfile`` in your favourite text editor and add in 
+Then open up ``Dockerfile`` in your favourite text editor and add in
 the following text::
 
     FROM quay.io/fenicsproject/stable:latest
@@ -401,60 +408,69 @@ the following text::
         apt-get -y install python-scipy && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-    USER root 
+    USER root
 
-Let's go through each directive one-by-one. The ``FROM`` directive instructions
-Docker to build the new image using ``quay.io/fenicsproject/stable:latest``
-image as a base. The ``USER`` directive instructions Docker to run all
-subsequent commands as the user ``root`` in the container. This method is
-preferred to using ``sudo`` in the ``Dockerfile``. Then, we ``RUN`` a few shell
-commands that update the ``apt-get`` cache and install ``scipy``. Note that we
-clean up and delete the ``apt-get`` cache after using it. This reduces the
-space requirements of the final image. Finally, we switch back to the ``USER``
-``root``. The reasons for switching back to the user ``root`` are outside
-the scope of this tutorial.
+Let's go through each directive one-by-one. The ``FROM`` directive
+instructions Docker to build the new image using
+``quay.io/fenicsproject/stable:latest`` image as a base. The ``USER``
+directive instructions Docker to run all subsequent commands as the
+user ``root`` in the container. This method is preferred to using
+``sudo`` in the ``Dockerfile``. Then, we ``RUN`` a few shell commands
+that update the ``apt-get`` cache and install ``scipy``. Note that we
+clean up and delete the ``apt-get`` cache after using it. This reduces
+the space requirements of the final image. Finally, we switch back to
+the ``USER`` ``root``. The reasons for switching back to the user
+``root`` are outside the scope of this tutorial.
 
 Save ``Dockerfile`` and exit back to the terminal, and then run::
 
     docker build .
 
 Docker will ``build`` the container using the instructions in the
-``Dockerfile``.  After the build is complete Docker will output a hash, e.g.::
+``Dockerfile``.  After the build is complete Docker will output a
+hash, e.g.::
 
      Successfully built 10c39a18651f
 
 that you can ``tag`` your container for future use::
 
     docker tag 10c39 quay.io/my-user/my-docker-image
-    
+
 We can now ``run`` the container in the usual way::
 
     docker run -ti quay.io/my-user/my-docker-image
 
-Now, inside the container, you should be able to use ``scipy`` and ``dolfin``::
+Now, inside the container, you should be able to use ``scipy`` and
+``dolfin``::
 
     python -c "import scipy; import dolfin"
 
 Congratulations, you've built your first Docker container!
 
-This is just the beginning of what you can do to customise and build on our
-containers. In general, if you can install it in Ubuntu, you can install it
-in our container. For ideas, you can take a look at the source code of
-our ``Dockerfiles`` `here <https://bitbucket.org/fenics-project/docker>`_ and
-at the official Docker `tutorials
-<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_ and
-`manual <https://docs.docker.com/engine/reference/builder/>`_ pages.
+This is just the beginning of what you can do to customise and build
+on our containers. In general, if you can install it in Ubuntu, you
+can install it in our container. For ideas, you can take a look at the
+source code of our ``Dockerfiles`` `here
+<https://bitbucket.org/fenics-project/docker>`_ and at the official
+Docker `tutorials
+<https://docs.docker.com/engine/userguide/containers/dockerimages/>`_
+and `manual <https://docs.docker.com/engine/reference/builder/>`_
+pages.
+
 
 Use graphical applications on Linux hosts
 -----------------------------------------
-This allows X11 applications (e.g. matplotlib plot windows) to be displayed on
-Linux host systems. To enable this, first run ``xhost +`` and then append ``-e
-DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix`` to the Docker `run`
-command. For example, you can run the stable version with::
+
+This allows X11 applications (e.g. matplotlib plot windows) to be
+displayed on Linux host systems. To enable this, first run ``xhost +``
+and then append ``-e DISPLAY=$DISPLAY -v
+/tmp/.X11-unix:/tmp/.X11-unix`` to the Docker `run` command. For
+example, you can run the stable version with::
 
     xhost +
     docker run -ti -e DISPLAY=$DISPLAY \
        -v /tmp/.X11-unix:/tmp/.X11-unix \
        quay.io/fenicsproject/stable
 
-After exiting docker, execute ``xhost -`` on the host to restore X settings.
+After exiting docker, execute ``xhost -`` on the host to restore X
+settings.

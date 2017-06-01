@@ -10,13 +10,14 @@ development since the images provide all FEniCS dependencies.  Follow
 the instructions below to create an environment that let's you pull,
 push, edit and build FEniCS using Docker.
 
+
 Development quickstart
 ----------------------
 
 On the host:
 
 .. code-block:: console
-   
+
     curl -s https://get.fenicsproject.org | bash
     export FENICS_SRC_DIR=$HOME/dev/fenics
     mkdir -p $FENICS_SRC_DIR
@@ -29,14 +30,15 @@ On the host:
 Inside the container:
 
 .. code-block:: console
-    
+
     fenics-build
 
 The workflow is to edit the code and interact with the ``git``
-repositories on the host with your favourite tools, and then build
-and run FEniCS inside the container.
+repositories on the host with your favourite tools, and then build and
+run FEniCS inside the container.
 
 .. _start_of_full_instructions:
+
 
 Install the ``fenicsproject`` script
 ------------------------------------
@@ -49,6 +51,7 @@ While it is possible to use straight ``docker`` commands to launch a
 development container, the script makes things significantly easier.
 Read on for full details: :ref:`start_of_full_instructions`.
 
+
 Set up your FEniCS source tree
 ------------------------------
 
@@ -59,7 +62,7 @@ container`. You should also use ``git push`` and ``git pull`` on the
 host so that you can use your usual ``git`` SSH keys and setup.
 
 We need to make a folder, e.g. ``$HOME/dev/fenics`` on the host system
-to hold the FEniCS source code: 
+to hold the FEniCS source code:
 
 .. code-block:: console
 
@@ -70,6 +73,7 @@ You can make this setup permanent by setting the environment variable
 ``export FENICS_SRC_DIR=$HOME/dev/fenics`` in your ``$HOME/.profile``
 or similar file. Feel free to choose another directory for your FEniCS
 sources.
+
 
 Pull the FEniCS sources
 -----------------------
@@ -97,14 +101,16 @@ we have yet to create). This ensures that we pull using the ``ssh``
 protocol (rather than the ``https`` protocol) and it ensures that you
 can interact with the repositories using your normal credentials
 (keys) on the host system. If you are using other repositories than
-the standard ones (in particular forks not owned by ``fenics-project``),
-make suitable adjustments to the ``git clone`` commands above.
+the standard ones (in particular forks not owned by
+``fenics-project``), make suitable adjustments to the ``git clone``
+commands above.
+
 
 Create the Docker container
 ---------------------------
 
-We will now setup the development container using the ``fenicsproject``
-script.
+We will now setup the development container using the
+``fenicsproject`` script.
 
 .. code-block:: console
 
@@ -131,6 +137,7 @@ The third command creates a container named ``my-dev-env`` that you
 will be using for FEniCS development. You may of course choose another
 name for this container.
 
+
 Start the FEniCS Docker container
 ---------------------------------
 
@@ -142,11 +149,13 @@ This command will fire up the Docker container and we are ready to get
 going. The FEniCS source directory that we created previously will be
 shared into the directory ``$HOME/local/src`` inside the container.
 
+
 Build FEniCS inside the Docker container
 ----------------------------------------
 
 To build all of the FEniCS components from the source you have shared
-into the container, simply run the following command inside the container:
+into the container, simply run the following command inside the
+container:
 
 .. code-block:: console
 
@@ -158,11 +167,11 @@ If you want to develop with a Python 3 version of FEniCS instead type:
 
     FENICS_PYTHON=python3 fenics-build
 
-Both commands build all the sources residing in ``$HOME/local/src`` and install
-the results into ``$HOME/local``. Once all components have been built, you may
-run FEniCS programs without changing any paths or setting any other environment
-variables. Everything is already setup correctly to point at the
-``$HOME/local`` installation directory.
+Both commands build all the sources residing in ``$HOME/local/src``
+and install the results into ``$HOME/local``. Once all components have
+been built, you may run FEniCS programs without changing any paths or
+setting any other environment variables. Everything is already setup
+correctly to point at the ``$HOME/local`` installation directory.
 
 Note that there is also a command named ``fenics-pull``. This will
 pull all the FEniCS sources into ``$HOME/local/src`` by entering each

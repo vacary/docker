@@ -20,11 +20,13 @@ FEniCS in Docker, compared to running natively on the host system.  In
 practice, the containers are usually faster than user installations
 because they have been tuned for performance.
 
+
 Docker for Mac
 ---------------
 
 On macOS, Docker runs inside an extremely lightweight hypervisor
 provided by Apple's Hypervisor framework.
+
 
 Docker for Windows
 ------------------
