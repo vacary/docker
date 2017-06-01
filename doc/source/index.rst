@@ -18,6 +18,7 @@ to take advantage of more advanced features of Docker.
 
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
 
    quickstart

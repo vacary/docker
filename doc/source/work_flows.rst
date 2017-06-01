@@ -174,7 +174,7 @@ command is rather cumbersome to type out.
 The first issue can be solved with the concept of `data volume
 containers`.  Interested users can refer to the official Docker
 documentation `here
-<https://docs.docker.com/engine/userguide/containers/dockervolumes/>`_. In
+<https://docs.docker.com/engine/userguide/containers/dockervolumes/>`__. In
 short, we will create a persistent Docker volume that is just used to
 store the compiled Instant object cache across individual ``run``-s::
 
