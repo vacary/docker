@@ -44,6 +44,7 @@ RUN apt-get -qq update && \
         git-lfs \
         libboost-filesystem-dev \
         libboost-iostreams-dev \
+        libboost-math-dev \
         libboost-program-options-dev \
         libboost-system-dev \
         libboost-thread-dev \
