@@ -34,16 +34,22 @@ RUN apt-get -qq update && \
         python-dev python3-dev \
         python-minimal python3-minimal \
         python-numpy python3-numpy \
-        python-pip python3-pip \
         python-pytest python3-pytest \
         python-pytest-cov python3-pytest-cov \
-        python-setuptools python3-setuptools \
         python-six python3-six \
         python-subprocess32 \
         python-wheel python-wheel &&  \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
+# Install setuptools
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+    python3 get-pip.py && \
+    pip3 install --no-cache-dir setuptools && \
+    python2 get-pip.py && \
+    pip2 install --no-cache-dir setuptools && \
+    rm -rf /tmp/*
 
 # Pip install of packages
 RUN pip2 install --no-cache-dir sympy && \
