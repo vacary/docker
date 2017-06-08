@@ -23,7 +23,8 @@ RUN apt-get -qq update && \
         git \
         libmpich-dev \
         mpich \
-        swig && \
+        swig \
+        wget && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python2 based environment
