@@ -102,20 +102,20 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
-                --with-blas-lib=/usr/lib/libopenblas.a --with-lapack-lib=/usr/lib/liblapack.a \
                 --with-c-support \
                 --with-debugging=0 \
                 --with-shared-libraries \
-                --download-suitesparse \
-                --download-scalapack \
+                --download-blacs \
+                --download-hypre \
                 --download-metis \
+                --download-mumps \
                 --download-parmetis \
                 --download-ptscotch \
-                --download-hypre \
-                --download-mumps \
-                --download-blacs \
+                --download-scalapack \
                 --download-spai \
-                --download-ml \
+                --download-suitesparse \
+                --download-superlu \
+                --download-superlu_dist \
                 --prefix=/usr/local/petsc-32 && \
      make && \
      make install && \
@@ -123,15 +123,14 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
                 --with-64-bit-indices \
-                --with-blas-lib=/usr/lib/libopenblas.a --with-lapack-lib=/usr/lib/liblapack.a \
                 --with-c-support \
                 --with-debugging=0 \
                 --with-shared-libraries \
-                --download-suitesparse \
+                --download-hypre \
                 --download-metis \
                 --download-parmetis \
                 --download-ptscotch \
-                --download-hypre \
+                --download-suitesparse \
                 --download-superlu_dist \
                 --prefix=/usr/local/petsc-64 && \
      make && \
