@@ -50,6 +50,10 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # https://bugs.launchpad.net/ubuntu/+source/python3.5/+bug/1408092?comments=all
 RUN echo "/usr/local/lib/python3/dist-packages" >> /usr/local/lib/python3.5/dist-packages/debian-ubuntu-sitepath-fix.pth
 
+# Turn off forwarding of syslog messages to stdout
+# https://github.com/phusion/baseimage-docker/issues/186
+RUN touch /etc/service/syslog-forwarder/down
+
 USER fenics
 ENV FENICS_HOME /home/fenics
 RUN touch $FENICS_HOME/.sudo_as_admin_successful && \
