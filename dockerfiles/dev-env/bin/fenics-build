@@ -18,6 +18,9 @@ if [ -z "${FENICS_PREFIX}" ]; then
     exit -1
 fi
 
+PYTHON_VERSION=$(${FENICS_PYTHON} -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))')
+export PYTHONPATH=${FENICS_PREFIX}/lib/python${PYTHON_VERSION}/site-packages:${PYTHONPATH}
+
 function build_cmake () {
     # build a project with cmake (dolfin, mshr)
     project="$1"
