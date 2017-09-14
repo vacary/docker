@@ -23,8 +23,10 @@ RUN /bin/bash -c "${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}'
                   git checkout ${DOLFIN_VERSION} && \
                   mkdir build && \
                   cd build && \
-                  cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) ../ && \
+                  cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) -DDOLFIN_USE_PYTHON3=False ../ && \
+                  make && \
                   make install && \
+                  ldconfig && \
                   rm -rf /tmp/*"
 
 # Python3 build.
@@ -38,17 +40,18 @@ RUN /bin/bash -c "${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}'
                   mkdir build && \
                   cd build && \
                   cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) ../ && \
+                  make && \
                   make install && \
+                  ldconfig && \
                   rm -rf /tmp/*"
 
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
 # the fenics.env.conf file and the unnecessary /home/fenics/local directory as
 # the user does not need them in the stable image! 
-RUN /bin/bash -c "ldconfig && \
-               cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo && \
-               rm -rf /home/fenics/local && \
-               rm -rf $FENICS_HOME/bin && \
-               echo '' >> $FENICS_HOME/.profile" 
+RUN /bin/bash -c "cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo && \
+                  rm -rf /home/fenics/local && \
+                  rm -rf $FENICS_HOME/bin && \
+                  echo '' >> $FENICS_HOME/.profile" 
 
 USER fenics
 # Make sure we get something that basically works on this stable build.  It
