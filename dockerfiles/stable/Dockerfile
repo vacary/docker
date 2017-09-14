@@ -48,12 +48,13 @@ RUN /bin/bash -c "${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}'
 # Install fenics as root user into /usr/local then remove the fenics-* scripts
 # the fenics.env.conf file and the unnecessary /home/fenics/local directory as
 # the user does not need them in the stable image! 
-RUN /bin/bash -c "cp -r $FENICS_PREFIX/share/dolfin/demo $FENICS_HOME/demo && \
+RUN /bin/bash -c "cp -r /usr/local/share/dolfin/demo $FENICS_HOME/demo && \
                   rm -rf /home/fenics/local && \
                   rm -rf $FENICS_HOME/bin && \
                   echo '' >> $FENICS_HOME/.profile" 
 
 USER fenics
+WORKDIR $FENICS_HOME
 # Make sure we get something that basically works on this stable build.  It
 # would be better to run unit tests, but at the moment even the quick tests
 # take too long to run.
