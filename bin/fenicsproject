@@ -417,10 +417,11 @@ preprocess_image_name () {
         if [ "$DEFAULT_IMAGE_HOST" == "quay.io/fenicsproject" ]; then
             fail=true
             # List should contain all of our official images suitable for end-users.
+            # add : to allow users to specify tags
             for image in 'stable' 'dev' 'dev-env'; do
-                if [ "$IMAGE" == $image ]; then
+                if [[ "$IMAGE:" == "$image:"* ]]; then
                    fail=false
-                fi 
+                fi
             done
             # We keep a tag stable:current so we can shift stable conservatively.
             # All other images shift with default tag :latest.
