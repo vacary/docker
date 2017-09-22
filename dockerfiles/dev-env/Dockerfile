@@ -36,6 +36,8 @@ RUN apt-get -qq update && \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get -y install \
         bison \
+        catch \
+        ccache \
         cmake \
         doxygen \
         flex \
@@ -58,13 +60,12 @@ RUN apt-get -qq update && \
         libhdf5-mpich-dev \
         libgmp-dev \
         libcln-dev \
-        libmpfr-dev \
+        libmpfr-dev
+        man \
         mpich \
         nano \
         pkg-config \
-        man \
         wget \
-        ccache \
         bash-completion && \
     git lfs install && \
     apt-get clean && \
@@ -86,7 +87,6 @@ RUN apt-get -qq update && \
         python-urllib3  python3-urllib3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 
 # Install setuptools
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
