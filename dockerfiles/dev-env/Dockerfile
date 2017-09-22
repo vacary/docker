@@ -60,7 +60,7 @@ RUN apt-get -qq update && \
         libhdf5-mpich-dev \
         libgmp-dev \
         libcln-dev \
-        libmpfr-dev
+        libmpfr-dev \
         man \
         mpich \
         nano \
