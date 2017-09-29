@@ -26,6 +26,15 @@ RUN /bin/bash -c "${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}'
                   cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) -DDOLFIN_USE_PYTHON3=False ../ && \
                   make && \
                   make install && \
+                  cd /tmp/ && \
+                  git clone https://bitbucket.org/fenics-project/mshr.git && \
+                  cd mshr && \
+                  git checkout ${DOLFIN_VERSION} && \
+                  mkdir build && \
+                  cd build && \
+                  cmake ../ && \
+                  make && \
+                  make install && \
                   ldconfig && \
                   rm -rf /tmp/*"
 
@@ -40,6 +49,15 @@ RUN /bin/bash -c "${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}'
                   mkdir build && \
                   cd build && \
                   cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) ../ && \
+                  make && \
+                  make install && \
+                  cd /tmp/ && \
+                  git clone https://bitbucket.org/fenics-project/mshr.git && \
+                  cd mshr && \
+                  git checkout ${DOLFIN_VERSION} && \
+                  mkdir build && \
+                  cd build && \
+                  cmake ../ && \
                   make && \
                   make install && \
                   ldconfig && \
