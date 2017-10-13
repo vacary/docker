@@ -13,18 +13,30 @@
 FROM quay.io/fenicsproject/dev-env:latest
 MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
-USER fenics
+USER root 
 
 ARG FENICS_BUILD_TYPE
 ENV FENICS_BUILD_TYPE ${FENICS_BUILD_TYPE:-Release}
 
 # Python 2 build
-RUN bash -l -c "source ~/fenics.env.conf && \
-                FENICS_PYTHON=python2 PIP_NO_CACHE_DIR=off fenics-update"
+RUN bash -l -c "FENICS_SRC_DIR=/tmp/python2 /home/fenics/bin/fenics-pull && \
+                FENICS_PREFIX=/usr/local \
+                FENICS_PYTHON=python2 \
+                FENICS_SRC_DIR=/tmp/python2 \
+                PIP_NO_CACHE_DIR=off \
+                /home/fenics/bin/fenics-build && \
+                ldconfig && \ 
+                rm -rf FENICS_SRC_DIR"
 
 # Python 3 build
-RUN bash -l -c "source ~/fenics.env.conf && \
-                FENICS_PYTHON=python3 PIP_NO_CACHE_DIR=off fenics-build"
+RUN bash -l -c "FENICS_SRC_DIR=/tmp/python3 /home/fenics/bin/fenics-pull && \
+                FENICS_PREFIX=/usr/local \
+                FENICS_PYTHON=python3 \
+                FENICS_SRC_DIR=/tmp/python3 \
+                PIP_NO_CACHE_DIR=off \
+                /home/fenics/bin/fenics-build && \
+                ldconfig && \
+                rm -rf FENICS_SRC_DIR"
 
 COPY WELCOME $FENICS_HOME/WELCOME
 
