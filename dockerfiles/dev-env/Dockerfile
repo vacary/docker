@@ -128,7 +128,6 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --with-shared-libraries \
                 --download-hypre \
                 --download-metis \
-                --download-parmetis \
                 --download-ptscotch \
                 --download-suitesparse \
                 --download-superlu_dist \
