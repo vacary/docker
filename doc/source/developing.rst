@@ -161,11 +161,11 @@ container:
 
     fenics-build
 
-If you want to develop with a Python 3 version of FEniCS instead type:
+If you want to develop with a Python 2 version of FEniCS instead type:
 
 .. code-block:: console
 
-    FENICS_PYTHON=python3 fenics-build
+    FENICS_PYTHON=python2 fenics-build
 
 Both commands build all the sources residing in ``$HOME/local/src``
 and install the results into ``$HOME/local``. Once all components have
