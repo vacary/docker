@@ -152,9 +152,10 @@ In my ``my-code.py`` I have the following simple Python/FEniCS code::
     from dolfin import *
     print("Running FEniCS...")
     mesh = UnitSquareMesh(10, 10)
-    V = FunctionSpace(mesh, "CG", 1)
-    f = interpolate(Constant(1.0), V)
-    XDMFFile("f.xdmf").write(f)
+    V = FunctionSpace(mesh, "P", 1)
+    u = interpolate(Constant(1.0), V)
+    with XDMFFile("f.xdmf") as f:
+        f.write(u)
 
 Running the ``docker run`` command above then gives me the output::
 
