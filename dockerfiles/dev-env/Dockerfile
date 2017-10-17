@@ -110,7 +110,6 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --download-hypre \
                 --download-metis \
                 --download-mumps \
-                --download-parmetis \
                 --download-ptscotch \
                 --download-scalapack \
                 --download-spai \
