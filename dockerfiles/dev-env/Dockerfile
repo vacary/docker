@@ -115,7 +115,6 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --download-spai \
                 --download-suitesparse \
                 --download-superlu \
-                --download-superlu_dist \
                 --prefix=/usr/local/petsc-32 && \
      make && \
      make install && \
@@ -130,7 +129,6 @@ RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-li
                 --download-metis \
                 --download-ptscotch \
                 --download-suitesparse \
-                --download-superlu_dist \
                 --prefix=/usr/local/petsc-64 && \
      make && \
      make install && \
