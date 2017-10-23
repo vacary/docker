@@ -16,13 +16,13 @@ USER root
 WORKDIR /tmp
 
 # Environment variables
-ENV PETSC_VERSION=3.8 \
-    SLEPC_VERSION=3.8 \
+ENV PETSC_VERSION=3.7.6 \
+    SLEPC_VERSION=3.7.4 \
     SWIG_VERSION=3.0.12 \
     PYBIND11_VERSION=2.2.1 \
     MPI4PY_VERSION=2.0.0 \
-    PETSC4PY_VERSION=3.8.0 \
-    SLEPC4PY_VERSION=3.8.0 \
+    PETSC4PY_VERSION=3.7.0 \
+    SLEPC4PY_VERSION=3.7.0 \
     TRILINOS_VERSION=12.10.1 \
     OPENBLAS_NUM_THREADS=1 \
     OPENBLAS_VERBOSE=0 \
@@ -97,9 +97,9 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
     rm -rf /tmp/*
 
 # Install PETSc from source
-RUN wget --quiet -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-${PETSC_VERSION}.tar.gz && \
-    tar -xf petsc-lite-${PETSC_VERSION}.tar.gz && \
-    cd petsc-${PETSC_VERSION} && \
+RUN wget -nc --quiet https://bitbucket.org/petsc/petsc/get/v${PETSC_VERSION}.tar.gz -O petsc-${PETSC_VERSION}.tar.gz && \
+    mkdir -p petsc-src && tar -xf petsc-${PETSC_VERSION}.tar.gz -C petsc-src --strip-components 1 && \
+    cd petsc-src && \
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
