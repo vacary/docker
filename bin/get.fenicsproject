@@ -83,7 +83,7 @@ curl -s $URLBASE/fenicsproject > $TMPDEST
 
 # Check if user is in sudoers
 SUDO=""
-if [ "$OS" == "Darwin" ]; then
+if [[ "$OS" == "Darwin" && ! -w "$DEST_DIR" ]]; then
     echo -e "On macOS we need your sudo password to install a script into $DEST".
     sudo -k
     sudo -v
