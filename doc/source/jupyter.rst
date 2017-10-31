@@ -23,8 +23,8 @@ exposed on ``localhost``::
 
     docker run --name notebook -w /home/fenics -v $(pwd):/home/fenics/shared -d -p 127.0.0.1:8888:8888 quay.io/fenicsproject/stable 'jupyter-notebook --ip=0.0.0.0'
 
-The notebook will be available at ``http://localhost:8888`` in your
-web browser.
+The notebook will be available at ``http://localhost:8888`` in your webbrowser.
+See :ref:`access-token` for the next step. 
 
 
 Docker Toolbox for Windows and Mac users
@@ -40,11 +40,32 @@ To find out the IP of the virtual machine::
 
     docker-machine ip $(docker-machine active)
 
-The notebook will be available at
-``http://<ip-of-virtual-machine>:8888`` in your web browser.
+The notebook will be available at ``http://<ip-of-virtual-machine>:8888`` in
+your web browser. See :ref:`access-token` for the next step.
 
-.. note:: All images except ``base`` and ``dev-env-base`` include Jupyter.
 
+.. _access_token:
+
+Finding out the access token
+----------------------------
+
+Jupyter creates a unique access token (password) to ensure that only
+you can access the notebook. To find out this access token run the following
+command on the host::
+
+    docker logs 3b4c7bcee5de
+
+where the hash is your container ID (see ``docker ps``). 
+
+Near the bottom of the output you should see something like::
+
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+                http://0.0.0.0:8888/?token=b8d00059b0a71a94edd67d03d8ebecaa09d8c28eb7e7a0a9
+
+In this case, the token is
+``b8d00059b0a71a94edd67d03d8ebecaa09d8c28eb7e7a0a9``.  Copy your token to the
+clipboard. Paste the token into the password field.
 
 Plotting
 --------
