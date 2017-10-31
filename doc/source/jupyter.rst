@@ -44,7 +44,7 @@ The notebook will be available at ``http://<ip-of-virtual-machine>:8888`` in
 your web browser. See :ref:`access-token` for the next step.
 
 
-.. _access_token:
+.. _access-token:
 
 Finding out the access token
 ----------------------------
