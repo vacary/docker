@@ -64,9 +64,9 @@ using the ``docker exec`` command::
 
 The ``-l`` is important and ensures that your environment in the
 container is setup correctly for FEniCS to run. You could also enter
-into an ``ipython`` prompt instantly using::
+into an ``ipython3`` prompt instantly using::
 
-    docker exec -ti -u fenics project-1 /bin/bash -l -c ipython
+    docker exec -ti -u fenics project-1 /bin/bash -l -c ipython3
 
 The ``-c`` flag makes ``bash`` read the commands from the string.
 
@@ -122,16 +122,16 @@ Run FEniCS in a Docker container like an application
 ----------------------------------------------------
 
 You don't have to run FEniCS by starting a shell in Docker and running
-``python`` to execute your FEniCS scripts. It is also possible to
+``python3`` to execute your FEniCS scripts. It is also possible to
 execute any executable directly in the container from the ``docker
 run`` command.
 
 Say we have a python file ``my-code.py`` in the current working
-directory on the host and that we want to run ``python`` on it
+directory on the host and that we want to run ``python3`` on it
 directly within a `one-shot` FEniCS container. We can do this with the
 following command::
 
-    docker run --rm -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "python my-code.py"
+    docker run --rm -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "python3 my-code.py"
 
 Let's break this complex ``run`` command down flag-by-flag:
 
@@ -143,18 +143,19 @@ Let's break this complex ``run`` command down flag-by-flag:
   just as before.
 * ``-w`` sets the current working directory in the container to our
   shared directory ``/home/fenics/shared``.
-* ``"python my-code.py"`` is the command passed to the Docker
+* ``"python3 my-code.py"`` is the command passed to the Docker
   container. The container will immediately execute this command in
   the working directory.
 
 In my ``my-code.py`` I have the following simple Python/FEniCS code::
 
     from dolfin import *
-    print "Running FEniCS..."
+    print("Running FEniCS...")
     mesh = UnitSquareMesh(10, 10)
-    V = FunctionSpace(mesh, "CG", 1)
-    f = interpolate(Constant(1.0), V)
-    XDMFFile("f.xdmf").write(f)
+    V = FunctionSpace(mesh, "P", 1)
+    u = interpolate(Constant(1.0), V)
+    with XDMFFile("f.xdmf") as f:
+        f.write(u)
 
 Running the ``docker run`` command above then gives me the output::
 
@@ -183,7 +184,7 @@ store the compiled Instant object cache across individual ``run``-s::
 We can then mount the persistent ``instant-cache`` image inside a `one-shot`
 container using the following command::
 
-    docker run --rm -v instant-cache:/home/fenics/.instant -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "python my-code.py"
+    docker run --rm -v instant-cache:/home/fenics/.instant -v $(pwd):/home/fenics/shared -w /home/fenics/shared quay.io/fenicsproject/stable "python3 my-code.py"
 
 The argument ``-v instant-cache:/home/fenics/.instant`` mounts the
 data volume ``instant-cache`` container into the `one-shot` container
@@ -203,7 +204,7 @@ following code::
 into a file ``fenics`` somewhere in your ``${PATH}`` and making it
 executable ``chmod +x fenics``. Then you can simply run::
 
-    fenics "python my-code.py"
+    fenics "python3 my-code.py"
 
 You could use the ideas in the above script to write your own custom
 launcher for FEniCS.
@@ -405,7 +406,7 @@ the following text::
     USER root
     RUN apt-get -qq update && \
         apt-get -y upgrade && \
-        apt-get -y install python-scipy && \
+        apt-get -y install python3-scipy && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     USER root
@@ -443,7 +444,7 @@ We can now ``run`` the container in the usual way::
 Now, inside the container, you should be able to use ``scipy`` and
 ``dolfin``::
 
-    python -c "import scipy; import dolfin"
+    python3 -c "import scipy; import dolfin"
 
 Congratulations, you've built your first Docker container!
 

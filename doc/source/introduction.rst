@@ -88,7 +88,7 @@ different to the one above.
 We can run the standard DOLFIN ``poisson.py`` example as usual::
 
     cd ~/demo/documented/poisson/python
-    python demo_poisson.py
+    python3 demo_poisson.py
 
 You should see the following output::
 
@@ -141,7 +141,7 @@ Now, you can edit your code on the host and run the following inside
 the container::
 
     cd $HOME/shared
-    python my_code.py
+    python3 my_code.py
 
 In this case, all files in ``my-work-directory`` will be shared into
 the container.  Any files you place in the directory
