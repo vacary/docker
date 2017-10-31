@@ -141,7 +141,7 @@ Now, you can edit your code on the host and run the following inside
 the container::
 
     cd $HOME/shared
-    python my_code.py
+    python3 my_code.py
 
 In this case, all files in ``my-work-directory`` will be shared into
 the container.  Any files you place in the directory
