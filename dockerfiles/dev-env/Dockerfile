@@ -16,8 +16,8 @@ USER root
 WORKDIR /tmp
 
 # Environment variables
-ENV PETSC_VERSION=3.7.6 \
-    SLEPC_VERSION=3.7.4 \
+ENV PETSC_VERSION=3.8 \
+    SLEPC_VERSION=3.8.1 \ 
     SWIG_VERSION=3.0.12 \
     PYBIND11_VERSION=2.2.1 \
     MPI4PY_VERSION=2.0.0 \
@@ -135,16 +135,16 @@ RUN wget -nc --quiet https://bitbucket.org/petsc/petsc/get/v${PETSC_VERSION}.tar
      rm -rf /tmp/*
 
 # Install SLEPc from source
-RUN wget -nc --quiet https://bitbucket.org/slepc/slepc/get/v${SLEPC_VERSION}.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
+RUN wget -nc --quiet http://slepc.upv.es/download/distrib/slepc-3.8.1.tar.gz -O slepc-${SLEPC_VERSION}.tar.gz && \
     mkdir -p slepc-src && tar -xf slepc-${SLEPC_VERSION}.tar.gz -C slepc-src --strip-components 1 && \
     export PETSC_DIR=/usr/local/petsc-32 && \
     cd slepc-src && \
     ./configure --prefix=/usr/local/slepc-32 && \
-    make && \
+    make SLEPC_DIR=$(pwd) && \
     make install && \
     export PETSC_DIR=/usr/local/petsc-64 && \
     ./configure --prefix=/usr/local/slepc-64 && \
-    make && \
+    make SLEPC_DIR=$(pwd) && \
     make install && \
     rm -rf /tmp/*
 
