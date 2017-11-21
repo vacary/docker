@@ -16,12 +16,12 @@ USER root
 WORKDIR /tmp
 
 # Environment variables
-ENV PETSC_VERSION=3.8 \
-    SLEPC_VERSION=3.8.1 \ 
+ENV PETSC_VERSION=3.8.2 \
+    SLEPC_VERSION=3.8.1 \
     SWIG_VERSION=3.0.12 \
     PYBIND11_VERSION=2.2.1 \
     MPI4PY_VERSION=2.0.0 \
-    PETSC4PY_VERSION=3.8.0 \
+    PETSC4PY_VERSION=3.8.1 \
     SLEPC4PY_VERSION=3.8.0 \
     TRILINOS_VERSION=12.10.1 \
     OPENBLAS_NUM_THREADS=1 \
@@ -103,9 +103,7 @@ RUN wget -nc --quiet https://bitbucket.org/petsc/petsc/get/v${PETSC_VERSION}.tar
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
-                --with-c-support \
                 --with-debugging=0 \
-                --with-shared-libraries \
                 --download-blacs \
                 --download-hypre \
                 --download-metis \
@@ -122,9 +120,7 @@ RUN wget -nc --quiet https://bitbucket.org/petsc/petsc/get/v${PETSC_VERSION}.tar
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
                 --with-64-bit-indices \
-                --with-c-support \
                 --with-debugging=0 \
-                --with-shared-libraries \
                 --download-hypre \
                 --download-metis \
                 --download-ptscotch \
