@@ -20,7 +20,7 @@ ENV PETSC_VERSION=3.8.2 \
     SLEPC_VERSION=3.8.1 \
     SWIG_VERSION=3.0.12 \
     PYBIND11_VERSION=2.2.1 \
-    MPI4PY_VERSION=2.0.0 \
+    MPI4PY_VERSION=3.0.0 \
     PETSC4PY_VERSION=3.8.1 \
     SLEPC4PY_VERSION=3.8.0 \
     TRILINOS_VERSION=12.10.1 \
@@ -36,7 +36,6 @@ RUN apt-get -qq update && \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && \
     apt-get -y install \
         bison \
-        catch \
         ccache \
         cmake \
         doxygen \
