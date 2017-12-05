@@ -52,10 +52,12 @@ RUN apt-get -qq update && \
         libboost-thread-dev \
         libboost-timer-dev \
         libeigen3-dev \
+        libfreetype6-dev \
         liblapack-dev \
         libmpich-dev \
         libopenblas-dev \
         libpcre3-dev \
+        libpng12-dev \
         libhdf5-mpich-dev \
         libgmp-dev \
         libcln-dev \
@@ -151,7 +153,7 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
 
 # Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
 RUN pip2 install --no-cache-dir sympy && \
-    pip2 install --no-cache-dir matplotlib && \
+    pip2 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
@@ -159,7 +161,7 @@ RUN pip2 install --no-cache-dir sympy && \
     pip2 install --no-cache-dir ipython ipykernel && \
     python2 -m ipykernel install --prefix=/usr/local && \
     pip3 install --no-cache-dir sympy && \
-    pip3 install --no-cache-dir matplotlib && \
+    pip3 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
