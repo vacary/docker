@@ -8,9 +8,8 @@ for image in dev-env stable
 do
     cd ${image}
     IMAGE_NAME=${image}.img
-    rm -i ${IMAGE_NAME} || true 
-    singularity create --size 2500 ${IMAGE_NAME} 
-    echo "Singularity needs sudo to bootstrap images."
+    rm -i ${IMAGE_NAME} || true
+    echo "Singularity needs sudo to build images."
     sudo singularity build ${IMAGE_NAME} Singularity
     cd ../
     echo "Created the image ${image}/${IMAGE_NAME}"
