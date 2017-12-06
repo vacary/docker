@@ -11,7 +11,7 @@ do
     rm -i ${IMAGE_NAME} || true 
     singularity create --size 2500 ${IMAGE_NAME} 
     echo "Singularity needs sudo to bootstrap images."
-    sudo singularity bootstrap ${IMAGE_NAME} Singularity
+    sudo singularity build ${IMAGE_NAME} Singularity
     cd ../
     echo "Created the image ${image}/${IMAGE_NAME}"
 done
