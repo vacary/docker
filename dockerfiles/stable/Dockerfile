@@ -76,7 +76,8 @@ WORKDIR $FENICS_HOME
 # Make sure we get something that basically works on this stable build.  It
 # would be better to run unit tests, but at the moment even the quick tests
 # take too long to run.
-RUN /bin/bash -l -c "mkdir -p /tmp/poisson_test && \
+RUN /bin/bash -l -c "export MPLBACKEND=Agg && \
+    mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
     python2 $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     python3 $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
