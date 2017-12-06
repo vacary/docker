@@ -17,7 +17,7 @@ ENV DOLFIN_VERSION="2017.2.0"
 ENV PYPI_FENICS_VERSION=">=2017.2.0,<2018.1.0"
 
 WORKDIR /tmp
-RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple 'fenics${PYPI_FENICS_VERSION}' && \
+RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}' && \
                   git clone https://bitbucket.org/fenics-project/dolfin.git && \
                   cd dolfin && \
                   git checkout ${DOLFIN_VERSION} && \
@@ -42,7 +42,7 @@ RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install --index-u
 ENV FENICS_PYTHON=python3
 
 WORKDIR /tmp
-RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple 'fenics${PYPI_FENICS_VERSION}' && \
+RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}' && \
                   git clone https://bitbucket.org/fenics-project/dolfin.git && \
                   cd dolfin && \
                   git checkout ${DOLFIN_VERSION} && \
