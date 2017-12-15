@@ -18,7 +18,6 @@ WORKDIR /tmp
 # Environment variables
 ENV PETSC_VERSION=3.8.2 \
     SLEPC_VERSION=3.8.1 \
-    SWIG_VERSION=3.0.12 \
     PYBIND11_VERSION=2.2.1 \
     MPI4PY_VERSION=3.0.0 \
     PETSC4PY_VERSION=3.8.1 \
@@ -152,7 +151,7 @@ RUN wget -nc --quiet http://slepc.upv.es/download/distrib/slepc-${SLEPC_VERSION}
 ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
-# Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
+# Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and pybind11 from source.
 RUN pip2 install --no-cache-dir sympy && \
     pip2 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
@@ -166,12 +165,6 @@ RUN pip2 install --no-cache-dir sympy && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
-    wget -nc --quiet http://downloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz -O swig-${SWIG_VERSION}.tar.gz && \
-    tar -xf swig-${SWIG_VERSION}.tar.gz && \
-    cd swig-${SWIG_VERSION} && \
-    ./configure && \
-    make && \
-    make install && \
     wget -nc --quiet https://github.com/pybind/pybind11/archive/v${PYBIND11_VERSION}.tar.gz && \
     tar -xf v${PYBIND11_VERSION}.tar.gz && \
     cd pybind11-${PYBIND11_VERSION} && \
