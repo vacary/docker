@@ -44,6 +44,7 @@ RUN apt-get -qq update && \
         gfortran \
         git \
         git-lfs \
+        graphviz \
         libboost-filesystem-dev \
         libboost-iostreams-dev \
         libboost-math-dev \
