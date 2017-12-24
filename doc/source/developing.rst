@@ -161,12 +161,6 @@ container:
 
     fenics-build
 
-If you want to develop with a Python 2 version of FEniCS instead type:
-
-.. code-block:: console
-
-    FENICS_PYTHON=python2 fenics-build
-
 Both commands build all the sources residing in ``$HOME/local/src``
 and install the results into ``$HOME/local``. Once all components have
 been built, you may run FEniCS programs without changing any paths or
