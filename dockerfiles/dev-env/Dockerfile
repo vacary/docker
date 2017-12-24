@@ -72,20 +72,19 @@ RUN apt-get -qq update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install Python2/3 based environment
+# Install Python3 based environment
 RUN apt-get -qq update && \
     apt-get -y --with-new-pkgs \
         -o Dpkg::Options::="--force-confold" upgrade && \
     apt-get -y install \
-        python-dev python3-dev \
-        python-flufl.lock python3-flufl.lock \
-        python-numpy python3-numpy \
-        python-ply python3-ply \
-        python-pytest python3-pytest \
-        python-scipy python3-scipy \
-        python-six python3-six \
-        python-subprocess32 \
-        python-urllib3  python3-urllib3 && \
+        python3-dev \
+        python3-flufl.lock \
+        python3-numpy \
+        python3-ply \
+        python3-pytest \
+        python3-scipy \
+        python3-six \
+        python3-urllib3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -93,8 +92,6 @@ RUN apt-get -qq update && \
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python3 get-pip.py && \
     pip3 install --no-cache-dir setuptools && \
-    python2 get-pip.py && \
-    pip2 install --no-cache-dir setuptools && \
     rm -rf /tmp/*
 
 # Install PETSc from source
@@ -152,14 +149,7 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
 # Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and pybind11 from source.
-RUN pip2 install --no-cache-dir sympy && \
-    pip2 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
-    pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
-    pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
-    pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
-    pip3 install --no-cache-dir jupyter && \
-    pip2 install --no-cache-dir ipython ipykernel && \
-    python2 -m ipykernel install --prefix=/usr/local && \
+RUN pip3 install --no-cache-dir jupyter && \
     pip3 install --no-cache-dir sympy && \
     pip3 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
@@ -179,11 +169,8 @@ RUN pip2 install --no-cache-dir sympy && \
 WORKDIR $FENICS_HOME
 COPY fenics.env.conf $FENICS_HOME/fenics.env.conf
 COPY bin $FENICS_HOME/bin
-RUN PYTHON2_SITE_DIR=$(python2 -c "import site; print(site.getsitepackages()[0])") && \
-    PYTHON3_SITE_DIR=$(python3 -c "import site; print(site.getsitepackages()[0])") && \
-    PYTHON2_VERSION=$(python2 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
+RUN PYTHON3_SITE_DIR=$(python3 -c "import site; print(site.getsitepackages()[0])") && \
     PYTHON3_VERSION=$(python3 -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))') && \
-    echo "$FENICS_HOME/local/lib/python$PYTHON2_VERSION/site-packages" >> $PYTHON2_SITE_DIR/fenics-user.pth && \
     echo "$FENICS_HOME/local/lib/python$PYTHON3_VERSION/site-packages" >> $PYTHON3_SITE_DIR/fenics-user.pth && \
     chown -R fenics:fenics $FENICS_HOME
 
