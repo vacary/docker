@@ -36,7 +36,6 @@ RUN apt-get -qq update && \
         python3-numpy \
         python3-pytest \
         python3-pytest-cov \
-        python3-six \
         python3-wheel &&  \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

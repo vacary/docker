@@ -83,7 +83,6 @@ RUN apt-get -qq update && \
         python3-ply \
         python3-pytest \
         python3-scipy \
-        python3-six \
         python3-urllib3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
