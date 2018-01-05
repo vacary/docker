@@ -32,6 +32,14 @@ function build_cmake () {
     make install
 }
 
+function build_pybind11_extension () {
+    project="$1"
+    echo "FENICS-BUILDER: Building $project Python wrapper..."
+
+    cd "$path/python"
+    DOLFIN_DIR=${FENICS_PREFIX}/shared/dolfin ${FENICS_PYTHON} -m pip install -v --prefix=${FENICS_PREFIX} --no-deps --upgrade .
+}
+
 function build () {
     for project in $@; do
         echo "FENICS-BUILDER: Building $project..."
@@ -42,6 +50,10 @@ function build () {
         fi
         if [ -e $path/CMakeLists.txt ]; then
             build_cmake "$project"
+            if [ -e $path/python/setup.py ]; then
+                cd "$path"
+                build_pybind11_extension "$project"
+            fi
         else
             cd "$path"
             ${FENICS_PYTHON} -m pip install --prefix=${FENICS_PREFIX} --no-deps --upgrade .
@@ -50,11 +62,7 @@ function build () {
 }
 
 if [ -z "$1" ]; then
-    if [ "${FENICS_VERSION}" == "1.6.0" ]; then
-        build fiat instant ufl ffc dolfin
-    else
-        build fiat dijitso instant ufl ffc dolfin mshr
-    fi
+    build fiat dijitso instant ufl ffc dolfin mshr
 else
     build $@
 fi
