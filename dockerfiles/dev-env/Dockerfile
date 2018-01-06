@@ -80,6 +80,7 @@ RUN apt-get -qq update && \
         python-dev python3-dev \
         python-flufl.lock python3-flufl.lock \
         python-numpy python3-numpy \
+        python3-pkgconfig \
         python-ply python3-ply \
         python-pytest python3-pytest \
         python-scipy python3-scipy \
