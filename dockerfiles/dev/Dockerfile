@@ -33,7 +33,7 @@ USER fenics
 RUN /bin/bash -l -c "export MPLBACKEND=Agg && \
     mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
-    python3 $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
+    python3 $FENICS_PREFIX/share/dolfin/demo/documented/poisson/python/demo_poisson.py && \
     rm -r /tmp/poisson_test"
 
 USER root
