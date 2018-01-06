@@ -13,7 +13,8 @@ USER root
 
 # Python2 build.
 ENV FENICS_PYTHON=python2
-ENV DOLFIN_VERSION="2017.2.0"
+ENV MSHR_VERSION="2017.2.0"
+ENV DOLFIN_VERSION="2017.2.0.post0"
 ENV PYPI_FENICS_VERSION=">=2017.2.0,<2018.1.0"
 
 WORKDIR /tmp
@@ -29,7 +30,7 @@ RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${
                   cd /tmp/ && \
                   git clone https://bitbucket.org/fenics-project/mshr.git && \
                   cd mshr && \
-                  git checkout ${DOLFIN_VERSION} && \
+                  git checkout ${MSHR_VERSION} && \
                   mkdir build && \
                   cd build && \
                   cmake ../ && \
