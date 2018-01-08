@@ -80,7 +80,6 @@ RUN apt-get -qq update && \
         python3-dev \
         python3-flufl.lock \
         python3-numpy \
-        python3-pkgconfig \
         python3-ply \
         python3-pytest \
         python3-scipy \
@@ -160,7 +159,7 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
 
 # Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and pybind11 from source.
 RUN pip3 install --no-cache-dir jupyter && \
-    pip3 install --no-cache-dir sympy && \
+    pip3 install --no-cache-dir sympy pkgconfig && \
     pip3 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
