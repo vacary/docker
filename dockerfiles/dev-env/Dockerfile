@@ -81,7 +81,6 @@ RUN apt-get -qq update && \
         python-dev python3-dev \
         python-flufl.lock python3-flufl.lock \
         python-numpy python3-numpy \
-        python3-pkgconfig \
         python-ply python3-ply \
         python-pytest python3-pytest \
         python-scipy python3-scipy \
@@ -162,7 +161,7 @@ RUN pip2 install --no-cache-dir sympy && \
     pip3 install --no-cache-dir jupyter && \
     pip2 install --no-cache-dir ipython ipykernel && \
     python2 -m ipykernel install --prefix=/usr/local && \
-    pip3 install --no-cache-dir sympy && \
+    pip3 install --no-cache-dir sympy pkgconfig && \
     pip3 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
