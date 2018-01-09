@@ -118,18 +118,6 @@ RUN wget -nc --quiet https://bitbucket.org/petsc/petsc/get/v${PETSC_VERSION}.tar
                 --prefix=/usr/local/petsc-32 && \
      make && \
      make install && \
-    ./configure --COPTFLAGS="-O2" \
-                --CXXOPTFLAGS="-O2" \
-                --FOPTFLAGS="-O2" \
-                --with-64-bit-indices \
-                --with-debugging=0 \
-                --download-hypre \
-                --download-metis \
-                --download-ptscotch \
-                --download-suitesparse \
-                --prefix=/usr/local/petsc-64 && \
-     make && \
-     make install && \
      rm -rf /tmp/*
 
 # Install SLEPc from source
@@ -140,10 +128,6 @@ RUN wget -nc --quiet http://slepc.upv.es/download/distrib/slepc-${SLEPC_VERSION}
     export PETSC_DIR=/usr/local/petsc-32 && \
     cd slepc-src && \
     ./configure --prefix=/usr/local/slepc-32 && \
-    make SLEPC_DIR=$(pwd) && \
-    make install && \
-    export PETSC_DIR=/usr/local/petsc-64 && \
-    ./configure --prefix=/usr/local/slepc-64 && \
     make SLEPC_DIR=$(pwd) && \
     make install && \
     rm -rf /tmp/*
