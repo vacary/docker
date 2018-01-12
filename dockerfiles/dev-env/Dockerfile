@@ -137,16 +137,14 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
 # Install Jupyter, sympy, mpi4py, petsc4py and slepc4py and Swig from source.
-RUN pip2 install --no-cache-dir sympy && \
-    pip2 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
+RUN pip2 install --no-cache-dir matplotlib sympy && \
     pip2 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip2 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir jupyter && \
     pip2 install --no-cache-dir ipython ipykernel && \
     python2 -m ipykernel install --prefix=/usr/local && \
-    pip3 install --no-cache-dir sympy pkgconfig && \
-    pip3 install --no-cache-dir git+https://github.com/matplotlib/matplotlib.git@v2.1.x && \
+    pip3 install --no-cache-dir matplotlib sympy pkgconfig && \
     pip3 install --no-cache-dir https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
