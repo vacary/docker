@@ -55,7 +55,7 @@ RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${
                   cd /tmp/ && \
                   git clone https://bitbucket.org/fenics-project/mshr.git && \
                   cd mshr && \
-                  git checkout ${DOLFIN_VERSION} && \
+                  git checkout ${MSHR_VERSION} && \
                   mkdir build && \
                   cd build && \
                   cmake ../ && \
