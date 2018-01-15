@@ -37,7 +37,7 @@ NORMAL="\033[0m"
 
 # Detect OS
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
-if [ "$(docker info | grep -c 'Docker for Mac')" == "1" ]; then
+if [[ "$(docker info | grep -c 'Docker for Mac')" == "1" || "$(docker info | grep -c Alpine)" == "1" ]]; then
     OS="Docker"
 elif [ "$(uname)" == "Darwin" ]; then
     # Mac OS X with Docker installed using docker-machine.
