@@ -28,6 +28,11 @@ If you want to share your current working directory into the container
 use the following command:
 
     docker run -ti -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
+    
+If you want to be able to view the plots in your web browser, use the following
+command:
+
+    docker run -ti -p 127.0.0.1:8000:8000 -v $(pwd):/home/fenics/shared quay.io/fenicsproject/<image-name>:latest
 
 Users with SELinux-enabled Linux distributions (Redhat, Fedora, CentOS, and others)
 will need to add the `:z` flag to the volume mount, e.g.:
