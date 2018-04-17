@@ -149,6 +149,8 @@ clean-string () {
     IMAGE=${IMAGE////}
     # Remove colons
     IMAGE=${IMAGE/:/}
+    # Remove ampersands
+    IMAGE=${IMAGE/@/}
     echo $IMAGE
 }
 
