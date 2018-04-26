@@ -37,7 +37,7 @@ function build_pybind11_extension () {
     echo "FENICS-BUILDER: Building $project Python wrapper..."
 
     cd "$path/python"
-    DOLFIN_DIR=${FENICS_PREFIX}/shared/dolfin ${FENICS_PYTHON} -m pip install -v --prefix=${FENICS_PREFIX} --no-deps --upgrade .
+    DOLFIN_DIR=${FENICS_PREFIX}/share/dolfin/cmake ${FENICS_PYTHON} -m pip install -v --prefix=${FENICS_PREFIX} --no-deps --upgrade .
 }
 
 function build () {
