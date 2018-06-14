@@ -11,36 +11,11 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 USER root 
 
-# Python2 build.
-ENV FENICS_PYTHON=python2
-ENV MSHR_VERSION="2017.2.0"
-ENV DOLFIN_VERSION="2017.2.0.post0"
-ENV PYPI_FENICS_VERSION=">=2017.2.0,<2018.1.0"
-
-WORKDIR /tmp
-RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}' && \
-                  git clone https://bitbucket.org/fenics-project/dolfin.git && \
-                  cd dolfin && \
-                  git checkout ${DOLFIN_VERSION} && \
-                  mkdir build && \
-                  cd build && \
-                  cmake -DPYTHON_EXECUTABLE:FILEPATH=$(which ${FENICS_PYTHON}) -DDOLFIN_USE_PYTHON3=False ../ && \
-                  make && \
-                  make install && \
-                  cd /tmp/ && \
-                  git clone https://bitbucket.org/fenics-project/mshr.git && \
-                  cd mshr && \
-                  git checkout ${MSHR_VERSION} && \
-                  mkdir build && \
-                  cd build && \
-                  cmake ../ && \
-                  make && \
-                  make install && \
-                  ldconfig && \
-                  rm -rf /tmp/*"
-
 # Python3 build.
 ENV FENICS_PYTHON=python3
+ENV DOLFIN_VERSION="2018.1.0"
+ENV MSHR_VERSION="2018.1.0"
+ENV PYPI_FENICS_VERSION=">=2018.1.0,<2018.2.0"
 
 WORKDIR /tmp
 RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install 'fenics${PYPI_FENICS_VERSION}' && \
@@ -80,7 +55,6 @@ WORKDIR $FENICS_HOME
 RUN /bin/bash -l -c "export MPLBACKEND=Agg && \
     mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
-    python2 $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     python3 $FENICS_HOME/demo/documented/poisson/python/demo_poisson.py && \
     instant-clean && \
     rm -r /tmp/poisson_test"
