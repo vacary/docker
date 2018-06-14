@@ -40,7 +40,7 @@ COPY set-home-permissions.sh /etc/my_init.d/set-home-permissions.sh
 RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
     echo "fenics:docker" | chpasswd && \
     echo "fenics ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    touch /etc/service/syslog-forwarder/down && \
+    rm /etc/my_init.d/10_syslog-ng.init && \ 
     echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc && \
     chmod +x /etc/my_init.d/set-home-permissions.sh && \
     ldconfig
@@ -49,10 +49,6 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
 # https://bitbucket.org/fenics-project/dolfin/issues/787/debian-ubuntu-python-bug-leads-to-python3
 # https://bugs.launchpad.net/ubuntu/+source/python3.5/+bug/1408092?comments=all
 RUN echo "/usr/local/lib/python3/dist-packages" >> /usr/local/lib/python3.5/dist-packages/debian-ubuntu-sitepath-fix.pth
-
-# Turn off forwarding of syslog messages to stdout
-# https://github.com/phusion/baseimage-docker/issues/186
-RUN touch /etc/service/syslog-forwarder/down
 
 USER fenics
 ENV FENICS_HOME /home/fenics
