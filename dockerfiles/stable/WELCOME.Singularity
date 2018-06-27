@@ -10,5 +10,5 @@ programs. Explore the demos by first copying them to a writable
 location, and then running them:
  
     cp -r /usr/local/share/dolfin/demo ~/demo
-    cd ~/demo/documented/poisson/python/
+    cd ~/demo/python/documented/poisson/
     python3 demo_poisson.py

@@ -26,7 +26,9 @@ RUN /bin/bash -c "PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install --index-u
                   cmake ../ && \
                   make && \
                   make install && \
-                  mv /usr/local/share/dolfin/demo /usr/local/share/dolfin/demo/cpp && \
+                  mv /usr/local/share/dolfin/demo /tmp/demo && \
+                  mkdir -p /usr/local/share/dolfin/demo && \
+                  mv /tmp/demo /usr/local/share/dolfin/demo/cpp && \
                   cd ../python && \
                   PIP_NO_CACHE_DIR=off ${FENICS_PYTHON} -m pip install . && \
                   cd demo && \
@@ -65,7 +67,6 @@ RUN /bin/bash -l -c "export MPLBACKEND=Agg && \
     mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
     python3 $FENICS_HOME/demo/python/documented/poisson/demo_poisson.py && \
-    instant-clean && \
     rm -r /tmp/poisson_test"
 
 COPY WELCOME $FENICS_HOME/WELCOME
