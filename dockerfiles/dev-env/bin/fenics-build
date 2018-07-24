@@ -48,15 +48,15 @@ function build () {
             echo "FENICS-BUILDER: $project source cannot be found at $path. Please run fenics-pull first."
             exit -1
         fi
-        if [ -e $path/CMakeLists.txt ]; then
+        if [ -e $path/setup.py ]; then
+            cd "$path"
+            ${FENICS_PYTHON} -m pip install --prefix=${FENICS_PREFIX} --no-deps --upgrade .
+        else
             build_cmake "$project"
             if [ -e $path/python/setup.py ]; then
                 cd "$path"
                 build_pybind11_extension "$project"
             fi
-        else
-            cd "$path"
-            ${FENICS_PYTHON} -m pip install --prefix=${FENICS_PREFIX} --no-deps --upgrade .
         fi
     done
 }
