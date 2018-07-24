@@ -50,7 +50,7 @@ function build () {
         fi
         if [ -e $path/setup.py ]; then
             cd "$path"
-            ${FENICS_PYTHON} -m pip install --prefix=${FENICS_PREFIX} --no-deps --upgrade .
+            ${FENICS_PYTHON} -m pip install -v --prefix=${FENICS_PREFIX} --no-deps --upgrade .
         else
             build_cmake "$project"
             if [ -e $path/python/setup.py ]; then
