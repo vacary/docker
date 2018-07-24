@@ -206,8 +206,7 @@ run ()
            --label org.fenicsproject.created_by_script=true \
            $IMAGE '$COMMAND'"
 
-    echo "[$CMD]" | tr -s " "; echo ""
-    NAME=$(command $CMD | tail -n 1)
+    NAME=$(command $CMD | tee /dev/tty | tail -n 1)
     command docker start $NAME
 
     log_mpl_port $NAME
