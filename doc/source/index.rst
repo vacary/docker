@@ -47,12 +47,14 @@ Background
 ==========
 
 Background on the use of containers with FEniCS, including performance
-data, is available in the paper
+data, is available in
 
-  Hale, J. S., Li, L., Richardson, C. N., and Wells, G. N. Containers
-  for portable, productive and performant scientific computing. To
-  appear in *IEEE Computing and Science and Engineering*.
-  [`arXiv:1608.07573 <http://arxiv.org/abs/1608.07573>`_]
+  Hale, J. S., Li, L., Richardson, C. N., and Wells, G. N. (2017).
+  Containers for portable, productive and performant scientific
+  computing. *IEEE Computing in Science and Engineering* 19(6):40-50.
+  [`doi:10.1109/MCSE.2017.2421459
+  <https://doi.org/10.1109/MCSE.2017.2421459>`_] [`arXiv:1608.07573
+  <http://arxiv.org/abs/1608.07573>`_]
 
 
 Indices and tables
