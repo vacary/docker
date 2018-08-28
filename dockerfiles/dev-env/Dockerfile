@@ -57,7 +57,7 @@ RUN apt-get -qq update && \
         libmpich-dev \
         libopenblas-dev \
         libpcre3-dev \
-        libpng12-dev \
+        libpng-dev \
         libhdf5-mpich-dev \
         libgmp-dev \
         libcln-dev \

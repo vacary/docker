@@ -12,7 +12,7 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.10.1
+FROM phusion/baseimage:0.11
 MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 # Get Ubuntu updates
@@ -44,11 +44,6 @@ RUN useradd -m -s /bin/bash -G sudo,docker_env fenics && \
     echo "cat /home/fenics/WELCOME" >> /home/fenics/.bashrc && \
     chmod +x /etc/my_init.d/set-home-permissions.sh && \
     ldconfig
-
-# Bug fix for Debian python3 site path issue
-# https://bitbucket.org/fenics-project/dolfin/issues/787/debian-ubuntu-python-bug-leads-to-python3
-# https://bugs.launchpad.net/ubuntu/+source/python3.5/+bug/1408092?comments=all
-RUN echo "/usr/local/lib/python3/dist-packages" >> /usr/local/lib/python3.5/dist-packages/debian-ubuntu-sitepath-fix.pth
 
 USER fenics
 ENV FENICS_HOME /home/fenics
