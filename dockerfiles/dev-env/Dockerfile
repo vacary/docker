@@ -139,7 +139,7 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
 
 # Install Jupyter, sympy, mpi4py, petsc4py, slepc4py and pybind11 from source.
 RUN pip3 install --no-cache-dir jupyter matplotlib sympy==1.1.1 pkgconfig && \
-    pip3 install --no-cache-dir https://github.com/mpi4py/mpi4py/archive/{MPI4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir https://github.com/mpi4py/mpi4py/archive/${MPI4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
     pip3 install --no-cache-dir pybind11==${PYBIND11_VERSION} && \
