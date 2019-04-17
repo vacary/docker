@@ -9,6 +9,7 @@ From: quay.io/fenicsproject/dev-env:latest
     bin/fenics-update /usr/local/bin
 
 %post
+    chmod a+r /usr/local/share/WELCOME
     ldconfig
         
 %runscript

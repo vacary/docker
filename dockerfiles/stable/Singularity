@@ -1,11 +1,13 @@
 Bootstrap: docker
 From: quay.io/fenicsproject/stable:current
 
-%post
-    ldconfig
 
 %files
     WELCOME.Singularity /usr/local/share/WELCOME
+
+%post
+    chmod a+r /usr/local/share/WELCOME
+    ldconfig
 
 %runscript
     cat /usr/local/share/WELCOME 
