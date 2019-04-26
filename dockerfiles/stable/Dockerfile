@@ -12,7 +12,7 @@ MAINTAINER fenics-project <fenics-support@googlegroups.com>
 USER root 
 
 ENV FENICS_PYTHON=python3
-ENV DOLFIN_VERSION="2019.1.0"
+ENV DOLFIN_VERSION="2019.1.0.post0"
 ENV MSHR_VERSION="2019.1.0"
 ENV PYPI_FENICS_VERSION=">=2019.1.0,<2019.2.0"
 
