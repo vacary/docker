@@ -104,6 +104,7 @@ RUN apt-get -qq update && \
     ./configure --COPTFLAGS="-O2" \
                 --CXXOPTFLAGS="-O2" \
                 --FOPTFLAGS="-O2" \
+                --with-fortran-bindings=no \
                 --with-debugging=0 \
                 --download-blacs \
                 --download-hypre \
