@@ -63,15 +63,11 @@ available at https://fenics-containers.readthedocs.org/.
 We currently offer following end-user images. A full description of
 the images can be found at https://fenics-containers.readthedocs.org/.
 
-> Looking for images with dolfin-adjoint already installed? Check out
-> [this page](https://bitbucket.org/dolfin-adjoint/dolfin-adjoint/src/master/docker/?at=master).
-
 | Image name       | Build status                                                                                                                                                                            | Description                                   |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
 | stable           | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/stable/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/stable)                     | Stable release, with PETSc and SLEPc.         |
-| dev              | [![Build Status on Bamboo](http://fenics-bamboo.simula.no:8085/plugins/servlet/wittified/build-status/FENICS-FDI)](https://quay.io/repository/fenicsproject/dev)                           | `master` version, produced by [Bamboo](https://bamboo.fenicsproject.org). |
+| dev              | | `master` version |
 | dev-env          | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env)                   | Development environment with PETSc and SLEPc. |
-| dev-env-trilinos | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/dev-env-trilinos/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/dev-env-trilinos) | As `dev-env`, but with Trilinos.              |
 | base             | [![Docker Repository on Quay](https://quay.io/repository/fenicsproject/base/status "Docker Repository on Quay")](https://quay.io/repository/fenicsproject/base)                         | Base image, not for end users.                |
 
 > Note: The *Build status* column refers to the latest *attempted*
@@ -124,18 +120,8 @@ want to compile an old version of FEniCS.
 
 ## Development images
 
-We also provide a set of *unsupported* images containing the output of
-all builds produced during our continuous integration and testing
-[system](https://bamboo.fenicsproject.org):
-
-[https://quay.io/organization/fenicsproject_dev](https://quay.io/organization/fenicsproject_dev)
-
-These images are not guaranteed to work and we do not provide end-user
-support. They may be of use to developers and contributors for
-debugging issues in pull requests or trying out bleeding edge features.
-
-Development images are automatically deleted after a set period of
-time. Pushing a new commit to a branch will re-build the image.
+Due to the shutdown of our Bamboo build service, `dev` images
+are no longer produced automatically.
 
 ## Process
 
