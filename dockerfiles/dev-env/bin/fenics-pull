@@ -17,7 +17,6 @@ if [ ! -d "$FENICS_SRC_DIR" ]; then
 fi
 
 function pull () {
-
     for project in $@; do
         echo "FENICS-BUILDER: Pulling $project..."
         cd "$FENICS_SRC_DIR"
