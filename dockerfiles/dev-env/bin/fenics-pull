@@ -17,6 +17,7 @@ if [ ! -d "$FENICS_SRC_DIR" ]; then
 fi
 
 function pull () {
+
     for project in $@; do
         echo "FENICS-BUILDER: Pulling $project..."
         cd "$FENICS_SRC_DIR"
@@ -24,7 +25,12 @@ function pull () {
             cd $project
             git pull
         else
-            git clone https://bitbucket.org/fenics-project/$project.git
+            if [[ "fiat" == "$project" ]] || [[ "ufl" == "$project" ]]; then
+				websource="github.com/FEniCS"
+            else
+               websource="bitbucket.org/fenics-project"
+			fi
+            git clone https://$websource/$project.git
             cd $project
             if [ ! -z "${FENICS_VERSION}" ]; then
                 git checkout ${FENICS_VERSION}
