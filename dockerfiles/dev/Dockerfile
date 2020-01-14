@@ -36,7 +36,6 @@ RUN /bin/bash -l -c "export MPLBACKEND=Agg && \
     mkdir -p /tmp/poisson_test && \
     cd /tmp/poisson_test && \
     python3 -c 'import dolfin' && \
-    rm -r /tmp/poisson_test" && \
-    rm -r $FENICS_SRC_DIR
+    rm -r /tmp/poisson_test"
 
 USER root
