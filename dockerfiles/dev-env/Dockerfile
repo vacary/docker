@@ -9,9 +9,10 @@
 # Garth N. Wells <gnw20@cam.ac.uk>
 # Jan Blechta <blechta@karlin.mff.cuni.cz>
 
-FROM quay.io/fenicsproject/base:latest
-MAINTAINER fenics-project <fenics-support@googlegroups.org>
+#FROM quay.io/fenicsproject/base:latest
+#MAINTAINER fenics-project <fenics-support@googlegroups.org>
 
+FROM fenics-base
 USER root
 WORKDIR /tmp
 
@@ -89,7 +90,7 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install setuptools
-RUN wget https://bootstrap.pypa.io/get-pip.py && \
+RUN wget https://bootstrap.pypa.io/pip/3.6/get-pip.py && \
     python3 get-pip.py && \
     pip3 install --no-cache-dir setuptools && \
     rm -rf /tmp/*
@@ -140,11 +141,11 @@ ENV SLEPC_DIR=/usr/local/slepc-32 \
     PETSC_DIR=/usr/local/petsc-32
 
 # Install jupyterlab, sympy, mpi4py, petsc4py, slepc4py and pybind11 from source.
-RUN pip3 install --no-cache-dir jupyter jupyterlab matplotlib sympy==1.1.1 pkgconfig && \
-    pip3 install --no-cache-dir https://github.com/mpi4py/mpi4py/archive/${MPI4PY_VERSION}.tar.gz && \
-    pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
-    pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz && \
-    pip3 install --no-cache-dir pybind11==${PYBIND11_VERSION} && \
+RUN pip3 install --no-cache-dir jupyter jupyterlab matplotlib sympy==1.1.1 pkgconfig 
+# RUN pip3 install --no-cache-dir https://github.com/mpi4py/mpi4py/archive/${MPI4PY_VERSION}.tar.gz  && \
+RUN pip3 install --no-cache-dir https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-${PETSC4PY_VERSION}.tar.gz && \
+    pip3 install --no-cache-dir https://bitbucket.org/slepc/slepc4py/downloads/slepc4py-${SLEPC4PY_VERSION}.tar.gz
+RUN pip3 install --no-cache-dir pybind11==${PYBIND11_VERSION} && \
     wget -nc --quiet https://github.com/pybind/pybind11/archive/v${PYBIND11_VERSION}.tar.gz && \
     tar -xf v${PYBIND11_VERSION}.tar.gz && \
     cd pybind11-${PYBIND11_VERSION} && \
