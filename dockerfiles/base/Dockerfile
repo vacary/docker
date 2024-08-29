@@ -12,8 +12,8 @@
 # Jack S. Hale <jack.hale@uni.lu>
 # Garth N. Wells <gnw20@cam.ac.uk>
 
-FROM phusion/baseimage:0.11
-MAINTAINER fenics-project <fenics-support@googlegroups.com>
+FROM --platform=$BUILDPLATFORM phusion/baseimage:0.11
+#MAINTAINER fenics-project <fenics-support@googlegroups.com>
 
 # Get Ubuntu updates
 USER root
