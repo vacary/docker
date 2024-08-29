@@ -6,8 +6,12 @@
 # Authors:
 # Jack S. Hale <jack.hale@uni.lu>
 
-FROM quay.io/fenicsproject/dev-env:latest
-MAINTAINER fenics-project <fenics-support@googlegroups.com>
+#FROM quay.io/fenicsproject/dev-env:latest
+#MAINTAINER fenics-project <fenics-support@googlegroups.com>
+
+
+FROM fenics-dev-env
+
 
 USER root 
 
