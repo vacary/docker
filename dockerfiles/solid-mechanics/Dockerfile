@@ -51,6 +51,21 @@ RUN cd fenics_mpm/python &&  \
     export CMAKE_PREFIX_PATH=/home/fenics/.local:$CMAKE_PREFIX_PATH && \
     pip install -e .
 
+
+# install additional python packages
+RUN pip install meshio multiphenics  --user
+RUN pip install pygmsh   --user
+
+
+
+### addons for mananing xdmf files in python
+USER root
+RUN apt-get -y install python3-h5py
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+
 USER root
 
 
